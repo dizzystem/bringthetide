@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "bringthetide:driftwood_log"
+    }
+  },
+  "pattern": [
+    "  x",
+    " x ",
+    "x  "
+  ],
+  "result": {
+    "item": "bringthetide:wand"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,5 @@
+{
+  "type": "bringthetide:tide_loot_modifier",
+  "chestType": "shipwreck",
+  "conditions": []
+}

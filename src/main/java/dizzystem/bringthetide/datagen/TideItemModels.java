@@ -1,0 +1,30 @@
+package dizzystem.bringthetide.datagen;
+
+import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.registration.TideBlocks;
+import dizzystem.bringthetide.registration.TideItems;
+import net.minecraft.data.PackOutput;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
+
+public class TideItemModels extends ItemModelProvider {
+    public TideItemModels(PackOutput output, ExistingFileHelper exFileHelper){
+        super (output, BringTheTide.MODID, exFileHelper);
+    }
+
+    @Override
+    protected void registerModels(){
+        withExistingParent(TideBlocks.BUDDING_PRISMARINE.getId().getPath(), modLoc("block/budding_prismarine"));
+        withExistingParent(TideBlocks.SMALL_PRISMARINE_BUD.getId().getPath(), modLoc("block/small_prismarine_bud"));
+        withExistingParent(TideBlocks.MEDIUM_PRISMARINE_BUD.getId().getPath(), modLoc("block/medium_prismarine_bud"));
+        withExistingParent(TideBlocks.LARGE_PRISMARINE_BUD.getId().getPath(), modLoc("block/large_prismarine_bud"));
+        withExistingParent(TideBlocks.PRISMARINE_CLUSTER.getId().getPath(), modLoc("block/prismarine_cluster"));
+
+        withExistingParent(TideBlocks.DRIFTWOOD_LOG.getId().getPath(), modLoc("block/driftwood_log"));
+        withExistingParent(TideBlocks.EROSION_CORE.getId().getPath(), modLoc("block/erosion_core"));
+        withExistingParent(TideBlocks.DEPOSITION_CORE.getId().getPath(), modLoc("block/deposition_core"));
+
+        basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
+        basicItem(TideItems.WAND.get());
+    }
+}

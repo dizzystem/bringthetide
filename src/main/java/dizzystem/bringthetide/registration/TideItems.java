@@ -1,0 +1,40 @@
+package dizzystem.bringthetide.registration;
+
+import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.item.Wand;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+public class TideItems {
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
+            BringTheTide.MODID);
+
+    public static final RegistryObject<Item> BUDDING_PRISMARINE_ITEM = ITEMS.register("budding_prismarine",
+            () -> new BlockItem(TideBlocks.BUDDING_PRISMARINE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PRISMARINE_CLUSTER_ITEM = ITEMS.register("prismarine_cluster",
+            () -> new BlockItem(TideBlocks.PRISMARINE_CLUSTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> LARGE_PRISMARINE_BUD_ITEM = ITEMS.register("large_prismarine_bud",
+            () -> new BlockItem(TideBlocks.LARGE_PRISMARINE_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<Item> MEDIUM_PRISMARINE_BUD_ITEM = ITEMS.register("medium_prismarine_bud",
+            () -> new BlockItem(TideBlocks.MEDIUM_PRISMARINE_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SMALL_PRISMARINE_BUD_ITEM = ITEMS.register("small_prismarine_bud",
+            () -> new BlockItem(TideBlocks.SMALL_PRISMARINE_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_LOG_ITEM = ITEMS.register("driftwood_log",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_LOG.get(), new Item.Properties()));
+    public static final RegistryObject<Item> EROSION_CORE_ITEM = ITEMS.register("erosion_core",
+            () -> new BlockItem(TideBlocks.EROSION_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DEPOSITION_CORE_ITEM = ITEMS.register("deposition_core",
+            () -> new BlockItem(TideBlocks.DEPOSITION_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> IMBUED_SEAWATER_BUCKET = ITEMS.register("imbued_seawater_bucket",
+            () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));
+    public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);
+
+    public static void init(IEventBus modEventBus) {
+        ITEMS.register(modEventBus);
+    }
+}
