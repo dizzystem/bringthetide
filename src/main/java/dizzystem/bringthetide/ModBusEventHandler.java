@@ -1,6 +1,7 @@
 package dizzystem.bringthetide;
 
 import com.mojang.logging.LogUtils;
+import dizzystem.bringthetide.client.particle.BubbleParticleProvider;
 import dizzystem.bringthetide.client.particle.SplashParticleProvider;
 import dizzystem.bringthetide.client.particle.WhirlpoolParticleProvider;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -19,5 +20,6 @@ public class ModBusEventHandler {
         LOGGER.info("Particles registered!");
         event.registerSpriteSet(TideParticles.WHIRLPOOL.get(), WhirlpoolParticleProvider::new);
         event.registerSpriteSet(TideParticles.SPLASH.get(), SplashParticleProvider::new);
+        event.registerSpriteSet(TideParticles.BUBBLE.get(), BubbleParticleProvider::new);
     }
 }

@@ -1,5 +1,6 @@
 package dizzystem.bringthetide.block;
 
+import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.tile.ErosionCoreEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -26,12 +27,13 @@ public class ErosionCore extends Block implements EntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type){
-        if (level.isClientSide()){
-            return null;
-        }
         return (lvl, pos, st, blockEntity) -> {
             if (blockEntity instanceof ErosionCoreEntity be){
-                be.tickServer();
+                if (lvl.isClientSide()){
+                    be.tickClient();
+                } else {
+                    be.tickServer();
+                }
             }
         };
     }

@@ -41,11 +41,17 @@ public class PoolHandler {
      *
      * @param pos The starting block.
      * @param condition A condition that takes a BlockState and returns true or false.
+     * @param poolBlocks If an array is supplied, the pool edge blocks will be added to it for use in the calling function.
+     * @param poolFluids If an array is supplied, the pool interior blocks will be added to it for use in the calling function.
      */
-    private static boolean horizontalFlood(Level level, BlockPos pos, Predicate<BlockState> condition){
+    private static boolean horizontalFlood(Level level, BlockPos pos, Predicate<BlockState> condition,
+                                           ArrayList<BlockPos> poolBlocks, ArrayList<BlockPos> poolFluids){
         Map<BlockPos, Boolean> validityMap = new HashMap<BlockPos, Boolean>();
         ArrayList<BlockPos> toCheck = new ArrayList<BlockPos>();
         BlockPos currentBlock = pos;
+
+        if (poolBlocks == null){ poolBlocks = new ArrayList<BlockPos>(); }
+        if (poolFluids == null){ poolFluids = new ArrayList<BlockPos>(); }
 
         //Iterate through the adjacent blocks, stopping when we find valid pool blocks.
         for (int i=0;i<1000;i++){
@@ -72,10 +78,12 @@ public class PoolHandler {
                     BlockState adjBlockState = level.getBlockState(adjBlock);
 
                     if (isValidPoolBlock(adjBlockState)) {
-                        validityMap.put(pos, true);
+                        poolBlocks.add(adjBlock);
+                        validityMap.put(adjBlock, true);
                     } else if (condition.test(adjBlockState)) {
-                        validityMap.put(pos, true);
-                        toCheck.add(pos);
+                        poolFluids.add(adjBlock);
+                        validityMap.put(adjBlock, true);
+                        toCheck.add(adjBlock);
                     } else {
                         return false;
                     }
@@ -100,7 +108,7 @@ public class PoolHandler {
      * @param pos A valid pool fluid blockpos in the pool.
      */
     public static Boolean verifyPoolFilled(Level level, BlockPos pos){
-        return horizontalFlood(level, pos, PoolHandler::isValidPoolFluid);
+        return horizontalFlood(level, pos, PoolHandler::isValidPoolFluid, null, null);
     }
 
     /**
@@ -109,8 +117,11 @@ public class PoolHandler {
      *
      * @param level the dimension
      * @param pos a ritual core block (may not be the primary)
+     * @param poolBlocks If an array is supplied, the pool edge blocks will be added to it for use in the calling function.
+     * @param poolFluids If an array is supplied, the pool interior blocks will be added to it for use in the calling function.
      */
-    public static boolean verifyEmptyPool(Level level, BlockPos pos) {
+    public static boolean verifyEmptyPool(Level level, BlockPos pos, ArrayList<BlockPos> poolBlocks,
+                                          ArrayList<BlockPos> poolFluids) {
         ArrayList<BlockPos> possiblePools = new ArrayList<BlockPos>();
 
         //Any line of blocks has two sides, so we have to figure out which are the two and try both.
@@ -146,9 +157,9 @@ public class PoolHandler {
 
         Predicate<BlockState> replaceableByPoolFluid =
                 blockState -> blockState.canBeReplaced(TideFluids.IMBUED_SEAWATER.get());
-        if (horizontalFlood(level, possiblePools.get(0), replaceableByPoolFluid)){
+        if (horizontalFlood(level, possiblePools.get(0), replaceableByPoolFluid, poolBlocks, poolFluids)){
             return true;
-        } else if (horizontalFlood(level, possiblePools.get(1), replaceableByPoolFluid)){
+        } else if (horizontalFlood(level, possiblePools.get(1), replaceableByPoolFluid, poolBlocks, poolFluids)){
             return true;
         }
 

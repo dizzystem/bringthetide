@@ -16,8 +16,8 @@ public class Splash extends TextureSheetParticle {
         this.gravity = 1.2f;
         this.yd = 0.4f;
 
-        this.xd = -0.4f + this.random.nextFloat();
-        this.zd = -0.4f + this.random.nextFloat();
+        this.xd = -0.5f + this.random.nextFloat();
+        this.zd = -0.5f + this.random.nextFloat();
 
         //initialize to prevent crash
         setSpriteFromAge(spriteSet);
