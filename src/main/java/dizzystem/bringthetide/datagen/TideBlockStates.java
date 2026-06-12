@@ -18,7 +18,8 @@ public class TideBlockStates extends BlockStateProvider {
         simpleBlock(TideBlocks.BUDDING_PRISMARINE.get());
         createPrismarineClusters();
         logBlock(TideBlocks.DRIFTWOOD_LOG.get());
-        simpleBlock(TideBlocks.EROSION_CORE.get());
+        horizontalBlock(TideBlocks.EROSION_CORE.get(), modLoc("block/core"),
+                modLoc("block/core_face"), modLoc("block/erosion_core"));
         simpleBlock(TideBlocks.DEPOSITION_CORE.get());
     }
 

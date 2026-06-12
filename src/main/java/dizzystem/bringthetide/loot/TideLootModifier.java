@@ -1,4 +1,4 @@
-package dizzystem.bringthetide;
+package dizzystem.bringthetide.loot;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

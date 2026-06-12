@@ -4,13 +4,17 @@ import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
+import dizzystem.bringthetide.tile.CoreEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
@@ -123,6 +127,7 @@ public class PoolHandler {
     public static boolean verifyEmptyPool(Level level, BlockPos pos, ArrayList<BlockPos> poolBlocks,
                                           ArrayList<BlockPos> poolFluids) {
         ArrayList<BlockPos> possiblePools = new ArrayList<BlockPos>();
+        BlockPos pool;
 
         //Any line of blocks has two sides, so we have to figure out which are the two and try both.
         ArrayList<Direction> adjBlockDirs = new ArrayList<Direction>();
@@ -157,13 +162,34 @@ public class PoolHandler {
 
         Predicate<BlockState> replaceableByPoolFluid =
                 blockState -> blockState.canBeReplaced(TideFluids.IMBUED_SEAWATER.get());
-        if (horizontalFlood(level, possiblePools.get(0), replaceableByPoolFluid, poolBlocks, poolFluids)){
-            return true;
-        } else if (horizontalFlood(level, possiblePools.get(1), replaceableByPoolFluid, poolBlocks, poolFluids)){
-            return true;
+        //We use new blank arrays to avoid adding to our return arrays until we're sure which pool is the real one.
+        ArrayList<BlockPos> poolBlocks1 = new ArrayList<BlockPos>(), poolBlocks2 = new ArrayList<BlockPos>(),
+                poolFluids1 = new ArrayList<BlockPos>(), poolFluids2 = new ArrayList<BlockPos>();
+        if (horizontalFlood(level, possiblePools.get(0), replaceableByPoolFluid, poolBlocks1, poolFluids1)){
+            poolBlocks.addAll(poolBlocks1);
+            poolFluids.addAll(poolFluids1);
+        } else if (horizontalFlood(level, possiblePools.get(1), replaceableByPoolFluid, poolBlocks2, poolFluids2)) {
+            poolBlocks.addAll(poolBlocks2);
+            poolFluids.addAll(poolFluids2);
+        } else {
+            return false;
         }
 
-        return false;
+        //Finally, check the cores to see if they have their required blocks.
+        for (var block : poolBlocks){
+            BlockEntity coreEntity = level.getBlockEntity(block);
+            if (coreEntity instanceof CoreEntity){ //this also covers if the block has no tile entity
+                ArrayList<Vec3i> missing = ((CoreEntity) coreEntity).checkRequiredShape();
+                if (!missing.isEmpty()){
+                    //for (var m : missing){
+                    //    LogUtils.getLogger().info("missing {}", m);
+                    //}
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**

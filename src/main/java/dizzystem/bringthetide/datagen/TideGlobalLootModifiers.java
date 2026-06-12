@@ -1,7 +1,7 @@
 package dizzystem.bringthetide.datagen;
 
 import dizzystem.bringthetide.BringTheTide;
-import dizzystem.bringthetide.TideLootModifier;
+import dizzystem.bringthetide.loot.TideLootModifier;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;

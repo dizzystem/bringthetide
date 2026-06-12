@@ -30,7 +30,6 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(Blocks.PRISMARINE_BRICKS)
                 .add(Blocks.PRISMARINE_BRICK_STAIRS)
                 .add(Blocks.PRISMARINE_BRICK_SLAB)
-                .add(Blocks.SAND)
                 .add(Blocks.SANDSTONE)
                 .add(Blocks.SANDSTONE_STAIRS)
                 .add(Blocks.SANDSTONE_SLAB)

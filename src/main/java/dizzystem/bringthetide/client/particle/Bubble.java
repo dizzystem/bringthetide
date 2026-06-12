@@ -15,8 +15,8 @@ public class Bubble extends TextureSheetParticle {
         this.setColor(0.2f, 1.0f, 0.8f);
         this.gravity = 0.04f;
 
-        this.xd = (-0.5f + this.random.nextFloat()) / 10;
-        this.zd = (-0.5f + this.random.nextFloat()) / 10;
+        this.xd = (-0.5f + this.random.nextFloat()) * 0.05;
+        this.zd = (-0.5f + this.random.nextFloat()) * 0.05;
 
         //initialize to prevent crash
         setSpriteFromAge(spriteSet);

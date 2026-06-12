@@ -2,7 +2,7 @@ package dizzystem.bringthetide.registration;
 
 import com.mojang.serialization.Codec;
 import dizzystem.bringthetide.BringTheTide;
-import dizzystem.bringthetide.TideLootModifier;
+import dizzystem.bringthetide.loot.TideLootModifier;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
