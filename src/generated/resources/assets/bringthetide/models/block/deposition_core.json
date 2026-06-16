@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/orientable",
   "textures": {
-    "all": "bringthetide:block/deposition_core"
+    "front": "bringthetide:block/core_prismarine_face",
+    "side": "bringthetide:block/core_prismarine",
+    "top": "bringthetide:block/deposition_core"
   }
 }

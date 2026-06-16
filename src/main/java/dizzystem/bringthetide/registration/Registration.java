@@ -14,6 +14,7 @@ public class Registration {
         TideFluids.init(modEventBus);
         TideParticles.init(modEventBus);
         TideLoot.init(modEventBus);
+        TideRecipes.init(modEventBus);
     }
 
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {

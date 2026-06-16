@@ -1,9 +1,11 @@
 package dizzystem.bringthetide.datagen;
 
 import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.registration.TideItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -17,5 +19,7 @@ public class TideItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider){
+        tag(ItemTags.LOGS)
+                .add(TideItems.DRIFTWOOD_LOG_ITEM.get());
     }
 }

@@ -22,8 +22,11 @@ public class BlockImbuedSeawater extends LiquidBlock {
     @Override
     @ParametersAreNonnullByDefault
     public void entityInside(BlockState blockState, Level level, BlockPos pos, Entity entity){
-        if (entity instanceof ItemEntity){
-            PoolHandler.entityInPool((ItemEntity) entity, pos);
+        if (level.isClientSide()){
+            return;
+        }
+        if (blockState.getFluidState().isSource()){
+            PoolHandler.entityInPool(entity, level, pos);
         }
     }
 
@@ -33,7 +36,7 @@ public class BlockImbuedSeawater extends LiquidBlock {
         super.onPlace(blockState, level, blockPos, oldState, movedByPiston);
         if (blockState.getFluidState().isSource()){
             LogUtils.getLogger().info("Seawater placed at {}", blockPos);
-            if (PoolHandler.verifyPoolFilled(level, blockPos)){
+            if (PoolHandler.verifyPoolFilled(level, blockPos, null, null)){
                 LogUtils.getLogger().info("Valid pool");
             } else {
                 LogUtils.getLogger().info("Invalid pool");

@@ -1,0 +1,13 @@
+{
+  "type": "bringthetide:erosion",
+  "ingredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:nether_wart_block"
+    }
+  },
+  "result": {
+    "count": 4,
+    "item": "minecraft:nether_wart"
+  }
+}

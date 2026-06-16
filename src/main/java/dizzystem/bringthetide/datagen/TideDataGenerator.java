@@ -26,7 +26,7 @@ public class TideDataGenerator {
         TideBlockTags blockTags = new TideBlockTags(packOutput, lookupProvider, event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTags);
         generator.addProvider(event.includeServer(), new TideItemTags(packOutput, lookupProvider, blockTags, event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), new TideRecipes(packOutput));
+        generator.addProvider(event.includeServer(), new TideRecipeProvider(packOutput));
         generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Collections.emptySet(),
                 List.of(new LootTableProvider.SubProviderEntry(TideLootTables::new, LootContextParamSets.BLOCK))));
         generator.addProvider(event.includeClient(), new TideParticleDescriptions(packOutput, existingFileHelper));

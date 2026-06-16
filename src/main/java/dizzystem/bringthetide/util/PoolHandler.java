@@ -5,10 +5,10 @@ import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.tile.CoreEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
+import net.minecraft.core.*;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -16,14 +16,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jline.utils.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class PoolHandler {
-    static Map<BlockPos, BlockPos> poolBlocksToCore = new HashMap<>();
+    static HashSet<PoolCore> cores = new HashSet<PoolCore>();
 
     private static short getCacheKey(BlockPos origin, BlockPos blockPos) {
         int i = blockPos.getX() - origin.getX();
@@ -49,13 +51,13 @@ public class PoolHandler {
      * @param poolFluids If an array is supplied, the pool interior blocks will be added to it for use in the calling function.
      */
     private static boolean horizontalFlood(Level level, BlockPos pos, Predicate<BlockState> condition,
-                                           ArrayList<BlockPos> poolBlocks, ArrayList<BlockPos> poolFluids){
+                                           HashSet<BlockPos> poolBlocks, HashSet<BlockPos> poolFluids){
         Map<BlockPos, Boolean> validityMap = new HashMap<BlockPos, Boolean>();
         ArrayList<BlockPos> toCheck = new ArrayList<BlockPos>();
         BlockPos currentBlock = pos;
 
-        if (poolBlocks == null){ poolBlocks = new ArrayList<BlockPos>(); }
-        if (poolFluids == null){ poolFluids = new ArrayList<BlockPos>(); }
+        if (poolBlocks == null){ poolBlocks = new HashSet<BlockPos>(); }
+        if (poolFluids == null){ poolFluids = new HashSet<BlockPos>(); }
 
         //Iterate through the adjacent blocks, stopping when we find valid pool blocks.
         for (int i=0;i<1000;i++){
@@ -64,34 +66,33 @@ public class PoolHandler {
                 return false;
             }
 
-            for (Direction direction1 : Direction.Plane.HORIZONTAL){
-                Direction[] diagonalMoves = new Direction[]{ direction1, direction1.getClockWise() };
-                for (Direction direction2 : diagonalMoves){
-                    BlockPos adjBlock;
+            BlockState currentBlockState = level.getBlockState(currentBlock);
 
-                    if (direction1 == direction2){
-                        adjBlock = currentBlock.relative(direction1);
-                    } else {
-                        adjBlock = currentBlock.relative(direction1).relative(direction2);
-                    }
+            if (isValidPoolBlock(currentBlockState)) { //pool edge, stop here
+                poolBlocks.add(currentBlock);
+                validityMap.put(currentBlock, true);
+            } else if (condition.test(currentBlockState)) { //pool fluid, keep checking
+                poolFluids.add(currentBlock);
+                validityMap.put(currentBlock, true);
 
-                    if (validityMap.get(adjBlock) != null) {
-                        continue;
-                    }
+                for (Direction direction1 : Direction.Plane.HORIZONTAL){
+                    Direction[] diagonalMoves = new Direction[]{ direction1, direction1.getClockWise() };
+                    for (Direction direction2 : diagonalMoves){
+                        BlockPos adjBlock;
 
-                    BlockState adjBlockState = level.getBlockState(adjBlock);
+                        if (direction1 == direction2){
+                            adjBlock = currentBlock.relative(direction1);
+                        } else {
+                            adjBlock = currentBlock.relative(direction1).relative(direction2);
+                        }
 
-                    if (isValidPoolBlock(adjBlockState)) {
-                        poolBlocks.add(adjBlock);
-                        validityMap.put(adjBlock, true);
-                    } else if (condition.test(adjBlockState)) {
-                        poolFluids.add(adjBlock);
-                        validityMap.put(adjBlock, true);
-                        toCheck.add(adjBlock);
-                    } else {
-                        return false;
+                        if (validityMap.get(adjBlock) == null) {
+                            toCheck.add(adjBlock);
+                        }
                     }
                 }
+            } else {
+                return false;
             }
 
             if (!toCheck.isEmpty()){
@@ -111,8 +112,9 @@ public class PoolHandler {
      *
      * @param pos A valid pool fluid blockpos in the pool.
      */
-    public static Boolean verifyPoolFilled(Level level, BlockPos pos){
-        return horizontalFlood(level, pos, PoolHandler::isValidPoolFluid, null, null);
+    public static Boolean verifyPoolFilled(Level level, BlockPos pos, HashSet<BlockPos> poolBlocks,
+                                           HashSet<BlockPos> poolFluids){
+        return horizontalFlood(level, pos, PoolHandler::isValidPoolFluid, poolBlocks, poolFluids);
     }
 
     /**
@@ -124,8 +126,8 @@ public class PoolHandler {
      * @param poolBlocks If an array is supplied, the pool edge blocks will be added to it for use in the calling function.
      * @param poolFluids If an array is supplied, the pool interior blocks will be added to it for use in the calling function.
      */
-    public static boolean verifyEmptyPool(Level level, BlockPos pos, ArrayList<BlockPos> poolBlocks,
-                                          ArrayList<BlockPos> poolFluids) {
+    public static boolean verifyEmptyPool(Level level, BlockPos pos, HashSet<BlockPos> poolBlocks,
+                                          HashSet<BlockPos> poolFluids) {
         ArrayList<BlockPos> possiblePools = new ArrayList<BlockPos>();
         BlockPos pool;
 
@@ -163,8 +165,8 @@ public class PoolHandler {
         Predicate<BlockState> replaceableByPoolFluid =
                 blockState -> blockState.canBeReplaced(TideFluids.IMBUED_SEAWATER.get());
         //We use new blank arrays to avoid adding to our return arrays until we're sure which pool is the real one.
-        ArrayList<BlockPos> poolBlocks1 = new ArrayList<BlockPos>(), poolBlocks2 = new ArrayList<BlockPos>(),
-                poolFluids1 = new ArrayList<BlockPos>(), poolFluids2 = new ArrayList<BlockPos>();
+        HashSet<BlockPos> poolBlocks1 = new HashSet<BlockPos>(), poolBlocks2 = new HashSet<BlockPos>(),
+                poolFluids1 = new HashSet<BlockPos>(), poolFluids2 = new HashSet<BlockPos>();
         if (horizontalFlood(level, possiblePools.get(0), replaceableByPoolFluid, poolBlocks1, poolFluids1)){
             poolBlocks.addAll(poolBlocks1);
             poolFluids.addAll(poolFluids1);
@@ -193,22 +195,59 @@ public class PoolHandler {
     }
 
     /**
-     * Adds the given pool to the pool map so that it can start doing its thing.
+     * Adds the given ritual core to the pool map so that it can start doing its thing.
      *
-     * @param pos The primary core of the pool (first core rotating clockwise from due north).
+     * @param pos The BlockPos of the core.
      */
-    public static void registerNewPool(BlockPos pos){
-
-        //poolBlocksToCore.put(pos);
-
-        new Pool(new BlockPos[]{}, new BlockPos[]{}, new BlockPos[]{});
+    public static void registerNewCore(Level level, BlockPos pos){
+        cores.add(new PoolCore(level, pos));
     }
 
-    public static void entityInPool(ItemEntity entity, BlockPos pos){
-        ItemStack item = entity.getItem();
+    /**
+     * Called when an entity enters an imbued seawater block, which may or may not be part of a pool.
+     *
+     * @param pos The BlockPos of the core.
+     */
+    public static void entityInPool(Entity entity, Level level, BlockPos pos){
+        for (PoolCore core : cores){
+            if (level != core.level()){
+                continue;
+            }
 
-        if (item.is(ItemTags.LOGS)){
-            //ItemStack result = new ItemStack()
+            BlockEntity blockEntity = level.getBlockEntity(core.corePos());
+            if (blockEntity instanceof CoreEntity){
+                HashSet<BlockPos> poolFluids = ((CoreEntity) blockEntity).getPoolFluids();
+                if (poolFluids.contains(pos)){
+                    ((CoreEntity) blockEntity).entityInPool(entity, level, pos);
+                }
+            }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static boolean matchBlock(BlockState blockState, Object requirement){
+        if (requirement instanceof Block){
+            return blockState.is((Block) requirement);
+        } else if (requirement instanceof HolderSet<?>){
+            return blockState.is((HolderSet<Block>) requirement);
+        } else if (requirement instanceof TagKey<?>){
+            return blockState.is((TagKey<Block>) requirement);
+        }
+
+        return false;
+    }
+
+    public static BlockState[] allBlocksMatching(Object requirement){
+        if (requirement instanceof Block){
+            return new BlockState[]{ ((Block) requirement).defaultBlockState() };
+        } else if (requirement instanceof HolderSet<?>){
+            return ((HolderSet<Block>) requirement).stream().map(Holder::value)
+                    .map(Block::defaultBlockState).toArray(BlockState[]::new);
+        } else if (requirement instanceof TagKey<?>){
+            return ForgeRegistries.BLOCKS.tags().getTag((TagKey<Block>) requirement).stream()
+                    .map(Block::defaultBlockState).toArray(BlockState[]::new);
+        }
+
+        return new BlockState[]{};
     }
 }

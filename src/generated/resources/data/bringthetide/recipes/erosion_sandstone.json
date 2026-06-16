@@ -1,0 +1,13 @@
+{
+  "type": "bringthetide:erosion",
+  "ingredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:sandstone"
+    }
+  },
+  "result": {
+    "count": 4,
+    "item": "minecraft:sand"
+  }
+}

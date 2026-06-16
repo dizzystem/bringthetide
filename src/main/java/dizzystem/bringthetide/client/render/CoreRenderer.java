@@ -9,13 +9,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
@@ -24,10 +28,11 @@ import java.util.Objects;
 
 public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
     private final TextureAtlasSprite overlaySprite;
+
     public CoreRenderer(BlockEntityRendererProvider.Context context){
         this.overlaySprite = Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
                 TextureAtlas.LOCATION_BLOCKS
-                ).apply(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "block/cross")));
+                ).apply(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "block/overlay_cross")));
     }
 
     /**
@@ -75,6 +80,42 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
         long millis = System.currentTimeMillis();
         float alpha = 0.5f + (float) Math.cos((float) (millis % 4000) * Math.PI*2f / 4000f) / 2f;
 
+        //only one of getMissingBlocks or getPoolBlocks should have any entries
+        //if there are missing blocks, render translucent blocks in those positions
+        for (var entry : entity.getMissingBlocksAllowed().entrySet()){
+            BlockPos blockPos = entry.getKey();
+            BlockState[] allowedBlocks = entry.getValue();
+
+            if (allowedBlocks == null){
+                //This shouldn't happen
+                LogUtils.getLogger().info("allowedBlocks is null at core pos {}", blockPos);
+                //for (var entry : entity.getMissingBlocksAllowed().entrySet()){
+                //    LogUtils.getLogger().info("{} : {}", entry.getKey(), entry.getValue());
+                //}
+            } else {
+                BlockState allowedBlock = allowedBlocks[(int)((millis % (1000 * allowedBlocks.length)) / 1000)];
+
+                VertexConsumer consumer = bufferSource.getBuffer(ModRenderTypes.GHOST);
+                BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
+                ModelBlockRenderer modelRenderer = dispatcher.getModelRenderer();
+                BakedModel model = dispatcher.getBlockModel(allowedBlock);
+
+                poseStack.pushPose();
+                poseStack.translate(blockPos.getX() - entityPos.getX(), blockPos.getY() - entityPos.getY(),
+                        blockPos.getZ() - entityPos.getZ());
+                //prevent z fighting if there's another block there
+                poseStack.translate(-0.001, -0.001,-0.001);
+                poseStack.scale(1.002f, 1.002f, 1.002f);
+
+                modelRenderer.renderModel(poseStack.last(), consumer, allowedBlock, model, 1, 1, 1, LightTexture.FULL_BRIGHT, combinedOverlay);
+                //renderer.renderSingleBlock(allowedBlock, poseStack, bufferSource, LightTexture.FULL_BRIGHT, OverlayTexture.WHITE_OVERLAY_V,
+                //        net.minecraftforge.client.model.data.ModelData.EMPTY, RenderType.translucent());
+                poseStack.popPose();
+            }
+
+        }
+
+        //if we have poolBlocks that means the pool is valid, render a flat texture over our poolBlocks
         for (var blockPos : entity.getPoolBlocks()){
             poseStack.pushPose();
 

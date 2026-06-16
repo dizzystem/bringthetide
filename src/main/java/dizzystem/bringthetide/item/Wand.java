@@ -20,14 +20,6 @@ public class Wand extends Item {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
 
-        level.addParticle(TideParticles.WHIRLPOOL.get(),
-                pos.getX() + .5,
-                pos.getY() + 1.5,
-                pos.getZ() + .5,
-                0,
-                0,
-                0);
-
         if (MultiblockChecker.assembleMultiblock(level, pos)){
             return InteractionResult.SUCCESS;
         }

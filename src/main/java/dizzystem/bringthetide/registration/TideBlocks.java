@@ -2,9 +2,11 @@ package dizzystem.bringthetide.registration;
 
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.block.BuddingPrismarine;
+import dizzystem.bringthetide.block.DepositionCore;
 import dizzystem.bringthetide.block.ErosionCore;
 import dizzystem.bringthetide.block.PrismarineClusterBlock;
 import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
+import dizzystem.bringthetide.tile.DepositionCoreEntity;
 import dizzystem.bringthetide.tile.ErosionCoreEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -55,13 +57,16 @@ public class TideBlocks {
     public static final RegistryObject<Block> EROSION_CORE = BLOCKS.register("erosion_core",
             ErosionCore::new);
     public static final RegistryObject<Block> DEPOSITION_CORE = BLOCKS.register("deposition_core",
-            () -> new Block(BlockBehaviour.Properties.of()));
+            DepositionCore::new);
     public static final RegistryObject<LiquidBlock> BLOCK_IMBUED_SEAWATER = BLOCKS.register(
             "block_imbued_seawater", BlockImbuedSeawater::new);
 
     public static final RegistryObject<BlockEntityType<ErosionCoreEntity>> EROSION_CORE_ENTITY =
             BLOCK_ENTITIES.register("erosion_core_entity",
                     () -> BlockEntityType.Builder.of(ErosionCoreEntity::new, EROSION_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<DepositionCoreEntity>> DEPOSITION_CORE_ENTITY =
+            BLOCK_ENTITIES.register("deposition_core_entity",
+                    () -> BlockEntityType.Builder.of(DepositionCoreEntity::new, DEPOSITION_CORE.get()).build(null));
 
     public static void init(IEventBus modEventBus) {
         BLOCKS.register(modEventBus);
