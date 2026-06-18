@@ -23,8 +23,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.Objects;
+
+import static java.util.Collections.copy;
 
 public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
     private final TextureAtlasSprite overlaySprite;
@@ -36,7 +39,21 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
     }
 
     /**
-     * copied rendering code from <a href="https://github.com/VazkiiMods/Botania/blob/1.20.x/Xplat/src/main/java/vazkii/botania/client/core/helper/RenderHelper.java#L469">Botania</a>
+     * from <a href="https://stackoverflow.com/questions/3684269/component-of-a-quaternion-rotation-around-an-axis">StackOverflow</a>
+     * Decompose the rotation into 2 parts.
+     * @param twist rotation around the "direction" vector
+     * @param swing rotation around axis that is perpendicular to "direction" vector
+     */
+    public static void SwingTwistDecomposition(Quaternionf rotation, Vector3f direction, Quaternionf swing,
+                                               Quaternionf twist){
+        Vector3f rotationAxis = new Vector3f(rotation.x, rotation.y, rotation.z);
+        Vector3f projection = direction.mul(rotationAxis.dot(direction));
+        twist.set(projection.x, projection.y, projection.z, rotation.w);
+        swing.set(new Quaternionf(rotation).mul(twist.conjugate()));
+    }
+
+    /**
+     * from <a href="https://github.com/VazkiiMods/Botania/blob/1.20.x/Xplat/src/main/java/vazkii/botania/client/core/helper/RenderHelper.java#L469">Botania</a>
      *
      * @param startX   Start x position in blocks
      * @param startY   Start position in blocks
@@ -59,16 +76,16 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
         float green = ((color >> 8) & 0xFF) / 255F;
         float blue = (color & 0xFF) / 255F;
 
-        buffer.vertex(mat, startX, endY, 0).color(red, green, blue, alpha)
+        buffer.vertex(mat, endX, startY, 0).color(red, green, blue, alpha)
                 .uv(icon.getU(uvStartX), icon.getV(uvEndY)).overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(light).normal(normal, 0, 0, 1).endVertex();
-        buffer.vertex(mat, endX, endY, 0).color(red, green, blue, alpha)
+        buffer.vertex(mat, startX, startY, 0).color(red, green, blue, alpha)
                 .uv(icon.getU(uvEndX), icon.getV(uvEndY)).overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(light).normal(normal, 0, 0, 1).endVertex();
-        buffer.vertex(mat, endX, startY, 0).color(red, green, blue, alpha)
+        buffer.vertex(mat, startX, endY, 0).color(red, green, blue, alpha)
                 .uv(icon.getU(uvEndX), icon.getV(uvStartY)).overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(light).normal(normal, 0, 0, 1).endVertex();
-        buffer.vertex(mat, startX, startY, 0).color(red, green, blue, alpha)
+        buffer.vertex(mat, endX, endY, 0).color(red, green, blue, alpha)
                 .uv(icon.getU(uvStartX), icon.getV(uvStartY)).overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(light).normal(normal, 0, 0, 1).endVertex();
     }
@@ -78,7 +95,7 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
                        int combinedLight, int combinedOverlay){
         BlockPos entityPos = entity.getBlockPos();
         long millis = System.currentTimeMillis();
-        float alpha = 0.5f + (float) Math.cos((float) (millis % 4000) * Math.PI*2f / 4000f) / 2f;
+        float alpha = 0.5f + (float) Math.cos((float) (millis % 4000) * Math.PI*2f / 4000f) * 0.5f;
 
         //only one of getMissingBlocks or getPoolBlocks should have any entries
         //if there are missing blocks, render translucent blocks in those positions
@@ -95,7 +112,7 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
             } else {
                 BlockState allowedBlock = allowedBlocks[(int)((millis % (1000 * allowedBlocks.length)) / 1000)];
 
-                VertexConsumer consumer = bufferSource.getBuffer(ModRenderTypes.GHOST);
+                VertexConsumer consumer = bufferSource.getBuffer(TideRenderTypes.GHOST);
                 BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
                 ModelBlockRenderer modelRenderer = dispatcher.getModelRenderer();
                 BakedModel model = dispatcher.getBlockModel(allowedBlock);
@@ -116,6 +133,7 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
         }
 
         //if we have poolBlocks that means the pool is valid, render a flat texture over our poolBlocks
+        //todo: only one core should be doing this in pools with multiple cores
         for (var blockPos : entity.getPoolBlocks()){
             poseStack.pushPose();
 

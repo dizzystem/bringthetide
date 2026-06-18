@@ -22,6 +22,8 @@ public class TideBlockStates extends BlockStateProvider {
                 modLoc("block/core_sandstone_face"), modLoc("block/erosion_core"));
         horizontalBlock(TideBlocks.DEPOSITION_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/deposition_core"));
+        simpleBlock(TideBlocks.BLOCK_IMBUED_SEAWATER.get(),
+                models().cubeAll("block_imbued_seawater", modLoc("block/fluids/imbued_seawater")));
     }
 
     private void createPrismarineClusters(){

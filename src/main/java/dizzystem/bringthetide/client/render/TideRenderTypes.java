@@ -8,8 +8,8 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import org.lwjgl.opengl.GL14;
 
-public class ModRenderTypes extends RenderStateShard {
-    public ModRenderTypes(String name, Runnable setupstate, Runnable clearState){
+public class TideRenderTypes extends RenderStateShard {
+    public TideRenderTypes(String name, Runnable setupstate, Runnable clearState){
         super(name, setupstate, clearState);
     }
 

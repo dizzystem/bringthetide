@@ -12,7 +12,6 @@ public class Bubble extends TextureSheetParticle {
     public Bubble(ClientLevel level, double x, double y, double z, SpriteSet spriteSet){
         super(level, x, y, z);
         this.spriteSet = spriteSet;
-        this.setColor(0.2f, 1.0f, 0.8f);
         this.gravity = 0.04f;
 
         this.xd = (-0.5f + this.random.nextFloat()) * 0.05;

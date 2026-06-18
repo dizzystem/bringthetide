@@ -1,37 +1,39 @@
 package dizzystem.bringthetide.util;
 
-import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
+import dizzystem.bringthetide.recipe.DepositionRecipe;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
+import dizzystem.bringthetide.registration.TideParticles;
+import dizzystem.bringthetide.registration.TideRecipes;
 import dizzystem.bringthetide.tile.CoreEntity;
+import dizzystem.bringthetide.tile.DepositionCoreEntity;
 import net.minecraft.core.*;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jline.utils.Log;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PoolHandler {
-    static HashSet<PoolCore> cores = new HashSet<PoolCore>();
-
-    private static short getCacheKey(BlockPos origin, BlockPos blockPos) {
-        int i = blockPos.getX() - origin.getX();
-        int j = blockPos.getZ() - origin.getZ();
-        return (short)((i + 128 & 255) << 8 | j + 128 & 255);
-    }
+    static HashSet<PoolCore> cores = new HashSet<>();
+    static Map<ItemEntity, ArrayList<CraftingAttempt>> craftingAttempts = new HashMap<>();
+    static Map<ItemEntity, CraftingOngoing> craftingOngoings = new HashMap<>();
 
     private static boolean isValidPoolBlock(BlockState blockState){
         return blockState.is(TideTags.VALID_POOL_BLOCK);
@@ -52,12 +54,12 @@ public class PoolHandler {
      */
     private static boolean horizontalFlood(Level level, BlockPos pos, Predicate<BlockState> condition,
                                            HashSet<BlockPos> poolBlocks, HashSet<BlockPos> poolFluids){
-        Map<BlockPos, Boolean> validityMap = new HashMap<BlockPos, Boolean>();
-        ArrayList<BlockPos> toCheck = new ArrayList<BlockPos>();
+        Map<BlockPos, Boolean> validityMap = new HashMap<>();
+        ArrayList<BlockPos> toCheck = new ArrayList<>();
         BlockPos currentBlock = pos;
 
-        if (poolBlocks == null){ poolBlocks = new HashSet<BlockPos>(); }
-        if (poolFluids == null){ poolFluids = new HashSet<BlockPos>(); }
+        if (poolBlocks == null){ poolBlocks = new HashSet<>(); }
+        if (poolFluids == null){ poolFluids = new HashSet<>(); }
 
         //Iterate through the adjacent blocks, stopping when we find valid pool blocks.
         for (int i=0;i<1000;i++){
@@ -128,52 +130,13 @@ public class PoolHandler {
      */
     public static boolean verifyEmptyPool(Level level, BlockPos pos, HashSet<BlockPos> poolBlocks,
                                           HashSet<BlockPos> poolFluids) {
-        ArrayList<BlockPos> possiblePools = new ArrayList<BlockPos>();
-        BlockPos pool;
+        Direction facing = level.getBlockState(pos).getValue(BlockStateProperties.HORIZONTAL_FACING);
+        BlockPos poolBlock =  pos.relative(facing);
 
-        //Any line of blocks has two sides, so we have to figure out which are the two and try both.
-        ArrayList<Direction> adjBlockDirs = new ArrayList<Direction>();
-        for (Direction direction : Direction.Plane.HORIZONTAL) {
-            BlockPos adjBlock = pos.relative(direction);
-            BlockState adjBlockState = level.getBlockState(adjBlock);
-            if (isValidPoolBlock(adjBlockState)) {
-                adjBlockDirs.add(direction);
-            }
-        }
-        if (adjBlockDirs.size() != 2) {
-            return false;
-        }
-        //Either they're opposite from each other (a straight line) or at a right angle.
-        if (adjBlockDirs.get(0) == adjBlockDirs.get(1).getOpposite()) {
-            //In a straight line we should expect the pool to be on the two remaining sides.
-            for (var adjBlockDir : adjBlockDirs) {
-                Direction clockwise = adjBlockDir.getClockWise();
-                possiblePools.add(pos.relative(clockwise));
-            }
-        } else {
-            //In a right angle we should expect the pool to be in the diagonal between the two blocks
-            //  and its opposite direction.
-            BlockPos diagonal1 = pos, diagonal2 = pos;
-            for (var adjBlockDir : adjBlockDirs) {
-                diagonal1 = pos.relative(adjBlockDir);
-                diagonal2 = pos.relative(adjBlockDir.getOpposite());
-            }
-            possiblePools.add(diagonal1);
-            possiblePools.add(diagonal2);
-        }
-
+        //Check that the pool is enclosed and contains no blocks that can't be washed away by seawater.
         Predicate<BlockState> replaceableByPoolFluid =
                 blockState -> blockState.canBeReplaced(TideFluids.IMBUED_SEAWATER.get());
-        //We use new blank arrays to avoid adding to our return arrays until we're sure which pool is the real one.
-        HashSet<BlockPos> poolBlocks1 = new HashSet<BlockPos>(), poolBlocks2 = new HashSet<BlockPos>(),
-                poolFluids1 = new HashSet<BlockPos>(), poolFluids2 = new HashSet<BlockPos>();
-        if (horizontalFlood(level, possiblePools.get(0), replaceableByPoolFluid, poolBlocks1, poolFluids1)){
-            poolBlocks.addAll(poolBlocks1);
-            poolFluids.addAll(poolFluids1);
-        } else if (horizontalFlood(level, possiblePools.get(1), replaceableByPoolFluid, poolBlocks2, poolFluids2)) {
-            poolBlocks.addAll(poolBlocks2);
-            poolFluids.addAll(poolFluids2);
-        } else {
+        if (!horizontalFlood(level, poolBlock, replaceableByPoolFluid, poolBlocks, poolFluids)){
             return false;
         }
 
@@ -221,6 +184,134 @@ public class PoolHandler {
                     ((CoreEntity) blockEntity).entityInPool(entity, level, pos);
                 }
             }
+        }
+
+        beginCrafts();
+    }
+
+    /**
+     * Called from cores that do crafting recipes. This collects the cores that are attempting to craft with
+     *  this ItemEntity into a Map so we can do crafting with them in one go.
+     */
+    public static void attemptCraft(ItemEntity entity, Level level, BlockPos pos, RecipeType<?> recipeType) {
+        if (!craftingAttempts.containsKey(entity)) {
+            craftingAttempts.put(entity, new ArrayList<>());
+        }
+        craftingAttempts.get(entity).add(new CraftingAttempt(pos, recipeType));
+    }
+
+    public static void beginCrafts(){
+        //todo: add cooldown for how often we check the same entity
+        for (var entry : craftingAttempts.entrySet()){
+            ItemEntity entity = entry.getKey();
+            ArrayList<CraftingAttempt> attempts = entry.getValue();
+
+            Level level = entity.level();
+
+            //do the deposition ones first
+            ArrayList<BlockPos> depositionCores = attempts.stream()
+                    .filter(attempt -> attempt.recipeType() == TideRecipes.DEPOSITION.get() &&
+                            level.getBlockEntity(attempt.corePos()) instanceof DepositionCoreEntity core)
+                    .map(CraftingAttempt::corePos)
+                    .collect(Collectors.toCollection(ArrayList::new));
+
+            ItemStack mainIngredient = entity.getItem();
+            ItemStack[] depositionCatalysts = depositionCores.stream()
+                    .map(pos -> ((DepositionCoreEntity) level.getBlockEntity(pos)).getItemStack())
+                    .filter(itemStack -> itemStack != null && !itemStack.isEmpty())
+                    .toArray(ItemStack[]::new);
+
+            //maybe we should put this code in the crafting core
+            IItemHandlerModifiable inputs = new ItemStackHandler(depositionCatalysts.length + 1);
+            inputs.setStackInSlot(0, mainIngredient);
+            for (int i=0;i<depositionCatalysts.length;i++){
+                inputs.setStackInSlot(i+1, depositionCatalysts[i]);
+            }
+            RecipeWrapper inputWrapper = new RecipeWrapper(inputs);
+
+            Optional<DepositionRecipe> maybeRecipe =
+                    level.getRecipeManager().getRecipeFor(
+                            TideRecipes.DEPOSITION.get(),
+                            inputWrapper,
+                            level);
+            if (!maybeRecipe.isPresent()) {
+                continue;
+            }
+
+            craftingOngoings.put(entity, new CraftingOngoing(depositionCores, maybeRecipe.get()));
+        }
+
+    }
+
+    public void endCrafts(){
+        for (var entry : craftingOngoings.entrySet()){
+            ItemEntity entity = entry.getKey();
+            CraftingOngoing ongoing = entry.getValue();
+
+            if (entity == null || entity.getItem().isEmpty()){
+                //item entity was picked up or otherwise destroyed
+                craftingOngoings.remove(entity);
+                continue;
+            }
+            Level level = entity.level();
+
+            int timeLeft = 0;
+            boolean invalid = false;
+            for (var blockPos : ongoing.corePosses()){
+                if (!(level.getBlockEntity(blockPos) instanceof CoreEntity coreEntity)){
+                    invalid = true;
+                    break;
+                }
+                timeLeft += coreEntity.getCraftingTimer();
+            }
+            if (invalid){
+                //one of the cores involved was broken
+                craftingOngoings.remove(entity);
+                continue;
+            }
+
+            if (timeLeft > 0){
+                continue;
+            }
+
+            ItemStack mainIngredient = entity.getItem();
+            ItemStack[] depositionCatalysts = ongoing.corePosses().stream()
+                    .map(pos -> ((DepositionCoreEntity) level.getBlockEntity(pos)).getItemStack())
+                    .filter(itemStack -> itemStack != null && !itemStack.isEmpty())
+                    .toArray(ItemStack[]::new);
+
+            IItemHandlerModifiable inputs = new ItemStackHandler(depositionCatalysts.length + 1);
+            inputs.setStackInSlot(0, mainIngredient);
+            for (int i=0;i<depositionCatalysts.length;i++){
+                inputs.setStackInSlot(i+1, depositionCatalysts[i]);
+            }
+            RecipeWrapper inputWrapper = new RecipeWrapper(inputs);
+
+            Recipe<?> recipe = ongoing.recipe();
+            ItemStack output;
+            if (recipe.getType() == TideRecipes.DEPOSITION.get()){
+                output = ((DepositionRecipe) recipe).assemble(inputWrapper, level.registryAccess());
+            } else {
+                continue;
+            }
+
+            mainIngredient.split(1);
+            ItemEntity outputEntity = new ItemEntity(level, pos.getX()+0.5,
+                    this.getBlockPos().getY() + 1, pos.getZ()+0.5, output);
+            outputEntity.setDeltaMovement(0, 0, 0);
+            outputEntity.setNoGravity(true);
+            outputEntity.setPickUpDelay(20);
+            level.addFreshEntity(outputEntity);
+
+            ((ServerLevel) level).sendParticles(TideParticles.SPLASH.get(),
+                    pos.getX() + .5,
+                    pos.getY() + 1.5,
+                    pos.getZ() + .5,
+                    10,
+                    0,
+                    0,
+                    0,
+                    0.25);
         }
     }
 

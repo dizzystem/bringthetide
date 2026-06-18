@@ -16,7 +16,6 @@ public class Whirlpool extends TextureSheetParticle {
 
         this.spriteSet = spriteSet;
         this.lifetime = (int)(MAX_LIFE / (this.random.nextFloat() * 0.9f + 0.1f));
-        this.setColor(0.2f, 1.0f, 0.8f);
         this.gravity = (float) 0.04f;
 
         //initialize to prevent crash

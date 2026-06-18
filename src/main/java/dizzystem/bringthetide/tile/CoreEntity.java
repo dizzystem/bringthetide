@@ -10,8 +10,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,8 +24,7 @@ import java.util.stream.Collectors;
 
 public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntity {
     public boolean poolFormed = false;
-    public int ticks = 0;
-    public boolean emittingParticles = false;
+    public int ticks = 0, craftingTimer = 0;
     public ArrayList<Vec3i> missingBlocks = new ArrayList<Vec3i>();
     public HashSet<BlockPos> poolBlocks = new HashSet<BlockPos>(),
             poolFluids = new HashSet<BlockPos>();
@@ -107,15 +104,46 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         return PoolHandler.allBlocksMatching(requirement);
     }
 
-    //updates the client side with our data
-    @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = new CompoundTag();
-        tag.putBoolean("particleWhirlpooling", this.emittingParticles);
+    //This is used for both saving and updating clients with our data.
+    protected void saveClientData(CompoundTag tag) {
         tag.putLongArray("poolBlocks", this.poolBlocks.stream().
                 map(BlockPos::asLong).collect(Collectors.toList()));
         tag.putLongArray("poolFluids", this.poolFluids.stream().
                 map(BlockPos::asLong).collect(Collectors.toList()));
+    }
+
+    //This is used for both saving and updating clients with our data.
+    protected void loadClientData(CompoundTag tag) {
+        this.poolBlocks = Arrays.stream(tag.getLongArray("poolBlocks")).mapToObj(BlockPos::of)
+                .collect(Collectors.toCollection(HashSet::new));
+        this.poolFluids = Arrays.stream(tag.getLongArray("poolFluids")).mapToObj(BlockPos::of)
+                .collect(Collectors.toCollection(HashSet::new));
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        saveClientData(tag);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        loadClientData(tag);
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag tag) {
+        if (tag != null) {
+            loadClientData(tag);
+        }
+    }
+
+    //updates the client side with our data
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        saveClientData(tag);
         return tag;
     }
 
@@ -129,11 +157,9 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt){
         CompoundTag tag = pkt.getTag();
 
-        this.emittingParticles = tag.getBoolean("particleWhirlpooling");
-        this.poolBlocks = Arrays.stream(tag.getLongArray("poolBlocks")).mapToObj(BlockPos::of)
-                .collect(Collectors.toCollection(HashSet::new));
-        this.poolFluids = Arrays.stream(tag.getLongArray("poolFluids")).mapToObj(BlockPos::of)
-                .collect(Collectors.toCollection(HashSet::new));
+        if (tag != null){
+            handleUpdateTag(tag);
+        }
     }
 
     //This prevents our block render entity from not rendering when it's offscreen, since sometimes you can see
@@ -141,6 +167,14 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     @Override
     public AABB getRenderBoundingBox(){
         return IForgeBlockEntity.INFINITE_EXTENT_AABB;
+    }
+
+    public void setCraftingTimer(int craftingTimer) {
+        this.craftingTimer = craftingTimer;
+    }
+
+    public int getCraftingTimer() {
+        return craftingTimer;
     }
 
     public void tickClient(){
@@ -157,31 +191,13 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                         pos.offset(rotateOffsetToFacingDirection(entry)), possibleMatches(entry));
             }
         }
-
-        if (this.emittingParticles && this.ticks++ % 10 == 0){
-            Level level = this.level;
-            BlockPos pos = this.getBlockPos();
-/*
-            level.addParticle(TideParticles.BUBBLE.get(),
-                    pos.getX() + .5,
-                    pos.getY() + 1.5,
-                    pos.getZ() + .5,
-                    0,
-                    0,
-                    0);
-            for (var blockPos : this.poolBlocks){
-                level.addParticle(TideParticles.BUBBLE.get(),
-                        blockPos.getX() + .5,
-                        blockPos.getY() + 1.5,
-                        blockPos.getZ() + .5,
-                        0,
-                        0,
-                        0);
-            }*/
-        }
     }
 
     public void tickServer(){
+        if (this.craftingTimer > -9999){
+            this.craftingTimer --;
+        }
+
         //once per second
         if (this.ticks++ % 20 != 0){
             return;

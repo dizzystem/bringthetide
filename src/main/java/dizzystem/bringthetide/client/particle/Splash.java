@@ -12,7 +12,6 @@ public class Splash extends TextureSheetParticle {
     public Splash(ClientLevel level, double x, double y, double z, SpriteSet spriteSet){
         super(level, x, y, z);
         this.spriteSet = spriteSet;
-        this.setColor(0.2f, 1.0f, 0.8f);
         this.gravity = 1.2f;
         this.yd = 0.4f;
 

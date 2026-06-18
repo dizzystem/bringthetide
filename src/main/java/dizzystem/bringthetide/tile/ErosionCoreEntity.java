@@ -44,10 +44,6 @@ public class ErosionCoreEntity extends CoreEntity {
         return this.requiredShape;
     }
 
-    public void tickServer(){
-        super.tickServer();
-    }
-
     //called when an entity enters our pool
     public void entityInPool(Entity entity, Level level, BlockPos pos){
         if (!(entity instanceof ItemEntity)) {

@@ -13,11 +13,8 @@ import org.slf4j.Logger;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BringTheTide.MODID)
 public class RegisterParticleProviders {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event){
-        LOGGER.info("Particles registered!");
         event.registerSpriteSet(TideParticles.WHIRLPOOL.get(), WhirlpoolParticleProvider::new);
         event.registerSpriteSet(TideParticles.SPLASH.get(), SplashParticleProvider::new);
         event.registerSpriteSet(TideParticles.BUBBLE.get(), BubbleParticleProvider::new);

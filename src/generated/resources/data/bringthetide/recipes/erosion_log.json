@@ -1,0 +1,13 @@
+{
+  "type": "bringthetide:erosion",
+  "ingredient": {
+    "count": 1,
+    "item": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "bringthetide:driftwood_log"
+  }
+}
