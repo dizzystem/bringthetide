@@ -58,7 +58,7 @@ public class ErosionRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public ResourceLocation getId() {
-        return ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion:"+result.getItem());
+        return ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_"+result.getItem());
     }
 
     @Override

@@ -5,5 +5,5 @@ import net.minecraft.world.item.crafting.Recipe;
 
 import java.util.ArrayList;
 
-public record CraftingOngoing(ArrayList<BlockPos> corePosses, Recipe<?> recipe){}
+public record OngoingCraft(ArrayList<BlockPos> corePosses, Recipe<?> recipe){}
 

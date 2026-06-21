@@ -3,6 +3,7 @@ package dizzystem.bringthetide.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.registration.TideRecipes;
 import net.minecraft.core.NonNullList;
@@ -24,14 +25,17 @@ import java.util.List;
 import java.util.Map;
 
 public class DepositionRecipe implements Recipe<RecipeWrapper> {
+    public static final int DEFAULT_CRAFTING_TIME = 80;
     private final Ingredient mainIngredient;
     private final Ingredient[] catalysts;
     private final ItemStack result;
+    private final int craftingTime;
 
-    public DepositionRecipe(Ingredient mainIngredient, Ingredient[] catalysts, ItemStack result){
+    public DepositionRecipe(Ingredient mainIngredient, Ingredient[] catalysts, ItemStack result, int craftingTime){
         this.mainIngredient = mainIngredient;
         this.catalysts = catalysts;
         this.result = result;
+        this.craftingTime = craftingTime;
     }
 
     @Override
@@ -40,6 +44,10 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
         list.add(this.mainIngredient);
         list.addAll(List.of(catalysts));
         return list;
+    }
+
+    public int getCraftingTime() {
+        return craftingTime;
     }
 
     @Override
@@ -60,10 +68,10 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
         for (int i=0;i<this.catalysts.length;i++){
             boolean match = false;
             Ingredient catalyst = this.catalysts[i];
-            Map<Integer,Boolean> used = new HashMap<Integer,Boolean>();
+            Map<Integer,Boolean> used = new HashMap<>();
 
             for (int j=0;j<containerSize;j++){
-                if (used.get(j)){
+                if (used.get(j) != null){
                     continue;
                 }
 
@@ -120,10 +128,9 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
         @Override
         @ParametersAreNonnullByDefault
         public DepositionRecipe fromJson(ResourceLocation recipeId, JsonObject jsonObject) {
-            JsonElement ingredientElement = (JsonElement)(GsonHelper.isArrayNode(jsonObject, "ingredient") ?
-                    GsonHelper.getAsJsonArray(jsonObject, "ingredient") :
-                    GsonHelper.getAsJsonObject(jsonObject, "ingredient"));
-            Ingredient mainIngredient = Ingredient.fromJson(ingredientElement, false);
+            JsonObject ingredientJson = GsonHelper.getAsJsonObject(jsonObject, "mainIngredient");
+            Ingredient mainIngredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(ingredientJson, "item"),
+                    false);
 
             JsonArray catalystsElement = GsonHelper.getAsJsonArray(jsonObject, "catalysts");
             int catalystsLen = catalystsElement.size();
@@ -134,17 +141,11 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
 
             if (!jsonObject.has("result"))
                 throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
-            ItemStack itemstack;
-            if (jsonObject.get("result").isJsonObject())
-                itemstack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(jsonObject, "result"));
-            else {
-                String s1 = GsonHelper.getAsString(jsonObject, "result");
-                ResourceLocation resourcelocation = ResourceLocation.parse(s1);
-                itemstack = new ItemStack(BuiltInRegistries.ITEM.getOptional(resourcelocation).orElseThrow(() -> {
-                    return new IllegalStateException("Item: " + s1 + " does not exist");
-                }));
-            }
-            return new DepositionRecipe(mainIngredient, catalysts, itemstack);
+            JsonObject resultJson = GsonHelper.getAsJsonObject(jsonObject, "result");
+            ItemStack result = ShapedRecipe.itemStackFromJson(resultJson);
+
+            int craftingTime = GsonHelper.getAsInt(jsonObject, "craftingTime", DEFAULT_CRAFTING_TIME);
+            return new DepositionRecipe(mainIngredient, catalysts, result, craftingTime);
         }
 
         @Override
@@ -156,8 +157,9 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
             for (int i=0;i<numCatalysts;i++){
                 catalysts[i] = Ingredient.fromNetwork(buffer);
             }
-            ItemStack itemstack = buffer.readItem();
-            return new DepositionRecipe(mainIngredient, catalysts, itemstack);
+            ItemStack result = buffer.readItem();
+            int craftingTime = buffer.readInt();
+            return new DepositionRecipe(mainIngredient, catalysts, result, craftingTime);
         }
 
         @Override
@@ -170,6 +172,7 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
                 recipe.catalysts[i].toNetwork(buffer);
             }
             buffer.writeItem(recipe.result);
+            buffer.writeInt(recipe.craftingTime);
         }
     }
 }

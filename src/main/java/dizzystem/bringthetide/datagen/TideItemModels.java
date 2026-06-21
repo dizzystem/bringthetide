@@ -26,5 +26,6 @@ public class TideItemModels extends ItemModelProvider {
 
         basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
         basicItem(TideItems.WAND.get());
+        basicItem(TideItems.SEASHELL_ALLOY_INGOT.get());
     }
 }

@@ -10,6 +10,9 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -24,7 +27,8 @@ import java.util.stream.Collectors;
 
 public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntity {
     public boolean poolFormed = false;
-    public int ticks = 0, craftingTimer = 0;
+    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0;
+    public ItemEntity craftingEntity;
     public ArrayList<Vec3i> missingBlocks = new ArrayList<Vec3i>();
     public HashSet<BlockPos> poolBlocks = new HashSet<BlockPos>(),
             poolFluids = new HashSet<BlockPos>();
@@ -110,6 +114,11 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                 map(BlockPos::asLong).collect(Collectors.toList()));
         tag.putLongArray("poolFluids", this.poolFluids.stream().
                 map(BlockPos::asLong).collect(Collectors.toList()));
+        tag.putInt("maxCraftingTimer", this.maxCraftingTimer);
+        tag.putInt("craftingTimer", this.craftingTimer);
+        if (this.craftingEntity != null){
+            tag.putInt("craftingEntity", this.craftingEntity.getId());
+        }
     }
 
     //This is used for both saving and updating clients with our data.
@@ -118,6 +127,12 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                 .collect(Collectors.toCollection(HashSet::new));
         this.poolFluids = Arrays.stream(tag.getLongArray("poolFluids")).mapToObj(BlockPos::of)
                 .collect(Collectors.toCollection(HashSet::new));
+        this.maxCraftingTimer = tag.getInt("maxCraftingTimer");
+        this.craftingTimer = tag.getInt("craftingTimer");
+        int entityId = tag.getInt("craftingEntity");
+        if (entityId != 0){
+            this.craftingEntity = (ItemEntity) level.getEntity(tag.getInt("craftingEntity"));
+        }
     }
 
     @Override
@@ -177,7 +192,27 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         return craftingTimer;
     }
 
+    public void setMaxCraftingTimer(int maxCraftingTimer) {
+        this.maxCraftingTimer = maxCraftingTimer;
+    }
+
+    public int getMaxCraftingTimer() {
+        return maxCraftingTimer;
+    }
+
+    public void setCraftingEntity(ItemEntity craftingEntity) {
+        this.craftingEntity = craftingEntity;
+    }
+
+    public ItemEntity getCraftingEntity(){
+        return this.craftingEntity;
+    }
+
     public void tickClient(){
+        if (this.maxCraftingTimer > 0) {
+            this.craftingTimer--;
+        }
+
         //do the missing block check clientside as well so our renderer can render the missing blocks
         if (this.ticks++ % 20 == 0){
             Level level = this.level;
@@ -194,8 +229,9 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     }
 
     public void tickServer(){
-        if (this.craftingTimer > -9999){
+        if (this.maxCraftingTimer > 0){
             this.craftingTimer --;
+            PoolHandler.endCrafts(this.craftingEntity);
         }
 
         //once per second
@@ -243,4 +279,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     //override to make core do stuff when an entity falls into it
     public void entityInPool(Entity entity, Level level, BlockPos pos){}
+
+    //override to make core do crafting
+    public void beginCraft(ItemEntity entity, ArrayList<BlockPos> cores){}
+
+    //override to make core do crafting
+    public void endCraft(ItemEntity entity, ArrayList<BlockPos> cores, Recipe<?> recipe){}
 }

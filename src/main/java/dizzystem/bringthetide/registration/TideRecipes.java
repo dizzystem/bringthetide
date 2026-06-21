@@ -21,14 +21,14 @@ public class TideRecipes {
 
     public static final Supplier<RecipeType<ErosionRecipe>> EROSION = RECIPE_TYPES.register(
             "erosion",
-            () -> RecipeType.<ErosionRecipe>simple(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion"))
+            () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion"))
     );
     public static final Supplier<RecipeSerializer<ErosionRecipe>> EROSION_SERIALIZER =
             RECIPE_SERIALIZERS.register("erosion", ErosionRecipe.Serializer::new);
 
     public static final Supplier<RecipeType<DepositionRecipe>> DEPOSITION = RECIPE_TYPES.register(
             "deposition",
-            () -> RecipeType.<DepositionRecipe>simple(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition"))
+            () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition"))
     );
     public static final Supplier<RecipeSerializer<DepositionRecipe>> DEPOSITION_SERIALIZER =
             RECIPE_SERIALIZERS.register("deposition", DepositionRecipe.Serializer::new);

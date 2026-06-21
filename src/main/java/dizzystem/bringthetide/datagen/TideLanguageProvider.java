@@ -23,5 +23,6 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.DEPOSITION_CORE.get(), "Deposition Core");
         add(TideItems.IMBUED_SEAWATER_BUCKET.get(), "Imbued Seawater Bucket");
         add(TideItems.WAND.get(), "Driftwood Wand");
+        add(TideItems.SEASHELL_ALLOY_INGOT.get(), "Seashell Alloy Ingot");
     }
 }

@@ -1,29 +1,20 @@
 package dizzystem.bringthetide.util;
 
+import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
-import dizzystem.bringthetide.recipe.DepositionRecipe;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
-import dizzystem.bringthetide.registration.TideParticles;
-import dizzystem.bringthetide.registration.TideRecipes;
 import dizzystem.bringthetide.tile.CoreEntity;
-import dizzystem.bringthetide.tile.DepositionCoreEntity;
 import net.minecraft.core.*;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
@@ -33,7 +24,8 @@ import java.util.stream.Collectors;
 public class PoolHandler {
     static HashSet<PoolCore> cores = new HashSet<>();
     static Map<ItemEntity, ArrayList<CraftingAttempt>> craftingAttempts = new HashMap<>();
-    static Map<ItemEntity, CraftingOngoing> craftingOngoings = new HashMap<>();
+    static Map<ItemEntity, OngoingCraft> ongoingCrafts = new HashMap<>();
+    static Map<Entity, Integer> entityCooldowns = new HashMap<>();
 
     private static boolean isValidPoolBlock(BlockState blockState){
         return blockState.is(TideTags.VALID_POOL_BLOCK);
@@ -172,6 +164,14 @@ public class PoolHandler {
      * @param pos The BlockPos of the core.
      */
     public static void entityInPool(Entity entity, Level level, BlockPos pos){
+        //only check the same entity once every 10 ticks
+        Integer cooldown = entityCooldowns.get(entity);
+        if (cooldown != null && cooldown > 0){
+            entityCooldowns.put(entity, cooldown-1);
+            return;
+        }
+        entityCooldowns.put(entity, 10);
+
         for (PoolCore core : cores){
             if (level != core.level()){
                 continue;
@@ -194,6 +194,11 @@ public class PoolHandler {
      *  this ItemEntity into a Map so we can do crafting with them in one go.
      */
     public static void attemptCraft(ItemEntity entity, Level level, BlockPos pos, RecipeType<?> recipeType) {
+        if (ongoingCrafts.get(entity) != null){
+            //we're already crafting with this
+            return;
+        }
+
         if (!craftingAttempts.containsKey(entity)) {
             craftingAttempts.put(entity, new ArrayList<>());
         }
@@ -201,118 +206,78 @@ public class PoolHandler {
     }
 
     public static void beginCrafts(){
-        //todo: add cooldown for how often we check the same entity
         for (var entry : craftingAttempts.entrySet()){
             ItemEntity entity = entry.getKey();
             ArrayList<CraftingAttempt> attempts = entry.getValue();
 
             Level level = entity.level();
 
-            //do the deposition ones first
-            ArrayList<BlockPos> depositionCores = attempts.stream()
-                    .filter(attempt -> attempt.recipeType() == TideRecipes.DEPOSITION.get() &&
-                            level.getBlockEntity(attempt.corePos()) instanceof DepositionCoreEntity core)
-                    .map(CraftingAttempt::corePos)
-                    .collect(Collectors.toCollection(ArrayList::new));
-
-            ItemStack mainIngredient = entity.getItem();
-            ItemStack[] depositionCatalysts = depositionCores.stream()
-                    .map(pos -> ((DepositionCoreEntity) level.getBlockEntity(pos)).getItemStack())
-                    .filter(itemStack -> itemStack != null && !itemStack.isEmpty())
-                    .toArray(ItemStack[]::new);
-
-            //maybe we should put this code in the crafting core
-            IItemHandlerModifiable inputs = new ItemStackHandler(depositionCatalysts.length + 1);
-            inputs.setStackInSlot(0, mainIngredient);
-            for (int i=0;i<depositionCatalysts.length;i++){
-                inputs.setStackInSlot(i+1, depositionCatalysts[i]);
+            //Send the collected crafting attempts back to one of the cores that have the same recipeType so it
+            // can figure out the recipe.
+            while (!attempts.isEmpty()){
+                CraftingAttempt attempt = attempts.get(0);
+                ArrayList<BlockPos> cores = attempts.stream()
+                        .filter(a -> a.recipeType() == attempt.recipeType())
+                        .map(CraftingAttempt::corePos)
+                        .collect(Collectors.toCollection(ArrayList::new));
+                if (level.getBlockEntity(attempt.corePos()) instanceof CoreEntity core){
+                    try {
+                        core.beginCraft(entity, cores);
+                    } catch (Exception e) {
+                        LogUtils.getLogger().error("Error when attempting to craft item at {}", attempt.corePos(), e);
+                    }
+                    attempts = attempts.stream()
+                            .filter(a -> a.recipeType() != attempt.recipeType())
+                            .collect(Collectors.toCollection(ArrayList::new));
+                } else {
+                    attempts.remove(0);
+                }
             }
-            RecipeWrapper inputWrapper = new RecipeWrapper(inputs);
-
-            Optional<DepositionRecipe> maybeRecipe =
-                    level.getRecipeManager().getRecipeFor(
-                            TideRecipes.DEPOSITION.get(),
-                            inputWrapper,
-                            level);
-            if (!maybeRecipe.isPresent()) {
-                continue;
-            }
-
-            craftingOngoings.put(entity, new CraftingOngoing(depositionCores, maybeRecipe.get()));
         }
-
+        craftingAttempts.clear();
     }
 
-    public void endCrafts(){
-        for (var entry : craftingOngoings.entrySet()){
-            ItemEntity entity = entry.getKey();
-            CraftingOngoing ongoing = entry.getValue();
+    public static void addOngoingCraft(ItemEntity entity, OngoingCraft craft){
+        ongoingCrafts.put(entity, craft);
+    }
 
-            if (entity == null || entity.getItem().isEmpty()){
-                //item entity was picked up or otherwise destroyed
-                craftingOngoings.remove(entity);
-                continue;
-            }
-            Level level = entity.level();
-
-            int timeLeft = 0;
-            boolean invalid = false;
-            for (var blockPos : ongoing.corePosses()){
-                if (!(level.getBlockEntity(blockPos) instanceof CoreEntity coreEntity)){
-                    invalid = true;
-                    break;
-                }
-                timeLeft += coreEntity.getCraftingTimer();
-            }
-            if (invalid){
-                //one of the cores involved was broken
-                craftingOngoings.remove(entity);
-                continue;
-            }
-
-            if (timeLeft > 0){
-                continue;
-            }
-
-            ItemStack mainIngredient = entity.getItem();
-            ItemStack[] depositionCatalysts = ongoing.corePosses().stream()
-                    .map(pos -> ((DepositionCoreEntity) level.getBlockEntity(pos)).getItemStack())
-                    .filter(itemStack -> itemStack != null && !itemStack.isEmpty())
-                    .toArray(ItemStack[]::new);
-
-            IItemHandlerModifiable inputs = new ItemStackHandler(depositionCatalysts.length + 1);
-            inputs.setStackInSlot(0, mainIngredient);
-            for (int i=0;i<depositionCatalysts.length;i++){
-                inputs.setStackInSlot(i+1, depositionCatalysts[i]);
-            }
-            RecipeWrapper inputWrapper = new RecipeWrapper(inputs);
-
-            Recipe<?> recipe = ongoing.recipe();
-            ItemStack output;
-            if (recipe.getType() == TideRecipes.DEPOSITION.get()){
-                output = ((DepositionRecipe) recipe).assemble(inputWrapper, level.registryAccess());
-            } else {
-                continue;
-            }
-
-            mainIngredient.split(1);
-            ItemEntity outputEntity = new ItemEntity(level, pos.getX()+0.5,
-                    this.getBlockPos().getY() + 1, pos.getZ()+0.5, output);
-            outputEntity.setDeltaMovement(0, 0, 0);
-            outputEntity.setNoGravity(true);
-            outputEntity.setPickUpDelay(20);
-            level.addFreshEntity(outputEntity);
-
-            ((ServerLevel) level).sendParticles(TideParticles.SPLASH.get(),
-                    pos.getX() + .5,
-                    pos.getY() + 1.5,
-                    pos.getZ() + .5,
-                    10,
-                    0,
-                    0,
-                    0,
-                    0.25);
+    public static void endCrafts(ItemEntity entity){
+        if (entity == null || entity.isRemoved() || entity.getItem().isEmpty()){
+            //item entity was picked up or otherwise destroyed
+            ongoingCrafts.remove(entity);
+            return;
         }
+
+        OngoingCraft ongoing = ongoingCrafts.get(entity);
+        Level level = entity.level();
+        ArrayList<BlockPos> cores = ongoing.corePosses();
+
+        int timeLeft = 0;
+        boolean invalid = false;
+        for (var blockPos : cores){
+            if (!(level.getBlockEntity(blockPos) instanceof CoreEntity coreEntity)){
+                invalid = true;
+                break;
+            }
+            timeLeft += coreEntity.getCraftingTimer();
+        }
+        if (invalid){
+            //one of the cores involved was broken
+            ongoingCrafts.remove(entity);
+            return;
+        }
+
+        //not done cooking yet
+        if (timeLeft > 0){
+            return;
+        }
+
+        try {
+            ((CoreEntity) level.getBlockEntity(cores.get(0))).endCraft(entity, cores, ongoing.recipe());
+        } catch (Exception e) {
+            LogUtils.getLogger().error("Error when attempting to craft item at {}", cores.get(0), e);
+        }
+        ongoingCrafts.remove(entity);
     }
 
     @SuppressWarnings("unchecked")

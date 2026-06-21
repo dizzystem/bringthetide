@@ -1,6 +1,8 @@
 package dizzystem.bringthetide.datagen;
 
 import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.recipe.DepositionRecipe;
+import dizzystem.bringthetide.recipe.DepositionRecipeBuilder;
 import dizzystem.bringthetide.recipe.ErosionRecipe;
 import dizzystem.bringthetide.recipe.ErosionRecipeBuilder;
 import dizzystem.bringthetide.registration.TideItems;
@@ -42,6 +44,13 @@ public class TideRecipeProvider extends RecipeProvider {
                 .ingredient(Ingredient.of(ItemTags.LOGS))
                 .result(new ItemStack(TideItems.DRIFTWOOD_LOG_ITEM.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_log"));
+
+        RecipeSerializer<?> depositionSerializer = TideRecipes.DEPOSITION_SERIALIZER.get();
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.COPPER_INGOT))
+                .catalyst(Ingredient.of(Items.NAUTILUS_SHELL))
+                .result(new ItemStack(TideItems.SEASHELL_ALLOY_INGOT.get(), 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_seashellalloyingot"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.WAND.get())
                 .pattern("  x")

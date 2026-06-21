@@ -33,6 +33,8 @@ public class TideItems {
     public static final RegistryObject<Item> IMBUED_SEAWATER_BUCKET = ITEMS.register("imbued_seawater_bucket",
             () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));
     public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);
+    public static final RegistryObject<Item> SEASHELL_ALLOY_INGOT = ITEMS.register("seashell_alloy_ingot",
+            () -> new Item(new Item.Properties()));
 
     public static void init(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
