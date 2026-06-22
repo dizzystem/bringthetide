@@ -59,8 +59,7 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
         }
 
         int containerSize = inputs.getContainerSize() - 1;
-        if (containerSize < this.catalysts.length){
-            //extra catalysts are fine
+        if (containerSize != this.catalysts.length){
             return false;
         }
 
@@ -111,7 +110,7 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public ResourceLocation getId() {
-        return ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition:"+result.toString());
+        return ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_"+result.getItem());
     }
 
     @Override

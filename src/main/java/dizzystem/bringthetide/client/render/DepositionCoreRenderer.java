@@ -13,13 +13,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -112,6 +112,15 @@ public class DepositionCoreRenderer extends CoreRenderer {
         poseStack.popPose();
 
         poseStack.pushPose();
+        //move a tiny bit closer to the player so we render on top of the item
+        Vec3 spritePos = entity.getBlockPos().getCenter();
+        Vec3 cameraPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()
+                .add(0, -1, 0); //camera position is 1 off
+        Vec3 towardPlayer = cameraPos.subtract(spritePos).normalize();
+        poseStack.translate(
+                0.25 * towardPlayer.x,
+                0.25 * towardPlayer.y,
+                0.25 * towardPlayer.z);
         //if crafting, spiral in towards the item
         poseStack.translate(spiral.x, spiral.y, spiral.z);
         poseStack.scale(0.5f, 0.5f, 0.5f);

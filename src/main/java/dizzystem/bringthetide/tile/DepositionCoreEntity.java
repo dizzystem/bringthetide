@@ -34,6 +34,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.Map.entry;
 
@@ -94,9 +95,14 @@ public class DepositionCoreEntity extends CoreEntity {
             return;
         }
 
-        //If so, add a timer to each of the cores to start the crafting animation.
+        //If so, add a timer to each of the cores involved in the recipe to start the crafting animation.
+        ArrayList<BlockPos> involvedCores = cores.stream()
+                .filter(pos -> (level.getBlockEntity(pos) instanceof DepositionCoreEntity depositionCore) &&
+                        depositionCore.getItemStack() != null)
+                .collect(Collectors.toCollection(ArrayList::new));
+
         DepositionRecipe recipe = maybeRecipe.get();
-        cores.forEach(pos -> {
+        involvedCores.forEach(pos -> {
                     if (level.getBlockEntity(pos) instanceof DepositionCoreEntity depositionCore){
                         depositionCore.setMaxCraftingTimer(recipe.getCraftingTime());
                         depositionCore.setCraftingTimer(recipe.getCraftingTime());
@@ -114,7 +120,7 @@ public class DepositionCoreEntity extends CoreEntity {
                                 0.1);
                     }
                 });
-        PoolHandler.addOngoingCraft(entity, new OngoingCraft(cores, recipe));
+        PoolHandler.addOngoingCraft(entity, new OngoingCraft(involvedCores, recipe));
         //Stop the item entity's horizontal momentum so it doesn't float into another block and mess up
         // the animation.
         entity.setDeltaMovement(0, entity.getDeltaMovement().y(), 0);
@@ -138,7 +144,6 @@ public class DepositionCoreEntity extends CoreEntity {
             return;
         }
 
-        //Check if we still have the ingredients to craft the thing.
         ItemStack mainIngredient = entity.getItem();
         ItemStack[] depositionCatalysts = cores.stream()
                 .map(pos -> ((DepositionCoreEntity) level.getBlockEntity(pos)).getItemStack())
@@ -151,6 +156,11 @@ public class DepositionCoreEntity extends CoreEntity {
             inputs.setStackInSlot(i+1, depositionCatalysts[i]);
         }
         RecipeWrapper inputWrapper = new RecipeWrapper(inputs);
+
+        //Check if we still have the ingredients to craft the thing.
+        if (!((DepositionRecipe) recipe).matches(inputWrapper, level)){
+            return;
+        }
 
         //Craft the thing.
         ItemStack output = ((DepositionRecipe) recipe).assemble(inputWrapper, level.registryAccess());
@@ -168,9 +178,9 @@ public class DepositionCoreEntity extends CoreEntity {
         level.addFreshEntity(outputEntity);
 
         ((ServerLevel) level).sendParticles(TideParticles.SPLASH.get(),
-                pos.getX() + .5,
+                pos.getX() + 0.5,
                 pos.getY() + 1.5,
-                pos.getZ() + .5,
+                pos.getZ() + 0.5,
                 10,
                 0,
                 0,
@@ -188,6 +198,11 @@ public class DepositionCoreEntity extends CoreEntity {
     @Nonnull
     private ItemStackHandler createItemHandler(){
         return new ItemStackHandler(SLOT_COUNT){
+            @Override
+            public int getSlotLimit(int slot){
+                return 1;
+            }
+
             @Override
             protected void onContentsChanged(int slot){
                 setChanged();

@@ -9,9 +9,11 @@ import net.minecraft.core.*;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -154,8 +156,12 @@ public class PoolHandler {
      *
      * @param pos The BlockPos of the core.
      */
-    public static void registerNewCore(Level level, BlockPos pos){
+    public static void registerCore(Level level, BlockPos pos){
         cores.add(new PoolCore(level, pos));
+    }
+
+    public static void deleteCore(Level level, BlockPos pos){
+        cores.remove(new PoolCore(level, pos));
     }
 
     /**
@@ -178,8 +184,11 @@ public class PoolHandler {
             }
 
             BlockEntity blockEntity = level.getBlockEntity(core.corePos());
-            if (blockEntity instanceof CoreEntity){
-                HashSet<BlockPos> poolFluids = ((CoreEntity) blockEntity).getPoolFluids();
+            if (blockEntity instanceof CoreEntity coreEntity){
+                if (!coreEntity.poolFilled){
+                    continue;
+                }
+                HashSet<BlockPos> poolFluids = coreEntity.getPoolFluids();
                 if (poolFluids.contains(pos)){
                     ((CoreEntity) blockEntity).entityInPool(entity, level, pos);
                 }
@@ -305,5 +314,39 @@ public class PoolHandler {
         }
 
         return new BlockState[]{};
+    }
+
+    //pool filling minigame
+    public static boolean wandUse(ItemStack wand, Level level, BlockPos pos){
+        BlockState turnInto = null;
+        boolean inPool = false;
+
+        //we already checked it's a fluid and a source block in the wand
+        //todo: add lava version
+        if (level.getBlockState(pos).is(Blocks.WATER)){
+            turnInto = TideBlocks.BLOCK_IMBUED_SEAWATER.get().defaultBlockState();
+        } else {
+            return false;
+        }
+
+        for (PoolCore core : cores){
+            if (level != core.level()){
+                continue;
+            }
+
+            BlockEntity blockEntity = level.getBlockEntity(core.corePos());
+            if (blockEntity instanceof CoreEntity coreEntity){
+                if (coreEntity.placeFluid(level, pos)){
+                    inPool = true;
+                }
+            }
+        }
+
+        if (inPool){
+            level.setBlockAndUpdate(pos, turnInto);
+            return true;
+        }
+
+        return false;
     }
 }

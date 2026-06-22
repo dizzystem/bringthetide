@@ -134,6 +134,12 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
 
         //if we have poolBlocks that means the pool is valid, render a flat texture over our poolBlocks
         //todo: only one core should be doing this in pools with multiple cores
+        int color;
+        if (entity.poolFilled){
+            color = 0x33FFCC;
+        } else {
+            color = 0xFF3366;
+        }
         for (var blockPos : entity.getPoolBlocks()){
             poseStack.pushPose();
 
@@ -149,7 +155,7 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
             renderIconFullBright(poseStack, builder,
                     0, 0, 1,1,
                     0, 0, 16, 16,
-                    this.overlaySprite, 0x33FFCC,
+                    this.overlaySprite, color,
                     alpha, LightTexture.FULL_BRIGHT);
             poseStack.popPose();
         }
