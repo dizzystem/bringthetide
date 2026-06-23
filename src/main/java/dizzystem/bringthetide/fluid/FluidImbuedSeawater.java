@@ -83,20 +83,29 @@ public abstract class FluidImbuedSeawater extends ForgeFlowingFluid {
         }
     }
 
-    @Override
-    @ParametersAreNonnullByDefault
-    protected boolean canSpreadTo(BlockGetter getter, BlockPos fromPos, BlockState fromState, Direction dir, BlockPos toPos, BlockState toState, FluidState fluidState, Fluid fluid){
-        if (dir == Direction.DOWN){
-            return false;
-        }
+    public boolean hasSeawaterOnTwoOrMoreSides(BlockGetter getter, BlockPos pos){
         int num = 0;
         for (var horizontalDir : Direction.Plane.HORIZONTAL){
-            BlockState horizontalState = getter.getBlockState(toPos.relative(horizontalDir));
+            BlockState horizontalState = getter.getBlockState(pos.relative(horizontalDir));
             if (horizontalState.is(TideBlocks.BLOCK_IMBUED_SEAWATER.get()) && horizontalState.getFluidState().isSource()){
                 num ++;
             }
         }
         if (num >= 2){
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    protected boolean canSpreadTo(BlockGetter getter, BlockPos fromPos, BlockState fromState, Direction dir,
+                                  BlockPos toPos, BlockState toState, FluidState fluidState, Fluid fluid){
+        if (dir == Direction.DOWN){
+            return false;
+        }
+        if (hasSeawaterOnTwoOrMoreSides(getter, toPos)){
             return true;
         }
 

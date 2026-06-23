@@ -14,11 +14,11 @@ public class TypeImbuedSeawater extends FluidType {
     public TypeImbuedSeawater(){
         super(FluidType.Properties.create()
                         .descriptionId("type_imbued_seawater")
-                        .canConvertToSource(true)
                         .canExtinguish(true)
                         .supportsBoating(true)
                         .canHydrate(true)
                         .lightLevel(9)
+                        .canConvertToSource(true)
                 );
     }
 

@@ -20,14 +20,13 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 import java.util.Objects;
-
-import static java.util.Collections.copy;
 
 public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
     private final TextureAtlasSprite overlaySprite;
@@ -95,7 +94,6 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
                        int combinedLight, int combinedOverlay){
         BlockPos entityPos = entity.getBlockPos();
         long millis = System.currentTimeMillis();
-        float alpha = 0.5f + (float) Math.cos((float) (millis % 4000) * Math.PI*2f / 4000f) * 0.5f;
 
         //only one of getMissingBlocks or getPoolBlocks should have any entries
         //if there are missing blocks, render translucent blocks in those positions
@@ -133,14 +131,31 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
         }
 
         //if we have poolBlocks that means the pool is valid, render a flat texture over our poolBlocks
-        //todo: only one core should be doing this in pools with multiple cores
-        int color;
-        if (entity.poolFilled){
-            color = 0x33FFCC;
-        } else {
-            color = 0xFF3366;
+        float alpha = 0.5f + (float) Math.cos((float) (millis % 4000) * Math.PI*2f / 4000f) * 0.5f;
+        if (!entity.getPoolCores().isEmpty()){
+            //only the first core in the pool should do this
+            if (!entity.getPoolCores().get(0).equals(entity.getBlockPos())){
+                return;
+            }
         }
+
         for (var blockPos : entity.getPoolBlocks()){
+            int color;
+            if (entity.poolFilled){
+                color = 0x33FFCC; //todo: make it fade between colours maybe
+            } else {
+                color = 0xFF3366;
+            }
+
+            //recolour some of the overlay to represent how much fillQuota is left
+            if (!entity.poolFilled && entity.renderProgressBar < 1 && entity.getPoolCentre() != null){
+                Vec3 vector = blockPos.getCenter().subtract(entity.getPoolCentre().getCenter());
+                double angle = Math.PI + Math.atan2(vector.z, vector.x);
+                if (entity.renderProgressBar * Math.PI * 2 < angle){
+                    color = 0x666666;
+                }
+            }
+
             poseStack.pushPose();
 
             //horizontal

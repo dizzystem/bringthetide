@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
+import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.tile.CoreEntity;
 import net.minecraft.core.*;
 import net.minecraft.tags.TagKey;
@@ -136,9 +137,8 @@ public class PoolHandler {
 
         //Finally, check the cores to see if they have their required blocks.
         for (var block : poolBlocks){
-            BlockEntity coreEntity = level.getBlockEntity(block);
-            if (coreEntity instanceof CoreEntity){ //this also covers if the block has no tile entity
-                ArrayList<Vec3i> missing = ((CoreEntity) coreEntity).checkRequiredShape();
+            if (level.getBlockEntity(block) instanceof CoreEntity coreEntity){ //this also covers if the block has no tile entity
+                ArrayList<Vec3i> missing = coreEntity.checkRequiredShape();
                 if (!missing.isEmpty()){
                     //for (var m : missing){
                     //    LogUtils.getLogger().info("missing {}", m);
@@ -344,6 +344,15 @@ public class PoolHandler {
 
         if (inPool){
             level.setBlockAndUpdate(pos, turnInto);
+            for (int i=0;i<4;i++){
+                level.addParticle(TideParticles.BUBBLE.get(),
+                        pos.getX() + Math.random(),
+                        pos.getY() + 1,
+                        pos.getZ() + Math.random(),
+                        1,
+                        1,
+                        1);
+            }
             return true;
         }
 

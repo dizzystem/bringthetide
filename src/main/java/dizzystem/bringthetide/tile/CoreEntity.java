@@ -1,5 +1,6 @@
 package dizzystem.bringthetide.tile;
 
+import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -32,10 +33,12 @@ import java.util.stream.Collectors;
 public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntity {
     public boolean poolFormed = false, poolFilled = false, checkPool = false;
     public int ticks = 0, fillQuota = MAX_FILL_QUOTA, maxCraftingTimer = 0, craftingTimer = 0;
+    public float renderProgressBar = 0f;
     public ItemEntity craftingEntity;
-    public ArrayList<Vec3i> missingBlocks = new ArrayList<Vec3i>();
-    public HashSet<BlockPos> poolBlocks = new HashSet<BlockPos>(),
-            poolFluids = new HashSet<BlockPos>();
+    public ArrayList<Vec3i> missingBlocks = new ArrayList<>();
+    public ArrayList<BlockPos> poolCores = new ArrayList<>();
+    public HashSet<BlockPos> poolBlocks = new HashSet<>(), poolFluids = new HashSet<>();
+    public BlockPos poolCentre = getBlockPos();
     public Map<BlockPos, BlockState[]> missingBlocksAllowed = new HashMap<>();
 
     public static int MAX_FILL_QUOTA = 4;
@@ -46,8 +49,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     public Map<BlockPos, BlockState[]> getMissingBlocksAllowed(){ return missingBlocksAllowed; }
     public ArrayList<Vec3i> getMissingBlocks(){ return missingBlocks; }
+    public ArrayList<BlockPos> getPoolCores(){ return poolCores; }
     public HashSet<BlockPos> getPoolBlocks(){ return poolBlocks; }
     public HashSet<BlockPos> getPoolFluids(){ return poolFluids; }
+    public BlockPos getPoolCentre(){ return poolCentre; }
 
     /**
      * The required additional blocks around the core to make it function as part of a ritual.
@@ -116,10 +121,13 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     //This is used for both saving and updating clients with our data.
     protected void saveClientData(CompoundTag tag) {
+        tag.putLongArray("poolCores", this.poolCores.stream().
+                map(BlockPos::asLong).collect(Collectors.toList()));
         tag.putLongArray("poolBlocks", this.poolBlocks.stream().
                 map(BlockPos::asLong).collect(Collectors.toList()));
         tag.putLongArray("poolFluids", this.poolFluids.stream().
                 map(BlockPos::asLong).collect(Collectors.toList()));
+        tag.putLong("poolCentre", this.poolCentre.asLong());
         tag.putInt("maxCraftingTimer", this.maxCraftingTimer);
         tag.putInt("craftingTimer", this.craftingTimer);
         if (this.craftingEntity != null){
@@ -132,10 +140,13 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     //This is used for both saving and updating clients with our data.
     protected void loadClientData(CompoundTag tag) {
+        this.poolCores = Arrays.stream(tag.getLongArray("poolCores")).mapToObj(BlockPos::of)
+                .collect(Collectors.toCollection(ArrayList::new));
         this.poolBlocks = Arrays.stream(tag.getLongArray("poolBlocks")).mapToObj(BlockPos::of)
                 .collect(Collectors.toCollection(HashSet::new));
         this.poolFluids = Arrays.stream(tag.getLongArray("poolFluids")).mapToObj(BlockPos::of)
                 .collect(Collectors.toCollection(HashSet::new));
+        this.poolCentre = BlockPos.of(tag.getLong("poolCentre"));
         this.maxCraftingTimer = tag.getInt("maxCraftingTimer");
         this.craftingTimer = tag.getInt("craftingTimer");
         int entityId = tag.getInt("craftingEntity");
@@ -245,6 +256,16 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             this.craftingTimer--;
         }
 
+        if (!this.poolFormed){
+            this.renderProgressBar = 0f;
+        } else {
+            float progressBar = (float) this.fillQuota / CoreEntity.MAX_FILL_QUOTA;
+            this.renderProgressBar += 0.1f * (progressBar - this.renderProgressBar);
+            if (Math.abs(progressBar - this.renderProgressBar) < 0.01){
+                this.renderProgressBar = progressBar;
+            }
+        }
+
         //do the missing block check clientside as well so our renderer can render the missing blocks
         if (this.ticks++ % 20 == 0){
             Level level = this.level;
@@ -258,6 +279,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                         pos.offset(rotateOffsetToFacingDirection(entry)), possibleMatches(entry));
             }
         }
+    }
+
+    public void resetQuota() {
+        this.fillQuota = MAX_FILL_QUOTA;
     }
 
     public void tickServer(){
@@ -280,7 +305,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             } else if (fillQuota <= 0){ //check if we have any quota left
                 //if not turn all our seawater back into water
                 clearImbuedWater();
-                this.fillQuota = MAX_FILL_QUOTA;
+                resetQuota();
             }
         }
 
@@ -293,13 +318,13 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         BlockPos pos = this.getBlockPos();
         BlockState blockState = this.getBlockState();
 
+        //check if our pool's formed yet
         if (!this.poolFormed){
-            //check if our pool's formed yet
-
             //required blocks
             ArrayList<Vec3i> missing = checkRequiredShape();
             if (!missing.isEmpty()){
                 this.missingBlocks = missing;
+                this.poolCores.clear();
                 this.poolBlocks.clear();
                 this.poolFluids.clear();
                 this.poolFormed = false;
@@ -309,21 +334,45 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             }
 
             //pool is a closed shape
-            Direction facing = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
-            BlockPos insidePool = pos.relative(facing);
             HashSet<BlockPos> poolBlocks = new HashSet<>(),
                     poolFluids = new HashSet<>();
             if (PoolHandler.verifyEmptyPool(level, pos, poolBlocks, poolFluids)){
+                //yup this is an empty pool
+                ArrayList<BlockPos> poolCores = poolBlocks.stream().filter(
+                        blockPos -> level.getBlockEntity(blockPos) instanceof CoreEntity
+                ).collect(Collectors.toCollection(ArrayList::new));
+                this.poolCores = poolCores;
                 this.poolBlocks = poolBlocks;
                 this.poolFluids = poolFluids;
-                this.poolFormed = true;
-                PoolHandler.registerCore(level, pos);
-                level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
+
+                float totalX = 0f, totalZ = 0f;
+                for (var fluidPos : poolFluids){
+                    totalX += fluidPos.getX();
+                    totalZ += fluidPos.getZ();
+                }
+                this.poolCentre = new BlockPos(
+                        Math.round(totalX / poolFluids.size()),
+                        pos.getY(),
+                        Math.round(totalZ / poolFluids.size()));
+
+                //tell the other cores we already checked to save them from checking again
+                this.poolCores.forEach(core -> {
+                    CoreEntity coreEntity = (CoreEntity) level.getBlockEntity(core);
+
+                    coreEntity.poolCores = this.poolCores;
+                    coreEntity.poolBlocks = this.poolBlocks;
+                    coreEntity.poolFluids = this.poolFluids;
+                    coreEntity.poolCentre = this.poolCentre;
+                    coreEntity.poolFormed = true;
+                    PoolHandler.registerCore(level, core);
+
+                    BlockState state = level.getBlockState(core);
+                    level.sendBlockUpdated(core, state, state, Block.UPDATE_CLIENTS);
+                });
             } else {
                 this.poolBlocks.clear();
             }
-        } else {
-            //check if our pool is still formed
+        } else { //check if our pool is still formed
             boolean formed = true;
             for (var blockPos : this.poolBlocks){
                 if (!level.getBlockState(blockPos).is(TideTags.VALID_POOL_BLOCK)){
@@ -341,7 +390,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             }
             if (!formed){
                 clearImbuedWater();
-                this.fillQuota = MAX_FILL_QUOTA;
+                resetQuota();
+                this.poolCores.clear();
                 this.poolBlocks.clear();
                 this.poolFluids.clear();
                 this.poolFormed = false;
@@ -362,7 +412,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             }
             if (!filled){
                 clearImbuedWater();
-                this.fillQuota = MAX_FILL_QUOTA;
+                resetQuota();
                 this.poolFilled = false;
             }
         }
@@ -391,14 +441,6 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         if (!this.poolFluids.contains(pos)){
             return false;
         }
-
-        level.addParticle(TideParticles.BUBBLE.get(),
-                pos.getX() + .5,
-                pos.getY() + 1,
-                pos.getZ() + .5,
-                1,
-                1,
-                1);
 
         fillQuota --;
 
