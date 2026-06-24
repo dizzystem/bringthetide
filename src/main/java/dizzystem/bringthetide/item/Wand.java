@@ -45,7 +45,7 @@ public class Wand extends Item {
             Direction direction = blockhitresult.getDirection();
             BlockPos blockpos1 = blockpos.relative(direction);
             if (level.mayInteract(player, blockpos) && player.mayUseItemAt(blockpos1, direction, itemstack) &&
-                    PoolHandler.wandUse(itemstack, level, blockpos1)) {
+                    PoolHandler.wandUse(player, itemstack, level, blockpos1)) {
                 player.awardStat(Stats.ITEM_USED.get(this));
                 return InteractionResult.SUCCESS;
             }

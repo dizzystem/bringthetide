@@ -1,6 +1,5 @@
 package dizzystem.bringthetide.tile;
 
-import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -16,6 +15,8 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -31,17 +32,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntity {
-    public boolean poolFormed = false, poolFilled = false, checkPool = false;
-    public int ticks = 0, fillQuota = MAX_FILL_QUOTA, maxCraftingTimer = 0, craftingTimer = 0;
-    public float renderProgressBar = 0f;
+    public boolean poolFormed = false, poolFilled = false, scheduleCheckPool = false, scheduleRegisterCore = false;
+    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0;
+    public float thalassity = 1f, renderThalassity = 0f;
     public ItemEntity craftingEntity;
     public ArrayList<Vec3i> missingBlocks = new ArrayList<>();
     public ArrayList<BlockPos> poolCores = new ArrayList<>();
     public HashSet<BlockPos> poolBlocks = new HashSet<>(), poolFluids = new HashSet<>();
     public BlockPos poolCentre = getBlockPos();
     public Map<BlockPos, BlockState[]> missingBlocksAllowed = new HashMap<>();
-
-    public static int MAX_FILL_QUOTA = 4;
 
     public CoreEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState){
         super(blockEntityType, blockPos, blockState);
@@ -133,7 +132,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         if (this.craftingEntity != null){
             tag.putInt("craftingEntity", this.craftingEntity.getId());
         }
-        tag.putInt("fillQuota", this.fillQuota);
+        tag.putFloat("fillQuota", this.thalassity);
         tag.putBoolean("poolFormed", this.poolFormed);
         tag.putBoolean("poolFilled", this.poolFilled);
     }
@@ -153,24 +152,25 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         if (entityId != 0){
             this.craftingEntity = (ItemEntity) level.getEntity(tag.getInt("craftingEntity"));
         }
-        this.fillQuota = tag.getInt("fillQuota");
+        this.thalassity = tag.getInt("fillQuota");
         this.poolFormed = tag.getBoolean("poolFormed");
         this.poolFilled = tag.getBoolean("poolFilled");
-        if (poolFormed){
-            PoolHandler.registerCore(getLevel(), getBlockPos());
-        }
     }
 
+    //saving
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         saveClientData(tag);
     }
 
+    //loading
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
         loadClientData(tag);
+
+        this.scheduleRegisterCore();
     }
 
     @Override
@@ -180,7 +180,6 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         }
     }
 
-    //updates the client side with our data
     @Override
     public CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
@@ -188,12 +187,13 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         return tag;
     }
 
+    //syncs to client
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    //is updated by the server side with our data
+    //is synced from server
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt){
         CompoundTag tag = pkt.getTag();
@@ -215,7 +215,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     }
 
     public int getCraftingTimer() {
-        return craftingTimer;
+        return this.craftingTimer;
     }
 
     public void setMaxCraftingTimer(int maxCraftingTimer) {
@@ -223,7 +223,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     }
 
     public int getMaxCraftingTimer() {
-        return maxCraftingTimer;
+        return this.maxCraftingTimer;
     }
 
     public void setCraftingEntity(ItemEntity craftingEntity) {
@@ -251,18 +251,29 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         }
     }
 
+    public void scheduleRegisterCore(){
+        this.scheduleRegisterCore = true;
+    }
+
     public void tickClient(){
         if (this.maxCraftingTimer > 0) {
             this.craftingTimer--;
         }
 
         if (!this.poolFormed){
-            this.renderProgressBar = 0f;
-        } else {
-            float progressBar = (float) this.fillQuota / CoreEntity.MAX_FILL_QUOTA;
-            this.renderProgressBar += 0.1f * (progressBar - this.renderProgressBar);
-            if (Math.abs(progressBar - this.renderProgressBar) < 0.01){
-                this.renderProgressBar = progressBar;
+            this.renderThalassity = 0f;
+        } else if (this.renderThalassity != this.thalassity){
+            this.renderThalassity += 0.1f * (this.thalassity - this.renderThalassity);
+            if (Math.abs(this.thalassity - this.renderThalassity) < 0.02){
+                this.renderThalassity = this.thalassity;
+            }
+        }
+
+        if (this.scheduleRegisterCore){
+            this.scheduleRegisterCore = false;
+
+            if (this.poolFormed){
+                PoolHandler.registerCore(getLevel(), getBlockPos());
             }
         }
 
@@ -282,7 +293,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     }
 
     public void resetQuota() {
-        this.fillQuota = MAX_FILL_QUOTA;
+        this.thalassity = 1f;
     }
 
     public void tickServer(){
@@ -291,8 +302,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             PoolHandler.endCrafts(this.craftingEntity);
         }
 
-        if (this.checkPool){
-            checkPool = false;
+        if (this.scheduleCheckPool){
+            this.scheduleCheckPool = false;
             //check if the pool's filled
             Direction facing = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             BlockPos insidePool = getBlockPos().relative(facing);
@@ -302,10 +313,18 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                 this.poolFluids = poolFluids;
                 this.poolFormed = true;
                 this.poolFilled = true;
-            } else if (fillQuota <= 0){ //check if we have any quota left
+            } else if (this.thalassity <= 0.00001){ //check if we have any thalassity left
                 //if not turn all our seawater back into water
                 clearImbuedWater();
                 resetQuota();
+            }
+        }
+
+        if (this.scheduleRegisterCore){
+            this.scheduleRegisterCore = false;
+
+            if (this.poolFormed){
+                PoolHandler.registerCore(getLevel(), getBlockPos());
             }
         }
 
@@ -429,12 +448,17 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     //override to make core do crafting
     public void endCraft(ItemEntity entity, ArrayList<BlockPos> cores, Recipe<?> recipe){}
 
-    //pool filling minigame
+    /* ===pool filling minigame=== */
     public void schedulePoolCheck(){
-        this.checkPool = true;
+        this.scheduleCheckPool = true;
     }
 
-    public boolean placeFluid(Level level, BlockPos pos){
+    public float getThalassityCost(Player player, ItemStack wand, Level level){
+        //todo: add wand tiers, gear that reduces cost
+        return 0.25f;
+    }
+
+    public boolean placeFluid(Player player, ItemStack wand, Level level, BlockPos pos){
         if (!this.poolFormed){
             return false;
         }
@@ -442,9 +466,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             return false;
         }
 
-        fillQuota --;
+        thalassity -= getThalassityCost(player, wand, level);
 
         schedulePoolCheck();
         return true;
     }
+    /* ===end pool filling minigame=== */
 }

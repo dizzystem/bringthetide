@@ -10,6 +10,7 @@ import net.minecraft.core.*;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -317,16 +318,23 @@ public class PoolHandler {
     }
 
     //pool filling minigame
-    public static boolean wandUse(ItemStack wand, Level level, BlockPos pos){
+    public static boolean wandUse(Player player, ItemStack wand, Level level, BlockPos pos){
         BlockState turnInto = null;
         boolean inPool = false;
 
         //we already checked it's a fluid and a source block in the wand
-        //todo: add lava version
-        if (level.getBlockState(pos).is(Blocks.WATER)){
-            turnInto = TideBlocks.BLOCK_IMBUED_SEAWATER.get().defaultBlockState();
+        if (level.dimensionType().ultraWarm()){ //lava in the nether instead of water
+            if (level.getBlockState(pos).is(Blocks.LAVA)){
+                turnInto = TideBlocks.BLOCK_IMBUED_SEAWATER.get().defaultBlockState();
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            if (level.getBlockState(pos).is(Blocks.WATER)){
+                turnInto = TideBlocks.BLOCK_IMBUED_SEAWATER.get().defaultBlockState();
+            } else {
+                return false;
+            }
         }
 
         for (PoolCore core : cores){
@@ -336,7 +344,7 @@ public class PoolHandler {
 
             BlockEntity blockEntity = level.getBlockEntity(core.corePos());
             if (blockEntity instanceof CoreEntity coreEntity){
-                if (coreEntity.placeFluid(level, pos)){
+                if (coreEntity.placeFluid(player, wand, level, pos)){
                     inPool = true;
                 }
             }

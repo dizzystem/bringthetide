@@ -47,7 +47,6 @@ public class DepositionCoreEntity extends CoreEntity {
     );
     public static final String ITEMS_TAG = "Inventory";
     public static final int SLOT_COUNT = 1;
-    public static final int SLOT = 0;
 
     private final ItemStackHandler items = createItemHandler();
     private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> items);
@@ -69,6 +68,7 @@ public class DepositionCoreEntity extends CoreEntity {
         PoolHandler.attemptCraft(itemEntity, level, getBlockPos(), TideRecipes.DEPOSITION.get());
     }
 
+    /* ===Crafting=== */
     @Override
     public void beginCraft(ItemEntity entity, ArrayList<BlockPos> cores) {
         //Check if we can craft anything with this entity and these cores.
@@ -187,6 +187,7 @@ public class DepositionCoreEntity extends CoreEntity {
                 0,
                 0.1);
     }
+    /* ===end Crafting=== */
 
     //this removes the capability if the block is broken
     @Override

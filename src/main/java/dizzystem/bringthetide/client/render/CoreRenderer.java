@@ -131,7 +131,7 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
         }
 
         //if we have poolBlocks that means the pool is valid, render a flat texture over our poolBlocks
-        float alpha = 0.5f + (float) Math.cos((float) (millis % 4000) * Math.PI*2f / 4000f) * 0.5f;
+        float alpha = 0.5f + (float) Math.cos((float) (millis % 4000) * Math.PI*2f / 4000f) * 0.4f;
         if (!entity.getPoolCores().isEmpty()){
             //only the first core in the pool should do this
             if (!entity.getPoolCores().get(0).equals(entity.getBlockPos())){
@@ -147,11 +147,11 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
                 color = 0xFF3366;
             }
 
-            //recolour some of the overlay to represent how much fillQuota is left
-            if (!entity.poolFilled && entity.renderProgressBar < 1 && entity.getPoolCentre() != null){
+            //recolour some of the overlay to represent how much thalassity is left
+            if (!entity.poolFilled && entity.renderThalassity < 1 && entity.getPoolCentre() != null){
                 Vec3 vector = blockPos.getCenter().subtract(entity.getPoolCentre().getCenter());
                 double angle = Math.PI + Math.atan2(vector.z, vector.x);
-                if (entity.renderProgressBar * Math.PI * 2 < angle){
+                if (entity.renderThalassity * Math.PI * 2 < angle){
                     color = 0x666666;
                 }
             }
