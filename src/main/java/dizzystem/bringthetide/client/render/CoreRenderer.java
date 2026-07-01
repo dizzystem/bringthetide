@@ -18,7 +18,9 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
@@ -26,15 +28,30 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 
 public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
-    private final TextureAtlasSprite overlaySprite;
+    private final TextureAtlasSprite[] overlaySprites;
+    private final int NUM_DIRS = 4;
 
     public CoreRenderer(BlockEntityRendererProvider.Context context){
-        this.overlaySprite = Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
+        this.overlaySprites = new TextureAtlasSprite[] {
+                getTextureSprite("block/overlay_circle_0"),
+                getTextureSprite("block/overlay_circle_1"),
+                getTextureSprite("block/overlay_circle_straight"),
+                getTextureSprite("block/overlay_circle_elbow"),
+                getTextureSprite("block/overlay_circle_3"),
+                getTextureSprite("block/overlay_circle_4"),
+        };
+    }
+
+    private TextureAtlasSprite getTextureSprite(String path){
+        return Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
                 TextureAtlas.LOCATION_BLOCKS
-                ).apply(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "block/overlay_cross")));
+        ).apply(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, path)));
     }
 
     /**
@@ -89,6 +106,73 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
                 .uv2(light).normal(normal, 0, 0, 1).endVertex();
     }
 
+    /**
+     * Returns an integer representing the overlay sprite and rotation of that sprite that the
+     *  given pool block should have rendered on it.
+     *
+     * @param blockPos the pool block
+     * @param poolBlocks the other blocks in the same pool
+     */
+    public int getOverlayType(BlockPos blockPos, HashSet<BlockPos> poolBlocks){
+        Direction[] dirs = {Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
+        ArrayList<Direction> neighbours = new ArrayList<>();
+        int overlayType;
+
+        for (int i=0;i<dirs.length;i++){
+            Direction dir = dirs[i];
+
+            if (poolBlocks.contains(blockPos.relative(dir))){
+                neighbours.add(dir);
+            }
+        }
+
+        if (neighbours.size() == 2){
+            //either a straight or an elbow
+            if (neighbours.get(0).equals(neighbours.get(1).getOpposite())){
+                overlayType = NUM_DIRS * 2;
+            } else {
+                overlayType = NUM_DIRS * 3;
+            }
+
+            for (int i=0;i<dirs.length;i++){
+                if (neighbours.get(0) == dirs[i]){
+                    if (neighbours.get(1) == dirs[(i + NUM_DIRS - 1) % NUM_DIRS]){
+                        //northwest special case
+                        overlayType += (i + NUM_DIRS - 1) % NUM_DIRS;
+                    } else {
+                        overlayType += i;
+                    }
+                    break;
+                }
+            }
+
+        } else if (neighbours.size() == 1){
+            overlayType = NUM_DIRS;
+
+            for (int i=0;i<dirs.length;i++){
+                if (neighbours.contains(dirs[i])){
+                    overlayType += i;
+                    break;
+                }
+            }
+        } else if (neighbours.size() == 3){
+            overlayType = NUM_DIRS * 4;
+
+            for (int i=0;i<dirs.length;i++){
+                if (!neighbours.contains(dirs[i])){
+                    overlayType += i;
+                    break;
+                }
+            }
+        } else if (neighbours.size() == 4){
+            overlayType = NUM_DIRS * 5;
+        } else {
+            overlayType = 0;
+        }
+
+        return overlayType;
+    }
+
     @Override
     public void render(CoreEntity entity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource,
                        int combinedLight, int combinedOverlay){
@@ -104,9 +188,6 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
             if (allowedBlocks == null){
                 //This shouldn't happen
                 LogUtils.getLogger().info("allowedBlocks is null at core pos {}", blockPos);
-                //for (var entry : entity.getMissingBlocksAllowed().entrySet()){
-                //    LogUtils.getLogger().info("{} : {}", entry.getKey(), entry.getValue());
-                //}
             } else {
                 BlockState allowedBlock = allowedBlocks[(int)((millis % (1000 * allowedBlocks.length)) / 1000)];
 
@@ -123,8 +204,6 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
                 poseStack.scale(1.002f, 1.002f, 1.002f);
 
                 modelRenderer.renderModel(poseStack.last(), consumer, allowedBlock, model, 1, 1, 1, LightTexture.FULL_BRIGHT, combinedOverlay);
-                //renderer.renderSingleBlock(allowedBlock, poseStack, bufferSource, LightTexture.FULL_BRIGHT, OverlayTexture.WHITE_OVERLAY_V,
-                //        net.minecraftforge.client.model.data.ModelData.EMPTY, RenderType.translucent());
                 poseStack.popPose();
             }
 
@@ -139,13 +218,24 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
             }
         }
 
-        for (var blockPos : entity.getPoolBlocks()){
+        Map<BlockPos, Integer> renderOverlayData = entity.getRenderOverlayData();
+
+        HashSet<BlockPos> poolBlocks = entity.getPoolBlocks();
+        for (var blockPos : poolBlocks){
             int color;
             if (entity.poolFilled){
                 color = 0x33FFCC; //todo: make it fade between colours maybe
             } else {
                 color = 0xFF3366;
             }
+
+            //cache the overlay data
+            if (!renderOverlayData.containsKey(blockPos)){
+                renderOverlayData.put(blockPos, getOverlayType(blockPos, poolBlocks));
+            }
+            Integer renderOverlayType = renderOverlayData.get(blockPos);
+            TextureAtlasSprite sprite = this.overlaySprites[(int) renderOverlayType / NUM_DIRS];
+            float rotation = (float) (Math.PI * (renderOverlayType % NUM_DIRS) / 2);
 
             //recolour some of the overlay to represent how much thalassity is left
             if (!entity.poolFilled && entity.renderThalassity < 1 && entity.getPoolCentre() != null){
@@ -165,12 +255,16 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
             //offset it to the block
             poseStack.translate(blockPos.getX() - entityPos.getX(), blockPos.getZ() - entityPos.getZ(),
                     0f);
+            //rotate the sprite
+            poseStack.translate(0.5f, 0.5f, 0);
+            poseStack.mulPose(new Quaternionf().rotateZ(rotation));
+            poseStack.translate(-0.5f, -0.5f, 0);
 
             VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
             renderIconFullBright(poseStack, builder,
                     0, 0, 1,1,
                     0, 0, 16, 16,
-                    this.overlaySprite, color,
+                    sprite, color,
                     alpha, LightTexture.FULL_BRIGHT);
             poseStack.popPose();
         }

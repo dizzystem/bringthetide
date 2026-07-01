@@ -30,6 +30,13 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.EROSION_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> DEPOSITION_CORE_ITEM = ITEMS.register("deposition_core",
             () -> new BlockItem(TideBlocks.DEPOSITION_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SINKHOLE_CORE_ITEM = ITEMS.register("sinkhole_core",
+            () -> new BlockItem(TideBlocks.SINKHOLE_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> CURRENT_CORE_ITEM = ITEMS.register("current_core",
+            () -> new BlockItem(TideBlocks.CURRENT_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> VORTEX_CORE_ITEM = ITEMS.register("vortex_core",
+            () -> new BlockItem(TideBlocks.VORTEX_CORE.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> IMBUED_SEAWATER_BUCKET = ITEMS.register("imbued_seawater_bucket",
             () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));
     public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);

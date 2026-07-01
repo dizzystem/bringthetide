@@ -15,5 +15,8 @@ public class EntityRenderers {
     public static void initClient(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(TideBlocks.EROSION_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.DEPOSITION_CORE_ENTITY.get(), DepositionCoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.SINKHOLE_CORE_ENTITY.get(), CoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.CURRENT_CORE_ENTITY.get(), CoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.VORTEX_CORE_ENTITY.get(), CoreRenderer::new);
     }
 }

@@ -1,12 +1,15 @@
 {
   "block.bringthetide.budding_prismarine": "Budding Prismarine",
+  "block.bringthetide.current_core": "Current Core",
   "block.bringthetide.deposition_core": "Deposition Core",
   "block.bringthetide.driftwood_log": "Driftwood Log",
   "block.bringthetide.erosion_core": "Erosion Core",
   "block.bringthetide.large_prismarine_bud": "Large Prismarine Bud",
   "block.bringthetide.medium_prismarine_bud": "Medium Prismarine Bud",
   "block.bringthetide.prismarine_cluster": "Prismarine Cluster",
+  "block.bringthetide.sinkhole_core": "Sinkhole Core",
   "block.bringthetide.small_prismarine_bud": "Small Prismarine Bud",
+  "block.bringthetide.vortex_core": "Vortex Core",
   "item.bringthetide.imbued_seawater_bucket": "Imbued Seawater Bucket",
   "item.bringthetide.seashell_alloy_ingot": "Seashell Alloy Ingot",
   "item.bringthetide.wand": "Driftwood Wand"

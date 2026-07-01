@@ -37,20 +37,6 @@ public class DepositionCore extends Core {
 
     @ParametersAreNonnullByDefault
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type){
-        return (lvl, pos, st, blockEntity) -> {
-            if (blockEntity instanceof DepositionCoreEntity be){
-                if (lvl.isClientSide()){
-                    be.tickClient();
-                } else {
-                    be.tickServer();
-                }
-            }
-        };
-    }
-
-    @ParametersAreNonnullByDefault
-    @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result){
         if (!(level.getBlockEntity(pos) instanceof DepositionCoreEntity core)){
             return InteractionResult.PASS;

@@ -12,6 +12,9 @@
     "minecraft:cut_sandstone",
     "minecraft:cut_sandstone_slab",
     "bringthetide:erosion_core",
-    "bringthetide:deposition_core"
+    "bringthetide:deposition_core",
+    "bringthetide:sinkhole_core",
+    "bringthetide:current_core",
+    "bringthetide:vortex_core"
   ]
 }

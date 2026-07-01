@@ -141,10 +141,15 @@ public class PoolHandler {
             if (level.getBlockEntity(block) instanceof CoreEntity coreEntity){ //this also covers if the block has no tile entity
                 ArrayList<Vec3i> missing = coreEntity.checkRequiredShape();
                 if (!missing.isEmpty()){
-                    //for (var m : missing){
-                    //    LogUtils.getLogger().info("missing {}", m);
-                    //}
                     return false;
+                }
+
+                //also check that they're actually part of the pool
+                HashSet<BlockPos> reqs = coreEntity.getRequiredBlockPositions();
+                for (var req : reqs){
+                    if (!poolBlocks.contains(req)){
+                        return false;
+                    }
                 }
             }
         }
@@ -304,13 +309,13 @@ public class PoolHandler {
     }
 
     public static BlockState[] allBlocksMatching(Object requirement){
-        if (requirement instanceof Block){
-            return new BlockState[]{ ((Block) requirement).defaultBlockState() };
-        } else if (requirement instanceof HolderSet<?>){
-            return ((HolderSet<Block>) requirement).stream().map(Holder::value)
+        if (requirement instanceof Block blockRequirement){
+            return new BlockState[]{ blockRequirement.defaultBlockState() };
+        } else if (requirement instanceof HolderSet<?> setRequirement){
+            return ((HolderSet<Block>) setRequirement).stream().map(Holder::value)
                     .map(Block::defaultBlockState).toArray(BlockState[]::new);
-        } else if (requirement instanceof TagKey<?>){
-            return ForgeRegistries.BLOCKS.tags().getTag((TagKey<Block>) requirement).stream()
+        } else if (requirement instanceof TagKey<?> tagRequirement){
+            return ForgeRegistries.BLOCKS.tags().getTag((TagKey<Block>) tagRequirement).stream()
                     .map(Block::defaultBlockState).toArray(BlockState[]::new);
         }
 
@@ -357,9 +362,9 @@ public class PoolHandler {
                         pos.getX() + Math.random(),
                         pos.getY() + 1,
                         pos.getZ() + Math.random(),
-                        1,
-                        1,
-                        1);
+                        0,
+                        0,
+                        0);
             }
             return true;
         }

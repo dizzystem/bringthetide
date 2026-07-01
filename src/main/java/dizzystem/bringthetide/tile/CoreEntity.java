@@ -4,6 +4,7 @@ import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.util.PoolHandler;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -13,6 +14,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,6 +43,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public HashSet<BlockPos> poolBlocks = new HashSet<>(), poolFluids = new HashSet<>();
     public BlockPos poolCentre = getBlockPos();
     public Map<BlockPos, BlockState[]> missingBlocksAllowed = new HashMap<>();
+    public Map<BlockPos, Integer> renderOverlayData = new HashMap<>();
 
     public CoreEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState){
         super(blockEntityType, blockPos, blockState);
@@ -52,6 +55,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public HashSet<BlockPos> getPoolBlocks(){ return poolBlocks; }
     public HashSet<BlockPos> getPoolFluids(){ return poolFluids; }
     public BlockPos getPoolCentre(){ return poolCentre; }
+    public boolean isPoolActive(){ return poolFilled; }
+    public Map<BlockPos, Integer> getRenderOverlayData(){ return renderOverlayData; }
 
     /**
      * The required additional blocks around the core to make it function as part of a ritual.
@@ -69,16 +74,34 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             case NORTH:
                 break;
             case SOUTH:
-                offset = new Vec3i(offset.getX(), offset.getY(), -offset.getZ());
+                offset = new Vec3i(-offset.getX(), offset.getY(), -offset.getZ());
                 break;
             case WEST:
-                offset = new Vec3i(offset.getZ(), offset.getY(), offset.getX());
+                offset = new Vec3i(offset.getZ(), offset.getY(), -offset.getX());
                 break;
             case EAST:
                 offset = new Vec3i(-offset.getZ(), offset.getY(), offset.getX());
                 break;
         }
         return offset;
+    }
+
+    /**
+     * Returns the block positions of the required shape of this core in its current place and rotation.
+     */
+    public HashSet<BlockPos> getRequiredBlockPositions(){
+        BlockPos blockPos = this.getBlockPos();
+        HashSet<BlockPos> blocks = new HashSet<>();
+
+        for (Map.Entry<Vec3i, Object> entry : this.getRequiredShape().entrySet()) {
+            Vec3i offset = entry.getKey();
+
+            //rotate the offset based on the way we're facing
+            Vec3i rotatedOffset = rotateOffsetToFacingDirection(offset);
+
+            blocks.add(blockPos.offset(rotatedOffset));
+        }
+        return blocks;
     }
 
     /**
@@ -89,8 +112,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public ArrayList<Vec3i> checkRequiredShape(){
         Level level = this.level;
         BlockPos blockPos = this.getBlockPos();
-        BlockState blockState = getBlockState();
-        ArrayList<Vec3i> missing = new ArrayList<Vec3i>();
+        ArrayList<Vec3i> missing = new ArrayList<>();
 
         for (Map.Entry<Vec3i, Object> entry : this.getRequiredShape().entrySet()){
             Vec3i offset = entry.getKey();
@@ -255,6 +277,16 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         this.scheduleRegisterCore = true;
     }
 
+    public void clearPoolData(Level level, BlockPos pos) {
+        this.poolCores.clear();
+        this.poolBlocks.clear();
+        this.poolFluids.clear();
+        this.renderOverlayData.clear();
+        this.poolFormed = false;
+        this.poolFilled = false;
+        PoolHandler.deleteCore(level, pos);
+    }
+
     public void tickClient(){
         if (this.maxCraftingTimer > 0) {
             this.craftingTimer--;
@@ -266,6 +298,25 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             this.renderThalassity += 0.1f * (this.thalassity - this.renderThalassity);
             if (Math.abs(this.thalassity - this.renderThalassity) < 0.02){
                 this.renderThalassity = this.thalassity;
+            }
+        }
+
+        if (this.poolFilled && this.getBlockPos().equals(this.poolCores.get(0))){
+            Level level = getLevel();
+            BlockPos[] poolFluids = this.poolFluids.toArray(new BlockPos[this.poolFluids.size()]);
+            RandomSource random = level.getRandom();
+
+            for (int i=0;i<4;i++){
+                if (random.nextInt(256) < this.poolFluids.size()){
+                    BlockPos poolBlock = poolFluids[random.nextInt(0, poolFluids.length)];
+                    level.addParticle(TideParticles.SPARKLE.get(),
+                            poolBlock.getX() + Math.random(),
+                            poolBlock.getY() + 1,
+                            poolBlock.getZ() + Math.random(),
+                            0,
+                            0,
+                            0);
+                }
             }
         }
 
@@ -343,11 +394,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             ArrayList<Vec3i> missing = checkRequiredShape();
             if (!missing.isEmpty()){
                 this.missingBlocks = missing;
-                this.poolCores.clear();
-                this.poolBlocks.clear();
-                this.poolFluids.clear();
-                this.poolFormed = false;
-                this.poolFilled = false;
+                clearPoolData(level, pos);
                 level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
                 return;
             }
@@ -410,12 +457,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             if (!formed){
                 clearImbuedWater();
                 resetQuota();
-                this.poolCores.clear();
-                this.poolBlocks.clear();
-                this.poolFluids.clear();
-                this.poolFormed = false;
-                this.poolFilled = false;
-                PoolHandler.deleteCore(level, pos);
+                clearPoolData(level, pos);
                 level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
         }
@@ -432,7 +474,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             if (!filled){
                 clearImbuedWater();
                 resetQuota();
-                this.poolFilled = false;
+                clearPoolData(level, pos);
+                level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
         }
 

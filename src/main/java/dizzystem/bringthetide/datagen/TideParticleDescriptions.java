@@ -16,6 +16,7 @@ public class TideParticleDescriptions extends ParticleDescriptionProvider {
     protected void addDescriptions(){
         sprite(TideParticles.BUBBLE.get(), ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "bubble"));
         sprite(TideParticles.WHIRLPOOL.get(), ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "bubble"));
+        sprite(TideParticles.SPARKLE.get(), ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pixel"));
 
         spriteSet(TideParticles.SPLASH.get(),
                 ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "splash"),

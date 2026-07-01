@@ -20,7 +20,7 @@ public class TideRenderTypes extends RenderStateShard {
             () -> {
                 RenderSystem.enableBlend();
                 RenderSystem.blendFunc(GlStateManager.SourceFactor.CONSTANT_ALPHA, GlStateManager.DestFactor.ONE_MINUS_CONSTANT_ALPHA);
-                GL14.glBlendColor(1.0F, 1.0F, 1.0F, 0.5F);
+                GL14.glBlendColor(1.0F, 1.0F, 1.0F, 0.4F);
             },
             () -> {
                 GL14.glBlendColor(1.0F, 1.0F, 1.0F, 1.0F);

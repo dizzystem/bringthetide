@@ -36,6 +36,9 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(Blocks.CUT_SANDSTONE)
                 .add(Blocks.CUT_SANDSTONE_SLAB)
                 .add(TideBlocks.EROSION_CORE.get())
-                .add(TideBlocks.DEPOSITION_CORE.get());
+                .add(TideBlocks.DEPOSITION_CORE.get())
+                .add(TideBlocks.SINKHOLE_CORE.get())
+                .add(TideBlocks.CURRENT_CORE.get())
+                .add(TideBlocks.VORTEX_CORE.get());
     }
 }

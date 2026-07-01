@@ -3,6 +3,7 @@ package dizzystem.bringthetide.event;
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.client.particle.BubbleParticleProvider;
+import dizzystem.bringthetide.client.particle.SparkleParticleProvider;
 import dizzystem.bringthetide.client.particle.SplashParticleProvider;
 import dizzystem.bringthetide.client.particle.WhirlpoolParticleProvider;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -18,5 +19,6 @@ public class RegisterParticleProviders {
         event.registerSpriteSet(TideParticles.WHIRLPOOL.get(), WhirlpoolParticleProvider::new);
         event.registerSpriteSet(TideParticles.SPLASH.get(), SplashParticleProvider::new);
         event.registerSpriteSet(TideParticles.BUBBLE.get(), BubbleParticleProvider::new);
+        event.registerSpriteSet(TideParticles.SPARKLE.get(), SparkleParticleProvider::new);
     }
 }

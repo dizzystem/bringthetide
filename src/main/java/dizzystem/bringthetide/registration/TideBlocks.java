@@ -1,13 +1,9 @@
 package dizzystem.bringthetide.registration;
 
 import dizzystem.bringthetide.BringTheTide;
-import dizzystem.bringthetide.block.BuddingPrismarine;
-import dizzystem.bringthetide.block.DepositionCore;
-import dizzystem.bringthetide.block.ErosionCore;
-import dizzystem.bringthetide.block.PrismarineClusterBlock;
+import dizzystem.bringthetide.block.*;
 import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
-import dizzystem.bringthetide.tile.DepositionCoreEntity;
-import dizzystem.bringthetide.tile.ErosionCoreEntity;
+import dizzystem.bringthetide.tile.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -58,6 +54,12 @@ public class TideBlocks {
             ErosionCore::new);
     public static final RegistryObject<Block> DEPOSITION_CORE = BLOCKS.register("deposition_core",
             DepositionCore::new);
+    public static final RegistryObject<Block> SINKHOLE_CORE = BLOCKS.register("sinkhole_core",
+            SinkholeCore::new);
+    public static final RegistryObject<Block> CURRENT_CORE = BLOCKS.register("current_core",
+            CurrentCore::new);
+    public static final RegistryObject<Block> VORTEX_CORE = BLOCKS.register("vortex_core",
+            VortexCore::new);
     public static final RegistryObject<LiquidBlock> BLOCK_IMBUED_SEAWATER = BLOCKS.register(
             "block_imbued_seawater", BlockImbuedSeawater::new);
 
@@ -67,6 +69,15 @@ public class TideBlocks {
     public static final RegistryObject<BlockEntityType<DepositionCoreEntity>> DEPOSITION_CORE_ENTITY =
             BLOCK_ENTITIES.register("deposition_core_entity",
                     () -> BlockEntityType.Builder.of(DepositionCoreEntity::new, DEPOSITION_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SinkholeCoreEntity>> SINKHOLE_CORE_ENTITY =
+            BLOCK_ENTITIES.register("sinkhole_core_entity",
+                    () -> BlockEntityType.Builder.of(SinkholeCoreEntity::new, SINKHOLE_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<CurrentCoreEntity>> CURRENT_CORE_ENTITY =
+            BLOCK_ENTITIES.register("current_core_entity",
+                    () -> BlockEntityType.Builder.of(CurrentCoreEntity::new, CURRENT_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<VortexCoreEntity>> VORTEX_CORE_ENTITY =
+            BLOCK_ENTITIES.register("vortex_core_entity",
+                    () -> BlockEntityType.Builder.of(VortexCoreEntity::new, VORTEX_CORE.get()).build(null));
 
     public static void init(IEventBus modEventBus) {
         BLOCKS.register(modEventBus);

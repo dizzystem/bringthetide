@@ -19,6 +19,8 @@ public class TideParticles {
             () -> new SimpleParticleType(false));
     public static final Supplier<SimpleParticleType> BUBBLE = PARTICLE_TYPES.register("bubble",
             () -> new SimpleParticleType(false));
+    public static final Supplier<SimpleParticleType> SPARKLE = PARTICLE_TYPES.register("sparkle",
+            () -> new SimpleParticleType(false));
 
     public static void init(IEventBus modEventBus) {
         PARTICLE_TYPES.register(modEventBus);

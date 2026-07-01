@@ -64,6 +64,9 @@ public class DepositionCoreEntity extends CoreEntity {
         if (!(entity instanceof ItemEntity itemEntity)) {
             return;
         }
+        if (!this.isPoolActive()) {
+            return;
+        }
 
         PoolHandler.attemptCraft(itemEntity, level, getBlockPos(), TideRecipes.DEPOSITION.get());
     }

@@ -68,6 +68,9 @@ public class ErosionCoreEntity extends CoreEntity {
         if (!(entity instanceof ItemEntity)) {
             return;
         }
+        if (!this.isPoolActive()){
+            return;
+        }
 
         ItemStack itemStack = ((ItemEntity) entity).getItem();
         IItemHandlerModifiable inputs = new ItemStackHandler(1);
