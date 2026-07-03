@@ -21,14 +21,17 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.PRISMARINE_CLUSTER.getId().getPath(), modLoc("block/prismarine_cluster"));
 
         withExistingParent(TideBlocks.DRIFTWOOD_LOG.getId().getPath(), modLoc("block/driftwood_log"));
-        withExistingParent(TideBlocks.EROSION_CORE.getId().getPath(), modLoc("block/erosion_core"));
-        withExistingParent(TideBlocks.DEPOSITION_CORE.getId().getPath(), modLoc("block/deposition_core"));
-        withExistingParent(TideBlocks.SINKHOLE_CORE.getId().getPath(), modLoc("block/sinkhole_core"));
         withExistingParent(TideBlocks.CURRENT_CORE.getId().getPath(), modLoc("block/current_core"));
+        withExistingParent(TideBlocks.DEPOSITION_CORE.getId().getPath(), modLoc("block/deposition_core"));
+        withExistingParent(TideBlocks.EROSION_CORE.getId().getPath(), modLoc("block/erosion_core"));
+        withExistingParent(TideBlocks.TRAWL_CORE.getId().getPath(), modLoc("block/trawl_core"));
+        withExistingParent(TideBlocks.TURBULENCE_CORE.getId().getPath(), modLoc("block/turbulence_core"));
+        withExistingParent(TideBlocks.SINKHOLE_CORE.getId().getPath(), modLoc("block/sinkhole_core"));
         withExistingParent(TideBlocks.VORTEX_CORE.getId().getPath(), modLoc("block/vortex_core"));
 
         basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
         basicItem(TideItems.WAND.get());
         basicItem(TideItems.SEASHELL_ALLOY_INGOT.get());
+        basicItem(TideItems.MASCOT_HELMET.get());
     }
 }

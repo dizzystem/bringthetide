@@ -24,7 +24,6 @@ import java.util.UUID;
 import static java.util.Map.entry;
 
 public class VortexCoreEntity extends CoreEntity {
-    public int ATTACK_COOLDOWN = 80; //4 seconds
     public static final String PLACEDBY_TAG = "Placed By";
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
             entry(new Vec3i(1, 0, 0), Blocks.SANDSTONE),
@@ -35,7 +34,6 @@ public class VortexCoreEntity extends CoreEntity {
             entry(new Vec3i(3, 0, -3), Blocks.SANDSTONE)
     );
     UUID placedBy;
-    private final Map<Entity, Integer> entityCooldowns = new HashMap<>();
 
     public VortexCoreEntity(BlockPos blockPos, BlockState blockState, UUID placedBy){
         super(TideBlocks.VORTEX_CORE_ENTITY.get(), blockPos, blockState);
@@ -58,13 +56,6 @@ public class VortexCoreEntity extends CoreEntity {
         if (!this.isPoolActive()) {
             return;
         }
-
-        int ticks = this.ticks;
-        Integer cooldown = this.entityCooldowns.get(livingEntity);
-        if (cooldown != null && cooldown > ticks){
-            return;
-        }
-        this.entityCooldowns.put(livingEntity, ticks + ATTACK_COOLDOWN);
 
         LogUtils.getLogger().info("simulating attack from {}", placedBy);
         FakePlayer fp;

@@ -2,11 +2,10 @@ package dizzystem.bringthetide.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.logging.LogUtils;
 import com.mojang.math.Axis;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.tile.CoreEntity;
-import dizzystem.bringthetide.tile.DepositionCoreEntity;
+import dizzystem.bringthetide.tile.ItemCoreEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,10 +24,10 @@ import org.joml.Vector3f;
 
 import java.util.Objects;
 
-public class DepositionCoreRenderer extends CoreRenderer {
+public class ItemCoreRenderer extends CoreRenderer {
     private final TextureAtlasSprite bubbleSprite;
 
-    public DepositionCoreRenderer(BlockEntityRendererProvider.Context context){
+    public ItemCoreRenderer(BlockEntityRendererProvider.Context context){
         super(context);
 
         this.bubbleSprite = Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
@@ -42,7 +41,7 @@ public class DepositionCoreRenderer extends CoreRenderer {
         long millis = System.currentTimeMillis();
         super.render(entity, partialTicks, poseStack, bufferSource, combinedLight, combinedOverlay);
 
-        ItemStack itemStack = ((DepositionCoreEntity) entity).getItemStack();
+        ItemStack itemStack = ((ItemCoreEntity) entity).getItemStack();
         if (itemStack.isEmpty()){
             return;
         }

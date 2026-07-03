@@ -2,9 +2,13 @@ package dizzystem.bringthetide.block;
 
 import dizzystem.bringthetide.tile.CoreEntity;
 import dizzystem.bringthetide.tile.DepositionCoreEntity;
+import dizzystem.bringthetide.tile.ErosionCoreEntity;
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -19,6 +23,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidActionResult;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -63,11 +77,90 @@ public abstract class Core extends Block implements EntityBlock {
     public void onRemove(BlockState oldState, Level level, BlockPos blockPos, BlockState newState, boolean pistonMoved){
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
-        if (blockEntity instanceof DepositionCoreEntity coreEntity){
+        if (blockEntity instanceof CoreEntity coreEntity){
             coreEntity.clearImbuedWater();
             PoolHandler.deleteCore(level, blockPos);
         }
 
+        //drop our inv on the ground when broken
+        if (!newState.is(oldState.getBlock())){
+            LazyOptional<IItemHandler> OItemHandler = blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER);
+            if (OItemHandler.isPresent()){
+                IItemHandler itemHandler = OItemHandler.orElse(null);
+                for (int i=0;i<itemHandler.getSlots();i++){
+                    Containers.dropItemStack(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(),
+                            itemHandler.getStackInSlot(i));
+                }
+            }
+        }
+
         super.onRemove(oldState, level, blockPos, newState, pistonMoved);
+    }
+
+    @ParametersAreNonnullByDefault
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
+                                 BlockHitResult blockHitResult){
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be == null){
+            return InteractionResult.PASS;
+        }
+
+        //right clicking fluids in or out
+        LazyOptional<IFluidHandler> OFluidHandler = be.getCapability(ForgeCapabilities.FLUID_HANDLER);
+        ItemStack item = player.getItemInHand(hand);
+        if (OFluidHandler.isPresent() && FluidUtil.getFluidHandler(item).isPresent()){
+            IFluidHandler fluidHandler = OFluidHandler.orElse(null);
+            FluidStack coreFluid = fluidHandler.getFluidInTank(0);
+            FluidActionResult result;
+            if (!coreFluid.isEmpty()){ //take out the fluid
+                result = FluidUtil.tryFillContainer(item, fluidHandler, coreFluid.getAmount(),
+                        player, true);
+                if (result.isSuccess()){
+                    if (item.getCount() > 1){
+                        item.shrink(1);
+                        player.getInventory().placeItemBackInInventory(result.result);
+                    } else {
+                        player.setItemInHand(hand, result.result);
+                    }
+                    be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
+                    return InteractionResult.sidedSuccess(level.isClientSide());
+                }
+            }
+
+            result = FluidUtil.tryEmptyContainer(item, fluidHandler, ErosionCoreEntity.TANK_CAPACITY,
+                    player, true);
+            if (result.isSuccess()){ //put in fluid
+                if (item.getCount() > 1){
+                    item.shrink(1);
+                    player.getInventory().placeItemBackInInventory(result.result);
+                } else {
+                    player.setItemInHand(hand, result.result);
+                }
+                be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
+                return InteractionResult.sidedSuccess(level.isClientSide());
+            }
+        }
+
+        //right clicking items in or out
+        LazyOptional<IItemHandler> OItemHandler = be.getCapability(ForgeCapabilities.ITEM_HANDLER);
+        if (OItemHandler.isPresent()){
+            IItemHandler itemHandler = OItemHandler.orElse(null);
+
+            ItemStack playerStack = player.getItemInHand(hand);
+            ItemStack coreStack = itemHandler.getStackInSlot(0);
+            if (!coreStack.isEmpty()){ //take out the item
+                ItemStack extracted = itemHandler.extractItem(0, 1, false);
+                player.getInventory().placeItemBackInInventory(extracted);
+                be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
+                return InteractionResult.sidedSuccess(level.isClientSide());
+            } else if (!playerStack.isEmpty()){ //put in an item
+                ItemHandlerHelper.insertItem(itemHandler, playerStack, false);
+                be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
+                return InteractionResult.sidedSuccess(level.isClientSide());
+            }
+        }
+
+        return InteractionResult.PASS;
     }
 }

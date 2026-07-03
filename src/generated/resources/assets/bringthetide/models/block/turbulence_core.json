@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "bringthetide:block/core_prismarine_face",
+    "side": "bringthetide:block/core_prismarine",
+    "top": "bringthetide:block/turbulence_core"
+  }
+}

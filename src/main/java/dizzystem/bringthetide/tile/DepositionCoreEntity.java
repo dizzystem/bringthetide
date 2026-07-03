@@ -38,18 +38,13 @@ import java.util.stream.Collectors;
 
 import static java.util.Map.entry;
 
-public class DepositionCoreEntity extends CoreEntity {
+public class DepositionCoreEntity extends ItemCoreEntity {
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
             entry(new Vec3i(1, 0, 0), Blocks.PRISMARINE),
             entry(new Vec3i(-1, 0, 0), Blocks.PRISMARINE),
             entry(new Vec3i(1, 0, -1), Blocks.PRISMARINE),
             entry(new Vec3i(-1, 0, -1), Blocks.PRISMARINE)
     );
-    public static final String ITEMS_TAG = "Inventory";
-    public static final int SLOT_COUNT = 1;
-
-    private final ItemStackHandler items = createItemHandler();
-    private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> items);
 
     public DepositionCoreEntity(BlockPos blockPos, BlockState blockState){
         super(TideBlocks.DEPOSITION_CORE_ENTITY.get(), blockPos, blockState);
@@ -107,8 +102,8 @@ public class DepositionCoreEntity extends CoreEntity {
         DepositionRecipe recipe = maybeRecipe.get();
         involvedCores.forEach(pos -> {
                     if (level.getBlockEntity(pos) instanceof DepositionCoreEntity depositionCore){
-                        depositionCore.setMaxCraftingTimer(recipe.getCraftingTime());
-                        depositionCore.setCraftingTimer(recipe.getCraftingTime());
+                        depositionCore.setMaxCraftingTimer(recipe.getCraftingTime() / getSpeed());
+                        depositionCore.setCraftingTimer(recipe.getCraftingTime() / getSpeed());
                         depositionCore.setCraftingEntity(entity);
                         BlockState blockState = level.getBlockState(pos);
                         level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
@@ -191,62 +186,4 @@ public class DepositionCoreEntity extends CoreEntity {
                 0.1);
     }
     /* ===end Crafting=== */
-
-    //this removes the capability if the block is broken
-    @Override
-    public void invalidateCaps(){
-        super.invalidateCaps();
-        itemHandler.invalidate();
-    }
-
-    @Nonnull
-    private ItemStackHandler createItemHandler(){
-        return new ItemStackHandler(SLOT_COUNT){
-            @Override
-            public int getSlotLimit(int slot){
-                return 1;
-            }
-
-            @Override
-            protected void onContentsChanged(int slot){
-                setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
-            }
-        };
-    }
-
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction side){
-        if (capability == ForgeCapabilities.ITEM_HANDLER){
-            return itemHandler.cast();
-        } else {
-            return super.getCapability(capability, side);
-        }
-    }
-
-    public void setItemStack(ItemStack itemStack){
-        items.setStackInSlot(0, itemStack);
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
-    }
-
-    public ItemStack getItemStack(){
-        return items.getStackInSlot(0);
-    }
-
-    @Override
-    protected void saveClientData(CompoundTag tag) {
-        super.saveClientData(tag);
-        //save our item
-        tag.put(ITEMS_TAG, items.serializeNBT());
-    }
-
-    @Override
-    protected void loadClientData(CompoundTag tag) {
-        super.loadClientData(tag);
-        if (tag.contains(ITEMS_TAG)) {
-            //load our item
-            items.deserializeNBT(tag.getCompound(ITEMS_TAG));
-        }
-    }
 }

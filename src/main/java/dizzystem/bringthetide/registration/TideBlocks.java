@@ -50,31 +50,41 @@ public class TideBlocks {
     public static final RegistryObject<RotatedPillarBlock> DRIFTWOOD_LOG = BLOCKS.register("driftwood_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(2).sound(SoundType.WOOD)
                     .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE)));
-    public static final RegistryObject<Block> EROSION_CORE = BLOCKS.register("erosion_core",
-            ErosionCore::new);
-    public static final RegistryObject<Block> DEPOSITION_CORE = BLOCKS.register("deposition_core",
-            DepositionCore::new);
-    public static final RegistryObject<Block> SINKHOLE_CORE = BLOCKS.register("sinkhole_core",
-            SinkholeCore::new);
     public static final RegistryObject<Block> CURRENT_CORE = BLOCKS.register("current_core",
             CurrentCore::new);
+    public static final RegistryObject<Block> DEPOSITION_CORE = BLOCKS.register("deposition_core",
+            DepositionCore::new);
+    public static final RegistryObject<Block> EROSION_CORE = BLOCKS.register("erosion_core",
+            ErosionCore::new);
+    public static final RegistryObject<Block> SINKHOLE_CORE = BLOCKS.register("sinkhole_core",
+            SinkholeCore::new);
+    public static final RegistryObject<Block> TRAWL_CORE = BLOCKS.register("trawl_core",
+            TrawlCore::new);
+    public static final RegistryObject<Block> TURBULENCE_CORE = BLOCKS.register("turbulence_core",
+            TurbulenceCore::new);
     public static final RegistryObject<Block> VORTEX_CORE = BLOCKS.register("vortex_core",
             VortexCore::new);
     public static final RegistryObject<LiquidBlock> BLOCK_IMBUED_SEAWATER = BLOCKS.register(
             "block_imbued_seawater", BlockImbuedSeawater::new);
 
-    public static final RegistryObject<BlockEntityType<ErosionCoreEntity>> EROSION_CORE_ENTITY =
-            BLOCK_ENTITIES.register("erosion_core_entity",
-                    () -> BlockEntityType.Builder.of(ErosionCoreEntity::new, EROSION_CORE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<DepositionCoreEntity>> DEPOSITION_CORE_ENTITY =
-            BLOCK_ENTITIES.register("deposition_core_entity",
-                    () -> BlockEntityType.Builder.of(DepositionCoreEntity::new, DEPOSITION_CORE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<SinkholeCoreEntity>> SINKHOLE_CORE_ENTITY =
-            BLOCK_ENTITIES.register("sinkhole_core_entity",
-                    () -> BlockEntityType.Builder.of(SinkholeCoreEntity::new, SINKHOLE_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<CurrentCoreEntity>> CURRENT_CORE_ENTITY =
             BLOCK_ENTITIES.register("current_core_entity",
                     () -> BlockEntityType.Builder.of(CurrentCoreEntity::new, CURRENT_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<DepositionCoreEntity>> DEPOSITION_CORE_ENTITY =
+            BLOCK_ENTITIES.register("deposition_core_entity",
+                    () -> BlockEntityType.Builder.of(DepositionCoreEntity::new, DEPOSITION_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ErosionCoreEntity>> EROSION_CORE_ENTITY =
+            BLOCK_ENTITIES.register("erosion_core_entity",
+                    () -> BlockEntityType.Builder.of(ErosionCoreEntity::new, EROSION_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SinkholeCoreEntity>> SINKHOLE_CORE_ENTITY =
+            BLOCK_ENTITIES.register("sinkhole_core_entity",
+                    () -> BlockEntityType.Builder.of(SinkholeCoreEntity::new, SINKHOLE_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<TrawlCoreEntity>> TRAWL_CORE_ENTITY =
+            BLOCK_ENTITIES.register("trawl_core_entity",
+                    () -> BlockEntityType.Builder.of(TrawlCoreEntity::new, TRAWL_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<TurbulenceCoreEntity>> TURBULENCE_CORE_ENTITY =
+            BLOCK_ENTITIES.register("turbulence_core_entity",
+                    () -> BlockEntityType.Builder.of(TurbulenceCoreEntity::new, TURBULENCE_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<VortexCoreEntity>> VORTEX_CORE_ENTITY =
             BLOCK_ENTITIES.register("vortex_core_entity",
                     () -> BlockEntityType.Builder.of(VortexCoreEntity::new, VORTEX_CORE.get()).build(null));

@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 
@@ -53,7 +54,7 @@ public class SinkholeCoreEntity extends CoreEntity {
         BlockPos poolCentre = this.getPoolCentre();
 
         //every 4 seconds
-        if (ticks % 80 == 0){
+        if (ticks % getTicksPerAction() == 0){
             ServerLevel level = (ServerLevel) getLevel();
             int minY = level.getMinBuildHeight() + 1;
             int maxY = getBlockPos().getY() - 1;
@@ -110,8 +111,8 @@ public class SinkholeCoreEntity extends CoreEntity {
         List<ItemStack> drops = Block.getDrops(targetState, level, targetPos, level.getBlockEntity(targetPos));
         if (level.removeBlock(targetPos, false)){
             for (var item : drops){
-                BlockPos poolCentre = this.getPoolCentre();
-                ItemEntity entity = new ItemEntity(level, poolCentre.getX(), poolCentre.getY(), poolCentre.getZ(), item);
+                Vec3 poolCentre = this.getPoolCentre().getCenter();
+                ItemEntity entity = new ItemEntity(level, poolCentre.x, poolCentre.y, poolCentre.z, item);
                 level.addFreshEntity(entity);
             }
         }

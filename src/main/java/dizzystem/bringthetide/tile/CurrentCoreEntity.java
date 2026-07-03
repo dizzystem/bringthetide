@@ -27,12 +27,8 @@ import static java.util.Map.entry;
 
 public class CurrentCoreEntity extends CoreEntity {
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
-            entry(new Vec3i(1, 0, 0), Blocks.PRISMARINE),
-            entry(new Vec3i(1, 0, -1), Blocks.PRISMARINE),
-            entry(new Vec3i(2, 0, -1), Blocks.PRISMARINE),
-            entry(new Vec3i(2, 0, -2), Blocks.PRISMARINE),
-            entry(new Vec3i(3, 0, -2), Blocks.PRISMARINE),
-            entry(new Vec3i(3, 0, -3), Blocks.PRISMARINE)
+            entry(new Vec3i(-1, 0, 0), Blocks.PRISMARINE),
+            entry(new Vec3i(1, 0, 0), Blocks.PRISMARINE)
     );
 
     public CurrentCoreEntity(BlockPos blockPos, BlockState blockState){

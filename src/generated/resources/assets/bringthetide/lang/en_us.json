@@ -9,8 +9,11 @@
   "block.bringthetide.prismarine_cluster": "Prismarine Cluster",
   "block.bringthetide.sinkhole_core": "Sinkhole Core",
   "block.bringthetide.small_prismarine_bud": "Small Prismarine Bud",
+  "block.bringthetide.trawl_core": "Trawl Core",
+  "block.bringthetide.turbulence_core": "Turbulence Core",
   "block.bringthetide.vortex_core": "Vortex Core",
   "item.bringthetide.imbued_seawater_bucket": "Imbued Seawater Bucket",
+  "item.bringthetide.mascot_helmet": "Dolphin Mascot Head",
   "item.bringthetide.seashell_alloy_ingot": "Seashell Alloy Ingot",
   "item.bringthetide.wand": "Driftwood Wand"
 }

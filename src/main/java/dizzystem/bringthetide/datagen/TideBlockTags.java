@@ -35,10 +35,12 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(Blocks.SANDSTONE_SLAB)
                 .add(Blocks.CUT_SANDSTONE)
                 .add(Blocks.CUT_SANDSTONE_SLAB)
-                .add(TideBlocks.EROSION_CORE.get())
-                .add(TideBlocks.DEPOSITION_CORE.get())
-                .add(TideBlocks.SINKHOLE_CORE.get())
                 .add(TideBlocks.CURRENT_CORE.get())
+                .add(TideBlocks.DEPOSITION_CORE.get())
+                .add(TideBlocks.EROSION_CORE.get())
+                .add(TideBlocks.SINKHOLE_CORE.get())
+                .add(TideBlocks.TRAWL_CORE.get())
+                .add(TideBlocks.TURBULENCE_CORE.get())
                 .add(TideBlocks.VORTEX_CORE.get());
     }
 }

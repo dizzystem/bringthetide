@@ -19,13 +19,16 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.LARGE_PRISMARINE_BUD.get(), "Large Prismarine Bud");
         add(TideBlocks.PRISMARINE_CLUSTER.get(), "Prismarine Cluster");
         add(TideBlocks.DRIFTWOOD_LOG.get(), "Driftwood Log");
-        add(TideBlocks.EROSION_CORE.get(), "Erosion Core");
-        add(TideBlocks.DEPOSITION_CORE.get(), "Deposition Core");
-        add(TideBlocks.SINKHOLE_CORE.get(), "Sinkhole Core");
         add(TideBlocks.CURRENT_CORE.get(), "Current Core");
+        add(TideBlocks.DEPOSITION_CORE.get(), "Deposition Core");
+        add(TideBlocks.EROSION_CORE.get(), "Erosion Core");
+        add(TideBlocks.SINKHOLE_CORE.get(), "Sinkhole Core");
+        add(TideBlocks.TRAWL_CORE.get(), "Trawl Core");
+        add(TideBlocks.TURBULENCE_CORE.get(), "Turbulence Core");
         add(TideBlocks.VORTEX_CORE.get(), "Vortex Core");
         add(TideItems.IMBUED_SEAWATER_BUCKET.get(), "Imbued Seawater Bucket");
         add(TideItems.WAND.get(), "Driftwood Wand");
         add(TideItems.SEASHELL_ALLOY_INGOT.get(), "Seashell Alloy Ingot");
+        add(TideItems.MASCOT_HELMET.get(), "Dolphin Mascot Head");
     }
 }

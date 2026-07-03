@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bringthetide:block/turbulence_core",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bringthetide:block/turbulence_core"
+    },
+    "facing=south": {
+      "model": "bringthetide:block/turbulence_core",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bringthetide:block/turbulence_core",
+      "y": 270
+    }
+  }
+}

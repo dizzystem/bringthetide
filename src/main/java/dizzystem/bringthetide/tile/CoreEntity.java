@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 
 public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntity {
     public boolean poolFormed = false, poolFilled = false, scheduleCheckPool = false, scheduleRegisterCore = false;
-    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0;
+    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0, speed = 1;
     public float thalassity = 1f, renderThalassity = 0f;
     public ItemEntity craftingEntity;
     public ArrayList<Vec3i> missingBlocks = new ArrayList<>();
@@ -57,6 +57,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public BlockPos getPoolCentre(){ return poolCentre; }
     public boolean isPoolActive(){ return poolFilled; }
     public Map<BlockPos, Integer> getRenderOverlayData(){ return renderOverlayData; }
+    public int getSpeed(){ return speed; }
+    public int getTicksPerAction(){ return 80 / speed; }
 
     /**
      * The required additional blocks around the core to make it function as part of a ritual.
@@ -287,6 +289,25 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         PoolHandler.deleteCore(level, pos);
     }
 
+    public void makeSparkles() {
+        Level level = getLevel();
+        BlockPos[] poolFluids = this.poolFluids.toArray(new BlockPos[this.poolFluids.size()]);
+        RandomSource random = level.getRandom();
+
+        for (int i=0;i<4;i++){
+            if (random.nextInt(256) < this.poolFluids.size()){
+                BlockPos poolBlock = poolFluids[random.nextInt(0, poolFluids.length)];
+                level.addParticle(TideParticles.SPARKLE.get(),
+                        poolBlock.getX() + Math.random(),
+                        poolBlock.getY() + 1,
+                        poolBlock.getZ() + Math.random(),
+                        0,
+                        0,
+                        0);
+            }
+        }
+    }
+
     public void tickClient(){
         if (this.maxCraftingTimer > 0) {
             this.craftingTimer--;
@@ -302,22 +323,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         }
 
         if (this.poolFilled && this.getBlockPos().equals(this.poolCores.get(0))){
-            Level level = getLevel();
-            BlockPos[] poolFluids = this.poolFluids.toArray(new BlockPos[this.poolFluids.size()]);
-            RandomSource random = level.getRandom();
-
-            for (int i=0;i<4;i++){
-                if (random.nextInt(256) < this.poolFluids.size()){
-                    BlockPos poolBlock = poolFluids[random.nextInt(0, poolFluids.length)];
-                    level.addParticle(TideParticles.SPARKLE.get(),
-                            poolBlock.getX() + Math.random(),
-                            poolBlock.getY() + 1,
-                            poolBlock.getZ() + Math.random(),
-                            0,
-                            0,
-                            0);
-                }
-            }
+            makeSparkles();
         }
 
         if (this.scheduleRegisterCore){

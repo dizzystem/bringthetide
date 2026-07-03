@@ -2,7 +2,7 @@ package dizzystem.bringthetide.event;
 
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.client.render.CoreRenderer;
-import dizzystem.bringthetide.client.render.DepositionCoreRenderer;
+import dizzystem.bringthetide.client.render.ItemCoreRenderer;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -14,9 +14,11 @@ public class EntityRenderers {
     @SubscribeEvent
     public static void initClient(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(TideBlocks.EROSION_CORE_ENTITY.get(), CoreRenderer::new);
-        event.registerBlockEntityRenderer(TideBlocks.DEPOSITION_CORE_ENTITY.get(), DepositionCoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.DEPOSITION_CORE_ENTITY.get(), ItemCoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.SINKHOLE_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.CURRENT_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.VORTEX_CORE_ENTITY.get(), CoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.TRAWL_CORE_ENTITY.get(), CoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.TURBULENCE_CORE_ENTITY.get(), ItemCoreRenderer::new);
     }
 }

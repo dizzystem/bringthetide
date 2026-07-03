@@ -1,10 +1,9 @@
 package dizzystem.bringthetide.registration;
 
 import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.item.DolphinCostumeItem;
 import dizzystem.bringthetide.item.Wand;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,14 +25,18 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.SMALL_PRISMARINE_BUD.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_LOG_ITEM = ITEMS.register("driftwood_log",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_LOG.get(), new Item.Properties()));
-    public static final RegistryObject<Item> EROSION_CORE_ITEM = ITEMS.register("erosion_core",
-            () -> new BlockItem(TideBlocks.EROSION_CORE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> DEPOSITION_CORE_ITEM = ITEMS.register("deposition_core",
-            () -> new BlockItem(TideBlocks.DEPOSITION_CORE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> SINKHOLE_CORE_ITEM = ITEMS.register("sinkhole_core",
-            () -> new BlockItem(TideBlocks.SINKHOLE_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> CURRENT_CORE_ITEM = ITEMS.register("current_core",
             () -> new BlockItem(TideBlocks.CURRENT_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DEPOSITION_CORE_ITEM = ITEMS.register("deposition_core",
+            () -> new BlockItem(TideBlocks.DEPOSITION_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> EROSION_CORE_ITEM = ITEMS.register("erosion_core",
+            () -> new BlockItem(TideBlocks.EROSION_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SINKHOLE_CORE_ITEM = ITEMS.register("sinkhole_core",
+            () -> new BlockItem(TideBlocks.SINKHOLE_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> TRAWL_CORE_ITEM = ITEMS.register("trawl_core",
+            () -> new BlockItem(TideBlocks.TRAWL_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> TURBULENCE_CORE_ITEM = ITEMS.register("turbulence_core",
+            () -> new BlockItem(TideBlocks.TURBULENCE_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> VORTEX_CORE_ITEM = ITEMS.register("vortex_core",
             () -> new BlockItem(TideBlocks.VORTEX_CORE.get(), new Item.Properties()));
 
@@ -42,6 +45,8 @@ public class TideItems {
     public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);
     public static final RegistryObject<Item> SEASHELL_ALLOY_INGOT = ITEMS.register("seashell_alloy_ingot",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> MASCOT_HELMET = ITEMS.register("mascot_helmet",
+            DolphinCostumeItem::new);
 
     public static void init(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
