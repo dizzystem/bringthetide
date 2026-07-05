@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bringthetide:block/basin_core",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bringthetide:block/basin_core"
+    },
+    "facing=south": {
+      "model": "bringthetide:block/basin_core",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bringthetide:block/basin_core",
+      "y": 270
+    }
+  }
+}

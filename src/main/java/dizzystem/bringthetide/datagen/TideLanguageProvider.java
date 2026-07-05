@@ -24,7 +24,7 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.EROSION_CORE.get(), "Erosion Core");
         add(TideBlocks.SINKHOLE_CORE.get(), "Sinkhole Core");
         add(TideBlocks.TRAWL_CORE.get(), "Trawl Core");
-        add(TideBlocks.TURBULENCE_CORE.get(), "Turbulence Core");
+        add(TideBlocks.BASIN_CORE.get(), "Basin Core");
         add(TideBlocks.VORTEX_CORE.get(), "Vortex Core");
         add(TideItems.IMBUED_SEAWATER_BUCKET.get(), "Imbued Seawater Bucket");
         add(TideItems.WAND.get(), "Driftwood Wand");

@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -101,23 +102,23 @@ public class DepositionCoreEntity extends ItemCoreEntity {
 
         DepositionRecipe recipe = maybeRecipe.get();
         involvedCores.forEach(pos -> {
-                    if (level.getBlockEntity(pos) instanceof DepositionCoreEntity depositionCore){
-                        depositionCore.setMaxCraftingTimer(recipe.getCraftingTime() / getSpeed());
-                        depositionCore.setCraftingTimer(recipe.getCraftingTime() / getSpeed());
-                        depositionCore.setCraftingEntity(entity);
-                        BlockState blockState = level.getBlockState(pos);
-                        level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
-                        ((ServerLevel) level).sendParticles(TideParticles.SPLASH.get(),
-                                pos.getX() + .5,
-                                pos.getY() + 1.5,
-                                pos.getZ() + .5,
-                                10,
-                                0,
-                                0,
-                                0,
-                                0.1);
-                    }
-                });
+            if (level.getBlockEntity(pos) instanceof DepositionCoreEntity depositionCore){
+                depositionCore.setMaxCraftingTimer(recipe.getCraftingTime() / getSpeed());
+                depositionCore.setCraftingTimer(recipe.getCraftingTime() / getSpeed());
+                depositionCore.setCraftingEntity(entity);
+                BlockState blockState = level.getBlockState(pos);
+                level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
+                ((ServerLevel) level).sendParticles(TideParticles.SPLASH.get(),
+                        pos.getX() + .5,
+                        pos.getY() + 1.5,
+                        pos.getZ() + .5,
+                        10,
+                        0,
+                        0,
+                        0,
+                        0.1);
+            }
+        });
         PoolHandler.addOngoingCraft(entity, new OngoingCraft(involvedCores, recipe));
         //Stop the item entity's horizontal momentum so it doesn't float into another block and mess up
         // the animation.
@@ -167,18 +168,18 @@ public class DepositionCoreEntity extends ItemCoreEntity {
         for (var itemStack : depositionCatalysts){
             itemStack.split(1);
         }
-        BlockPos pos = entity.blockPosition();
-        ItemEntity outputEntity = new ItemEntity(level, pos.getX()+0.5,
-                this.getBlockPos().getY() + 1, pos.getZ()+0.5, output);
+        Vec3 pos = entity.position();
+        ItemEntity outputEntity = new ItemEntity(level, pos.x,
+                this.getBlockPos().getY() + 1, pos.z, output);
         outputEntity.setDeltaMovement(0, 0, 0);
         outputEntity.setNoGravity(true);
         outputEntity.setPickUpDelay(20);
         level.addFreshEntity(outputEntity);
 
         ((ServerLevel) level).sendParticles(TideParticles.SPLASH.get(),
-                pos.getX() + 0.5,
-                pos.getY() + 1.5,
-                pos.getZ() + 0.5,
+                pos.x,
+                pos.y + 1,
+                pos.z,
                 10,
                 0,
                 0,

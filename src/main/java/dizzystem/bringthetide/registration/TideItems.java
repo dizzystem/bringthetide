@@ -35,10 +35,13 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.SINKHOLE_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> TRAWL_CORE_ITEM = ITEMS.register("trawl_core",
             () -> new BlockItem(TideBlocks.TRAWL_CORE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> TURBULENCE_CORE_ITEM = ITEMS.register("turbulence_core",
-            () -> new BlockItem(TideBlocks.TURBULENCE_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> BASIN_CORE_ITEM = ITEMS.register("basin_core",
+            () -> new BlockItem(TideBlocks.BASIN_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> VORTEX_CORE_ITEM = ITEMS.register("vortex_core",
             () -> new BlockItem(TideBlocks.VORTEX_CORE.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> IMBUED_SEAWATER_ITEM = ITEMS.register("block_imbued_seawater",
+            () -> new BlockItem(TideBlocks.BLOCK_IMBUED_SEAWATER.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> IMBUED_SEAWATER_BUCKET = ITEMS.register("imbued_seawater_bucket",
             () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));

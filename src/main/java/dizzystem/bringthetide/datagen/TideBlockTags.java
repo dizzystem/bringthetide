@@ -40,7 +40,7 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(TideBlocks.EROSION_CORE.get())
                 .add(TideBlocks.SINKHOLE_CORE.get())
                 .add(TideBlocks.TRAWL_CORE.get())
-                .add(TideBlocks.TURBULENCE_CORE.get())
+                .add(TideBlocks.BASIN_CORE.get())
                 .add(TideBlocks.VORTEX_CORE.get());
     }
 }

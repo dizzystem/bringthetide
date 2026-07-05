@@ -2,10 +2,7 @@ package dizzystem.bringthetide.event;
 
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.BringTheTide;
-import dizzystem.bringthetide.client.particle.BubbleParticleProvider;
-import dizzystem.bringthetide.client.particle.SparkleParticleProvider;
-import dizzystem.bringthetide.client.particle.SplashParticleProvider;
-import dizzystem.bringthetide.client.particle.WhirlpoolParticleProvider;
+import dizzystem.bringthetide.client.particle.*;
 import dizzystem.bringthetide.registration.TideParticles;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,5 +17,6 @@ public class RegisterParticleProviders {
         event.registerSpriteSet(TideParticles.SPLASH.get(), SplashParticleProvider::new);
         event.registerSpriteSet(TideParticles.BUBBLE.get(), BubbleParticleProvider::new);
         event.registerSpriteSet(TideParticles.SPARKLE.get(), SparkleParticleProvider::new);
+        event.registerSpriteSet(TideParticles.DROPLET.get(), DropletParticleProvider::new);
     }
 }

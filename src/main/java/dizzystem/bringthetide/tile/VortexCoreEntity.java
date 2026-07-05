@@ -72,6 +72,7 @@ public class VortexCoreEntity extends CoreEntity {
         fp.setPos(attackPos);
         livingEntity.hurt(livingEntity.damageSources().playerAttack(fp), 6);
         livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().scale(0.5));
+        fp.setPos(0, 0, 0);
 
         ((ServerLevel) level).sendParticles(TideParticles.BUBBLE.get(),
                 attackPos.x,

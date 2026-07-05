@@ -130,7 +130,7 @@ public class ItemCoreRenderer extends CoreRenderer {
         poseStack.mulPose(cameraRotation);
         //align the centre of our sprite to the centre of the item
         //this needs to happen after rotation so that the rotation happens around the same point for both renders
-        poseStack.translate(-0.96f, -0.96f, 0f);
+        poseStack.translate(-0.925f, -0.925f, 0f);
 
         VertexConsumer builder = bufferSource.getBuffer(RenderType.cutout());
         renderIconFullBright(poseStack, builder,

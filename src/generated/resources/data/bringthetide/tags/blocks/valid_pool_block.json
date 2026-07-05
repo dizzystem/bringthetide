@@ -16,7 +16,7 @@
     "bringthetide:erosion_core",
     "bringthetide:sinkhole_core",
     "bringthetide:trawl_core",
-    "bringthetide:turbulence_core",
+    "bringthetide:basin_core",
     "bringthetide:vortex_core"
   ]
 }

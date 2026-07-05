@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bringthetide:turbulence_core"
+          "name": "bringthetide:basin_core"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bringthetide:blocks/turbulence_core"
+  "random_sequence": "bringthetide:blocks/basin_core"
 }

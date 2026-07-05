@@ -1,6 +1,7 @@
 package dizzystem.bringthetide.registration;
 
 import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.client.particle.DropletParticleType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -21,6 +22,8 @@ public class TideParticles {
             () -> new SimpleParticleType(false));
     public static final Supplier<SimpleParticleType> SPARKLE = PARTICLE_TYPES.register("sparkle",
             () -> new SimpleParticleType(false));
+    public static final Supplier<DropletParticleType> DROPLET = PARTICLE_TYPES.register("droplet",
+            () -> new DropletParticleType(false));
 
     public static void init(IEventBus modEventBus) {
         PARTICLE_TYPES.register(modEventBus);

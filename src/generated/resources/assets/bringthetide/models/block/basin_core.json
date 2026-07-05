@@ -3,6 +3,6 @@
   "textures": {
     "front": "bringthetide:block/core_prismarine_face",
     "side": "bringthetide:block/core_prismarine",
-    "top": "bringthetide:block/turbulence_core"
+    "top": "bringthetide:block/basin_core"
   }
 }

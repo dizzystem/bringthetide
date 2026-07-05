@@ -17,12 +17,15 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 public class ErosionRecipe implements Recipe<RecipeWrapper> {
+    public static final int DEFAULT_CRAFTING_TIME = 80;
     private final Ingredient ingredient;
     private final ItemStack result;
+    private final int craftingTime;
 
-    public ErosionRecipe(Ingredient ingredient, ItemStack result){
+    public ErosionRecipe(Ingredient ingredient, ItemStack result, int craftingTime){
         this.ingredient = ingredient;
         this.result = result;
+        this.craftingTime = craftingTime;
     }
 
     @Override
@@ -30,6 +33,10 @@ public class ErosionRecipe implements Recipe<RecipeWrapper> {
         NonNullList<Ingredient> list = NonNullList.create();
         list.add(this.ingredient);
         return list;
+    }
+
+    public int getCraftingTime() {
+        return craftingTime;
     }
 
     @Override
@@ -85,7 +92,8 @@ public class ErosionRecipe implements Recipe<RecipeWrapper> {
                 throw new com.google.gson.JsonSyntaxException("Missing result, expected to find a string or object");
             JsonObject resultJson = GsonHelper.getAsJsonObject(jsonObject, "result");
             ItemStack itemstack = ShapedRecipe.itemStackFromJson(resultJson);
-            return new ErosionRecipe(ingredient, itemstack);
+            int craftingTime = GsonHelper.getAsInt(jsonObject, "craftingTime", DEFAULT_CRAFTING_TIME);
+            return new ErosionRecipe(ingredient, itemstack, craftingTime);
         }
 
         @Override
@@ -93,7 +101,8 @@ public class ErosionRecipe implements Recipe<RecipeWrapper> {
         public ErosionRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
             ItemStack itemstack = buffer.readItem();
-            return new ErosionRecipe(ingredient, itemstack);
+            int craftingTime = buffer.readInt();
+            return new ErosionRecipe(ingredient, itemstack, craftingTime);
         }
 
         @Override
@@ -101,6 +110,7 @@ public class ErosionRecipe implements Recipe<RecipeWrapper> {
         public void toNetwork(FriendlyByteBuf buffer, ErosionRecipe recipe) {
             recipe.ingredient.toNetwork(buffer);
             buffer.writeItem(recipe.result);
+            buffer.writeInt(recipe.craftingTime);
         }
     }
 }

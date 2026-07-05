@@ -34,8 +34,8 @@ public class TideBlockStates extends BlockStateProvider {
                 modLoc("block/core_prismarine_face"), modLoc("block/deposition_core"));
         horizontalBlock(TideBlocks.TRAWL_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/trawl_core"));
-        horizontalBlock(TideBlocks.TURBULENCE_CORE.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/turbulence_core"));
+        horizontalBlock(TideBlocks.BASIN_CORE.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/basin_core"));
 
         simpleBlock(TideBlocks.BLOCK_IMBUED_SEAWATER.get(),
                 models().cubeAll("block_imbued_seawater", modLoc("block/fluids/imbued_seawater")));
