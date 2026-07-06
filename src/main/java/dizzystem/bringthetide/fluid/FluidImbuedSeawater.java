@@ -42,7 +42,7 @@ public abstract class FluidImbuedSeawater extends ForgeFlowingFluid {
                 TideFluids.TYPE_IMBUED_SEAWATER,
                 TideFluids.IMBUED_SEAWATER,
                 TideFluids.FLOWING_IMBUED_SEAWATER
-        ).block(TideBlocks.BLOCK_IMBUED_SEAWATER).bucket(TideItems.IMBUED_SEAWATER_BUCKET));
+        ).block(TideBlocks.BLOCK_IMBUED_SEAWATER));
     }
 
     public static class Flowing extends FluidImbuedSeawater {

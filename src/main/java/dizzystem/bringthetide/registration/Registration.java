@@ -20,11 +20,19 @@ public class Registration {
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(TideItems.BUDDING_PRISMARINE_ITEM);
-            event.accept(TideItems.IMBUED_SEAWATER_BUCKET);
             event.accept(TideItems.DRIFTWOOD_LOG_ITEM);
+            event.accept(TideItems.BASIN_CORE_ITEM);
+            event.accept(TideItems.CURRENT_CORE_ITEM);
+            event.accept(TideItems.DEPOSITION_CORE_ITEM);
+            event.accept(TideItems.EROSION_CORE_ITEM);
+            event.accept(TideItems.SINKHOLE_CORE_ITEM);
+            event.accept(TideItems.TRAWL_CORE_ITEM);
+            event.accept(TideItems.VORTEX_CORE_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.accept(TideItems.WAND);
+            event.accept(TideItems.DRIFTWOOD_WAND);
+            event.accept(TideItems.CREATIVE_WAND);
+            event.accept(TideItems.MASCOT_HELMET);
         }
     }
 

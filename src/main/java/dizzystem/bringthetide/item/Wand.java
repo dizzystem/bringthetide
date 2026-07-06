@@ -5,6 +5,7 @@ import dizzystem.bringthetide.util.MultiblockChecker;
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -21,9 +23,12 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class Wand extends Item {
-    public Wand (){
+import java.util.List;
+
+public abstract class Wand extends Item {
+    public Wand(){
         super(new Item.Properties().stacksTo(1));
     }
 
@@ -53,4 +58,6 @@ public class Wand extends Item {
 
         return InteractionResult.PASS;
     }
+
+    public abstract int getWandPower();
 }

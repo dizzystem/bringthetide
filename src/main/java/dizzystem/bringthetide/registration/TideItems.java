@@ -1,8 +1,9 @@
 package dizzystem.bringthetide.registration;
 
 import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.item.CreativeWand;
 import dizzystem.bringthetide.item.DolphinCostumeItem;
-import dizzystem.bringthetide.item.Wand;
+import dizzystem.bringthetide.item.DriftwoodWand;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -40,12 +41,10 @@ public class TideItems {
     public static final RegistryObject<Item> VORTEX_CORE_ITEM = ITEMS.register("vortex_core",
             () -> new BlockItem(TideBlocks.VORTEX_CORE.get(), new Item.Properties()));
 
-    public static final RegistryObject<Item> IMBUED_SEAWATER_ITEM = ITEMS.register("block_imbued_seawater",
-            () -> new BlockItem(TideBlocks.BLOCK_IMBUED_SEAWATER.get(), new Item.Properties()));
-
-    public static final RegistryObject<Item> IMBUED_SEAWATER_BUCKET = ITEMS.register("imbued_seawater_bucket",
-            () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));
-    public static final RegistryObject<Item> WAND = ITEMS.register("wand", Wand::new);
+//    public static final RegistryObject<Item> IMBUED_SEAWATER_BUCKET = ITEMS.register("imbued_seawater_bucket",
+//            () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_WAND = ITEMS.register("driftwood_wand", DriftwoodWand::new);
+    public static final RegistryObject<Item> CREATIVE_WAND = ITEMS.register("creative_wand", CreativeWand::new);
     public static final RegistryObject<Item> SEASHELL_ALLOY_INGOT = ITEMS.register("seashell_alloy_ingot",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MASCOT_HELMET = ITEMS.register("mascot_helmet",

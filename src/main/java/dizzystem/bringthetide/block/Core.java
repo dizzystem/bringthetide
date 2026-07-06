@@ -131,11 +131,13 @@ public abstract class Core extends Block implements EntityBlock {
             result = FluidUtil.tryEmptyContainer(item, fluidHandler, ErosionCoreEntity.TANK_CAPACITY,
                     player, true);
             if (result.isSuccess()){ //put in fluid
-                if (item.getCount() > 1){
-                    item.shrink(1);
-                    player.getInventory().placeItemBackInInventory(result.result);
-                } else {
-                    player.setItemInHand(hand, result.result);
+                if (!player.isCreative()) {
+                    if (item.getCount() > 1) {
+                        item.shrink(1);
+                        player.getInventory().placeItemBackInInventory(result.result);
+                    } else {
+                        player.setItemInHand(hand, result.result);
+                    }
                 }
                 be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
                 return InteractionResult.sidedSuccess(level.isClientSide());

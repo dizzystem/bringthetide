@@ -4,6 +4,7 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideItems;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -29,9 +30,12 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.SINKHOLE_CORE.getId().getPath(), modLoc("block/sinkhole_core"));
         withExistingParent(TideBlocks.VORTEX_CORE.getId().getPath(), modLoc("block/vortex_core"));
 
-        basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
-        basicItem(TideItems.WAND.get());
+        //basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
+        basicItem(TideItems.DRIFTWOOD_WAND.get());
+        basicItem(TideItems.CREATIVE_WAND.get());
         basicItem(TideItems.SEASHELL_ALLOY_INGOT.get());
         basicItem(TideItems.MASCOT_HELMET.get());
+        //for our patchouli book
+        basicItem(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "atlas"));
     }
 }

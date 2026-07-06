@@ -1,5 +1,6 @@
 package dizzystem.bringthetide.tile;
 
+import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.client.particle.DropletParticleType;
 import dizzystem.bringthetide.recipe.ErosionRecipe;
 import dizzystem.bringthetide.registration.TideBlocks;
@@ -117,6 +118,8 @@ public class ErosionCoreEntity extends FluidCoreEntity {
                 erosionCore.setMaxCraftingTimer(0);
                 erosionCore.setCraftingTimer(0);
                 erosionCore.setCraftingEntity(null);
+                BlockState blockState = level.getBlockState(pos);
+                level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
         });
 
@@ -159,6 +162,7 @@ public class ErosionCoreEntity extends FluidCoreEntity {
                 0,
                 0.25);
     }
+    /* ===end Crafting=== */
 
     public void tickClient() {
         super.tickClient();
@@ -169,7 +173,8 @@ public class ErosionCoreEntity extends FluidCoreEntity {
 
         Level level = getLevel();
         RandomSource random = level.getRandom();
-        if (this.craftingEntity != null && !this.getFluid().isEmpty() && random.nextInt(5) == 0){
+        if (this.craftingEntity != null && !this.getFluid().isEmpty() &&
+                random.nextInt(5) == 0){
             Vec3 bubblePos = getBlockPos().getCenter().add(0, 0.8, 0).add(
                     0.25 - 0.5 * random.nextFloat(),
                     0.25 - 0.5 * random.nextFloat(),

@@ -1,5 +1,6 @@
 package dizzystem.bringthetide.tile;
 
+import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -155,6 +156,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         tag.putInt("craftingTimer", this.craftingTimer);
         if (this.craftingEntity != null){
             tag.putInt("craftingEntity", this.craftingEntity.getId());
+        } else {
+            tag.putInt("craftingEntity", -1);
         }
         tag.putFloat("fillQuota", this.thalassity);
         tag.putBoolean("poolFormed", this.poolFormed);
@@ -173,8 +176,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         this.maxCraftingTimer = tag.getInt("maxCraftingTimer");
         this.craftingTimer = tag.getInt("craftingTimer");
         int entityId = tag.getInt("craftingEntity");
-        if (entityId != 0){
-            this.craftingEntity = (ItemEntity) level.getEntity(tag.getInt("craftingEntity"));
+        if (entityId == -1) {
+            this.craftingEntity = null;
+        } else {
+            this.craftingEntity = (ItemEntity) level.getEntity(entityId);
         }
         this.thalassity = tag.getInt("fillQuota");
         this.poolFormed = tag.getBoolean("poolFormed");
@@ -502,11 +507,6 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         this.scheduleCheckPool = true;
     }
 
-    public float getThalassityCost(Player player, ItemStack wand, Level level){
-        //todo: add wand tiers, gear that reduces cost
-        return 0.25f;
-    }
-
     public boolean placeFluid(Player player, ItemStack wand, Level level, BlockPos pos){
         if (!this.poolFormed){
             return false;
@@ -515,7 +515,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             return false;
         }
 
-        thalassity -= getThalassityCost(player, wand, level);
+        thalassity -= PoolHandler.getThalassityCost(player, wand, level);
 
         schedulePoolCheck();
         return true;

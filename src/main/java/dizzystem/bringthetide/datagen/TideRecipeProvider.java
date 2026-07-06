@@ -16,6 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.api.PatchouliConfigAccess;
 
 import java.util.function.Consumer;
 
@@ -52,13 +54,24 @@ public class TideRecipeProvider extends RecipeProvider {
                 .result(new ItemStack(TideItems.SEASHELL_ALLOY_INGOT.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_seashellalloyingot"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.WAND.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_WAND.get())
                 .pattern("  x")
                 .pattern(" x ")
                 .pattern("x  ")
                 .define('x', TideItems.DRIFTWOOD_LOG_ITEM.get())
                 .unlockedBy("has_driftwood", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.DRIFTWOOD_LOG_ITEM.get()))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.EROSION_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("GBG")
+                .pattern("---")
+                .define('-', Items.SANDSTONE_SLAB)
+                .define('G', Items.GRAVEL)
+                .define('B', Items.WATER_BUCKET)
+                .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.GRAVEL))
                 .save(consumer);
     };
 }

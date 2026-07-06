@@ -2,6 +2,7 @@ package dizzystem.bringthetide.util;
 
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
+import dizzystem.bringthetide.item.Wand;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -11,6 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -376,5 +378,15 @@ public class PoolHandler {
         }
 
         return false;
+    }
+
+    public static float getThalassityCost(Player player, ItemStack wand, Level level){
+        int totalPower = 0;
+
+        if (wand.getItem() instanceof Wand wandType){
+            totalPower += wandType.getWandPower();
+        }
+
+        return 1f / totalPower;
     }
 }

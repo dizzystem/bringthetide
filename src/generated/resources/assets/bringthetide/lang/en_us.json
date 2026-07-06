@@ -1,5 +1,6 @@
 {
   "block.bringthetide.basin_core": "Basin Core",
+  "block.bringthetide.block_imbued_seawater": "Imbued Seawater",
   "block.bringthetide.budding_prismarine": "Budding Prismarine",
   "block.bringthetide.current_core": "Current Core",
   "block.bringthetide.deposition_core": "Deposition Core",
@@ -12,8 +13,8 @@
   "block.bringthetide.small_prismarine_bud": "Small Prismarine Bud",
   "block.bringthetide.trawl_core": "Trawl Core",
   "block.bringthetide.vortex_core": "Vortex Core",
-  "item.bringthetide.imbued_seawater_bucket": "Imbued Seawater Bucket",
+  "item.bringthetide.creative_wand": "Creative Wand",
+  "item.bringthetide.driftwood_wand": "Driftwood Wand",
   "item.bringthetide.mascot_helmet": "Dolphin Mascot Head",
-  "item.bringthetide.seashell_alloy_ingot": "Seashell Alloy Ingot",
-  "item.bringthetide.wand": "Driftwood Wand"
+  "item.bringthetide.seashell_alloy_ingot": "Seashell Alloy Ingot"
 }

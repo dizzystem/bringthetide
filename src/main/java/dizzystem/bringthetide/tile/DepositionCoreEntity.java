@@ -133,6 +133,8 @@ public class DepositionCoreEntity extends ItemCoreEntity {
                 depositionCore.setMaxCraftingTimer(0);
                 depositionCore.setCraftingTimer(0);
                 depositionCore.setCraftingEntity(null);
+                BlockState blockState = level.getBlockState(pos);
+                level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
         });
 

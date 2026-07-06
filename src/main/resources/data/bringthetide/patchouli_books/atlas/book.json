@@ -1,0 +1,9 @@
+{
+  "name": "An Atlas of the Tides",
+  "landing_text" : "A pool is a boundary. Inside, the Primordial Sea, or a facsimile thereof; outside, dry land. But what if I could trespass upon this boundary? What if I were to open the gates and bring the tide to this world?",
+  "version" : 1,
+  "creative_tab": "minecraft:tools_and_utilities",
+  "use_resource_pack": true,
+  "filler_texture": "bringthetide:textures/gui/page_filler.png",
+  "model": "bringthetide:atlas"
+}

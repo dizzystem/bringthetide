@@ -27,7 +27,7 @@ public class Droplet extends TextureSheetParticle {
         super(level, x, y, z);
         this.spriteSet = spriteSet;
         this.lifetime = 10;
-        //this.scale(0.25f);
+        this.scale(0.5f);
         this.xd = xSpeed;
         this.yd = ySpeed;
         this.zd = zSpeed;
