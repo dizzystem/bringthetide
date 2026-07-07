@@ -34,7 +34,10 @@ public class TideItemModels extends ItemModelProvider {
         basicItem(TideItems.DRIFTWOOD_WAND.get());
         basicItem(TideItems.CREATIVE_WAND.get());
         basicItem(TideItems.SEASHELL_ALLOY_INGOT.get());
-        basicItem(TideItems.MASCOT_HELMET.get());
+        basicItem(TideItems.COSTUME_HELMET.get());
+        basicItem(TideItems.COSTUME_CHESTPLATE.get());
+        basicItem(TideItems.COSTUME_LEGGINGS.get());
+        basicItem(TideItems.COSTUME_BOOTS.get());
         //for our patchouli book
         basicItem(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "atlas"));
     }

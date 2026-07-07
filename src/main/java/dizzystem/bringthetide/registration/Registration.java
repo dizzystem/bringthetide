@@ -32,7 +32,10 @@ public class Registration {
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(TideItems.DRIFTWOOD_WAND);
             event.accept(TideItems.CREATIVE_WAND);
-            event.accept(TideItems.MASCOT_HELMET);
+            event.accept(TideItems.COSTUME_HELMET);
+            event.accept(TideItems.COSTUME_CHESTPLATE);
+            event.accept(TideItems.COSTUME_LEGGINGS);
+            event.accept(TideItems.COSTUME_BOOTS);
         }
     }
 

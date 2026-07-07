@@ -14,8 +14,8 @@ import javax.annotation.Nullable;
 public class DolphinCostumeItem extends AbstractArmorItem {
     private static final String TEXTURE_LOCATION = makeCustomTextureLocation(BringTheTide.MODID, "dolphin_costume");
 
-    public DolphinCostumeItem(){
-        super(ArmorMaterials.DIAMOND, Type.HELMET, new Properties().rarity(Rarity.RARE));
+    public DolphinCostumeItem(Type type){
+        super(ArmorMaterials.DIAMOND, type, new Properties().rarity(Rarity.RARE));
     }
 
     @Override

@@ -31,6 +31,9 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideItems.DRIFTWOOD_WAND.get(), "Driftwood Wand");
         add(TideItems.CREATIVE_WAND.get(), "Creative Wand");
         add(TideItems.SEASHELL_ALLOY_INGOT.get(), "Seashell Alloy Ingot");
-        add(TideItems.MASCOT_HELMET.get(), "Dolphin Mascot Head");
+        add(TideItems.COSTUME_HELMET.get(), "Dolphin Costume Head");
+        add(TideItems.COSTUME_CHESTPLATE.get(), "Dolphin Costume Body");
+        add(TideItems.COSTUME_LEGGINGS.get(), "Dolphin Costume Legs");
+        add(TideItems.COSTUME_BOOTS.get(), "Dolphin Costume Shoes");
     }
 }

@@ -47,8 +47,14 @@ public class TideItems {
     public static final RegistryObject<Item> CREATIVE_WAND = ITEMS.register("creative_wand", CreativeWand::new);
     public static final RegistryObject<Item> SEASHELL_ALLOY_INGOT = ITEMS.register("seashell_alloy_ingot",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> MASCOT_HELMET = ITEMS.register("mascot_helmet",
-            DolphinCostumeItem::new);
+    public static final RegistryObject<Item> COSTUME_HELMET = ITEMS.register("costume_helmet",
+            () -> new DolphinCostumeItem(ArmorItem.Type.HELMET));
+    public static final RegistryObject<Item> COSTUME_CHESTPLATE = ITEMS.register("costume_chestplate",
+            () -> new DolphinCostumeItem(ArmorItem.Type.CHESTPLATE));
+    public static final RegistryObject<Item> COSTUME_LEGGINGS = ITEMS.register("costume_leggings",
+            () -> new DolphinCostumeItem(ArmorItem.Type.LEGGINGS));
+    public static final RegistryObject<Item> COSTUME_BOOTS = ITEMS.register("costume_boots",
+            () -> new DolphinCostumeItem(ArmorItem.Type.BOOTS));
 
     public static void init(IEventBus modEventBus) {
         ITEMS.register(modEventBus);
