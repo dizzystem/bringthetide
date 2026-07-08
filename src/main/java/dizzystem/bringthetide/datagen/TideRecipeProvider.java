@@ -53,6 +53,45 @@ public class TideRecipeProvider extends RecipeProvider {
                 .catalyst(Ingredient.of(Items.NAUTILUS_SHELL))
                 .result(new ItemStack(TideItems.SEASHELL_ALLOY_INGOT.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_seashellalloyingot"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.LEATHER))
+                .catalyst(Ingredient.of(Items.KELP))
+                .catalyst(Ingredient.of(Items.BONE_MEAL))
+                .result(new ItemStack(TideItems.SEABOUND_SKIN.get(), 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_seaboundskin"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TideItems.COSTUME_HELMET.get())
+                .pattern("xxx")
+                .pattern("x x")
+                .pattern("   ")
+                .define('x', TideItems.SEABOUND_SKIN.get())
+                .unlockedBy("has_skins", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEABOUND_SKIN.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TideItems.COSTUME_CHESTPLATE.get())
+                .pattern("x x")
+                .pattern("xxx")
+                .pattern("xxx")
+                .define('x', TideItems.SEABOUND_SKIN.get())
+                .unlockedBy("has_skins", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEABOUND_SKIN.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TideItems.COSTUME_LEGGINGS.get())
+                .pattern("xxx")
+                .pattern("x x")
+                .pattern("x x")
+                .define('x', TideItems.SEABOUND_SKIN.get())
+                .unlockedBy("has_skins", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEABOUND_SKIN.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TideItems.COSTUME_BOOTS.get())
+                .pattern("x x")
+                .pattern("x x")
+                .pattern("   ")
+                .define('x', TideItems.SEABOUND_SKIN.get())
+                .unlockedBy("has_skins", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEABOUND_SKIN.get()))
+                .save(consumer);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_WAND.get())
                 .pattern("  x")

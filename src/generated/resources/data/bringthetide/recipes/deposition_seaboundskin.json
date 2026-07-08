@@ -1,0 +1,21 @@
+{
+  "type": "bringthetide:deposition",
+  "catalysts": [
+    {
+      "item": "minecraft:kelp"
+    },
+    {
+      "item": "minecraft:string"
+    }
+  ],
+  "mainIngredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "bringthetide:seabound_skin"
+  }
+}

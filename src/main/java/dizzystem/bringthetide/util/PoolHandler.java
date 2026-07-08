@@ -2,6 +2,7 @@ package dizzystem.bringthetide.util;
 
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
+import dizzystem.bringthetide.item.DolphinCostumeItem;
 import dizzystem.bringthetide.item.Wand;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
@@ -385,6 +386,14 @@ public class PoolHandler {
 
         if (wand.getItem() instanceof Wand wandType){
             totalPower += wandType.getWandPower();
+        }
+        for (ItemStack equipment : player.getArmorSlots()){
+            if (equipment.isEmpty()){
+                continue;
+            }
+            if (equipment.getItem() instanceof DolphinCostumeItem costumeItem){
+                totalPower += costumeItem.getWandPower();
+            }
         }
 
         return 1f / totalPower;

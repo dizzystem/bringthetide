@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "bringthetide:seabound_skin"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "x x",
+    "   "
+  ],
+  "result": {
+    "item": "bringthetide:costume_helmet"
+  },
+  "show_notification": true
+}

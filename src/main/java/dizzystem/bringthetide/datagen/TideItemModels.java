@@ -34,6 +34,7 @@ public class TideItemModels extends ItemModelProvider {
         basicItem(TideItems.DRIFTWOOD_WAND.get());
         basicItem(TideItems.CREATIVE_WAND.get());
         basicItem(TideItems.SEASHELL_ALLOY_INGOT.get());
+        basicItem(TideItems.SEABOUND_SKIN.get());
         basicItem(TideItems.COSTUME_HELMET.get());
         basicItem(TideItems.COSTUME_CHESTPLATE.get());
         basicItem(TideItems.COSTUME_LEGGINGS.get());

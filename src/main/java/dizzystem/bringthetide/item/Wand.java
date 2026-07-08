@@ -3,6 +3,7 @@ package dizzystem.bringthetide.item;
 import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.util.MultiblockChecker;
 import dizzystem.bringthetide.util.PoolHandler;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -12,10 +13,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -29,7 +27,7 @@ import java.util.List;
 
 public abstract class Wand extends Item {
     public Wand(){
-        super(new Item.Properties().stacksTo(1));
+        super(new Item.Properties().stacksTo(1).rarity(Rarity.RARE));
     }
 
     @Override
@@ -60,4 +58,11 @@ public abstract class Wand extends Item {
     }
 
     public abstract int getWandPower();
+
+    @Override
+    public void appendHoverText(ItemStack item, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(item, level, tooltip, flag);
+        tooltip.add(Component.translatable("Wand Power: ")
+                .append(((Integer) getWandPower()).toString()).withStyle(ChatFormatting.AQUA));
+    }
 }
