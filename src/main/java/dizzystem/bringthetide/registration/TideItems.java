@@ -40,6 +40,18 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.BASIN_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> VORTEX_CORE_ITEM = ITEMS.register("vortex_core",
             () -> new BlockItem(TideBlocks.VORTEX_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FLOW_UPGRADE_ITEM = ITEMS.register("flow_upgrade",
+            () -> new BlockItem(TideBlocks.FLOW_UPGRADE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> BOOTY_UPGRADE_ITEM = ITEMS.register("booty_upgrade",
+            () -> new BlockItem(TideBlocks.BOOTY_UPGRADE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> RANGE_UPGRADE_ITEM = ITEMS.register("range_upgrade",
+            () -> new BlockItem(TideBlocks.RANGE_UPGRADE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ITEM_FILTER_ITEM = ITEMS.register("item_filter",
+            () -> new BlockItem(TideBlocks.ITEM_FILTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FLUID_FILTER_ITEM = ITEMS.register("fluid_filter",
+            () -> new BlockItem(TideBlocks.FLUID_FILTER.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ENTITY_FILTER_ITEM = ITEMS.register("entity_filter",
+            () -> new BlockItem(TideBlocks.ENTITY_FILTER.get(), new Item.Properties()));
 
 //    public static final RegistryObject<Item> IMBUED_SEAWATER_BUCKET = ITEMS.register("imbued_seawater_bucket",
 //            () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));

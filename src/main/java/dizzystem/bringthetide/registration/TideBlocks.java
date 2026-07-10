@@ -64,6 +64,18 @@ public class TideBlocks {
             BasinCore::new);
     public static final RegistryObject<Block> VORTEX_CORE = BLOCKS.register("vortex_core",
             VortexCore::new);
+    public static final RegistryObject<Block> FLOW_UPGRADE = BLOCKS.register("flow_upgrade",
+            FlowUpgrade::new);
+    public static final RegistryObject<Block> BOOTY_UPGRADE = BLOCKS.register("booty_upgrade",
+            BootyUpgrade::new);
+    public static final RegistryObject<Block> RANGE_UPGRADE = BLOCKS.register("range_upgrade",
+            RangeUpgrade::new);
+    public static final RegistryObject<Block> ITEM_FILTER = BLOCKS.register("item_filter",
+            ItemFilter::new);
+    public static final RegistryObject<Block> FLUID_FILTER = BLOCKS.register("fluid_filter",
+            FluidFilter::new);
+    public static final RegistryObject<Block> ENTITY_FILTER = BLOCKS.register("entity_filter",
+            EntityFilter::new);
     public static final RegistryObject<LiquidBlock> BLOCK_IMBUED_SEAWATER = BLOCKS.register(
             "block_imbued_seawater", BlockImbuedSeawater::new);
 
@@ -88,6 +100,24 @@ public class TideBlocks {
     public static final RegistryObject<BlockEntityType<VortexCoreEntity>> VORTEX_CORE_ENTITY =
             BLOCK_ENTITIES.register("vortex_core_entity",
                     () -> BlockEntityType.Builder.of(VortexCoreEntity::new, VORTEX_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FlowUpgradeEntity>> FLOW_UPGRADE_ENTITY =
+            BLOCK_ENTITIES.register("flow_upgrade_entity",
+                    () -> BlockEntityType.Builder.of(FlowUpgradeEntity::new, FLOW_UPGRADE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<BootyUpgradeEntity>> BOOTY_UPGRADE_ENTITY =
+            BLOCK_ENTITIES.register("booty_upgrade_entity",
+                    () -> BlockEntityType.Builder.of(BootyUpgradeEntity::new, BOOTY_UPGRADE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<RangeUpgradeEntity>> RANGE_UPGRADE_ENTITY =
+            BLOCK_ENTITIES.register("range_upgrade_entity",
+                    () -> BlockEntityType.Builder.of(RangeUpgradeEntity::new, RANGE_UPGRADE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ItemFilterEntity>> ITEM_FILTER_ENTITY =
+            BLOCK_ENTITIES.register("item_filter_entity",
+                    () -> BlockEntityType.Builder.of(ItemFilterEntity::new, ITEM_FILTER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<FluidFilterEntity>> FLUID_FILTER_ENTITY =
+            BLOCK_ENTITIES.register("fluid_filter_entity",
+                    () -> BlockEntityType.Builder.of(FluidFilterEntity::new, FLUID_FILTER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<EntityFilterEntity>> ENTITY_FILTER_ENTITY =
+            BLOCK_ENTITIES.register("entity_filter_entity",
+                    () -> BlockEntityType.Builder.of(EntityFilterEntity::new, ENTITY_FILTER.get()).build(null));
 
     public static void init(IEventBus modEventBus) {
         BLOCKS.register(modEventBus);

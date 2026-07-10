@@ -37,6 +37,20 @@ public class TideBlockStates extends BlockStateProvider {
         horizontalBlock(TideBlocks.BASIN_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/basin_core"));
 
+        //upgrades
+        horizontalBlock(TideBlocks.FLOW_UPGRADE.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
+        horizontalBlock(TideBlocks.BOOTY_UPGRADE.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
+        horizontalBlock(TideBlocks.RANGE_UPGRADE.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
+        horizontalBlock(TideBlocks.ITEM_FILTER.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
+        horizontalBlock(TideBlocks.FLUID_FILTER.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
+        horizontalBlock(TideBlocks.ENTITY_FILTER.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
+
         simpleBlock(TideBlocks.BLOCK_IMBUED_SEAWATER.get(),
                 models().cubeAll("block_imbued_seawater", modLoc("block/fluids/imbued_seawater")));
     }

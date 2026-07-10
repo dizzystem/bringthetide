@@ -17,6 +17,12 @@
     "bringthetide:sinkhole_core",
     "bringthetide:trawl_core",
     "bringthetide:basin_core",
-    "bringthetide:vortex_core"
+    "bringthetide:vortex_core",
+    "bringthetide:flow_upgrade",
+    "bringthetide:booty_upgrade",
+    "bringthetide:range_upgrade",
+    "bringthetide:item_filter",
+    "bringthetide:fluid_filter",
+    "bringthetide:entity_filter"
   ]
 }

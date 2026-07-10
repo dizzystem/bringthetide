@@ -27,6 +27,12 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.TRAWL_CORE.get(), "Trawl Core");
         add(TideBlocks.BASIN_CORE.get(), "Basin Core");
         add(TideBlocks.VORTEX_CORE.get(), "Vortex Core");
+        add(TideBlocks.FLOW_UPGRADE.get(), "Flow Upgrade");
+        add(TideBlocks.BOOTY_UPGRADE.get(), "Booty Upgrade");
+        add(TideBlocks.RANGE_UPGRADE.get(), "Range Upgrade");
+        add(TideBlocks.ITEM_FILTER.get(), "Item Filter Upgrade");
+        add(TideBlocks.FLUID_FILTER.get(), "Fluid Filter Upgrade");
+        add(TideBlocks.ENTITY_FILTER.get(), "Entity Filter Upgrade");
         add(TideBlocks.BLOCK_IMBUED_SEAWATER.get(), "Imbued Seawater");
 
         add(TideFluids.TYPE_IMBUED_SEAWATER.getId().getPath(), "Imbued Seawater");

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bringthetide:block/entity_filter",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bringthetide:block/entity_filter"
+    },
+    "facing=south": {
+      "model": "bringthetide:block/entity_filter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bringthetide:block/entity_filter",
+      "y": 270
+    }
+  }
+}

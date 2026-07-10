@@ -36,8 +36,8 @@ import java.util.stream.Collectors;
 
 public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntity {
     public boolean poolFormed = false, poolFilled = false, scheduleCheckPool = false, scheduleRegisterCore = false;
-    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0, speed = 1;
-    public float thalassity = 1f, renderThalassity = 0f;
+    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0;
+    public float thalassity = 1f, renderThalassity = 0f, speed = 1f, luck = 1f, range = 1f;
     public ItemEntity craftingEntity;
     public ArrayList<Vec3i> missingBlocks = new ArrayList<>();
     public ArrayList<BlockPos> poolCores = new ArrayList<>();
@@ -58,8 +58,14 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public BlockPos getPoolCentre(){ return poolCentre; }
     public boolean isPoolActive(){ return poolFilled; }
     public Map<BlockPos, Integer> getRenderOverlayData(){ return renderOverlayData; }
-    public int getSpeed(){ return speed; }
-    public int getTicksPerAction(){ return 80 / speed; }
+
+    public void setSpeed(float speed){ this.speed = speed; }
+    public void setLuck(float luck){ this.luck = luck; }
+    public void setRange(float range){ this.range = range; }
+    public float getSpeed(){ return speed; }
+    public int getTicksPerAction(){ return (int) (80 / speed); }
+    public float getLuck() { return luck; }
+    public float getRange() { return range; }
 
     /**
      * The required additional blocks around the core to make it function as part of a ritual.
@@ -422,6 +428,16 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                 this.poolBlocks = poolBlocks;
                 this.poolFluids = poolFluids;
 
+                //apply upgrades
+                this.speed = 1;
+                this.luck = 1;
+                this.range = 1;
+                for (var core : poolCores){
+                    if (level.getBlockEntity(core) instanceof UpgradeCoreEntity upgradeCore){
+                        upgradeCore.applyUpgradeto(this);
+                    }
+                }
+
                 float totalX = 0f, totalZ = 0f;
                 for (var fluidPos : poolFluids){
                     totalX += fluidPos.getX();
@@ -442,6 +458,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                     coreEntity.poolCentre = this.poolCentre;
                     coreEntity.poolFormed = true;
                     PoolHandler.registerCore(level, core);
+
+                    coreEntity.setSpeed(this.getSpeed());
+                    coreEntity.setLuck(this.getLuck());
+                    coreEntity.setRange(this.getRange());
 
                     BlockState state = level.getBlockState(core);
                     level.sendBlockUpdated(core, state, state, Block.UPDATE_CLIENTS);

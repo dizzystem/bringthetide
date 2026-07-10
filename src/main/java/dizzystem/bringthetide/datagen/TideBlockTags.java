@@ -41,6 +41,12 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(TideBlocks.SINKHOLE_CORE.get())
                 .add(TideBlocks.TRAWL_CORE.get())
                 .add(TideBlocks.BASIN_CORE.get())
-                .add(TideBlocks.VORTEX_CORE.get());
+                .add(TideBlocks.VORTEX_CORE.get())
+                .add(TideBlocks.FLOW_UPGRADE.get())
+                .add(TideBlocks.BOOTY_UPGRADE.get())
+                .add(TideBlocks.RANGE_UPGRADE.get())
+                .add(TideBlocks.ITEM_FILTER.get())
+                .add(TideBlocks.FLUID_FILTER.get())
+                .add(TideBlocks.ENTITY_FILTER.get());
     }
 }

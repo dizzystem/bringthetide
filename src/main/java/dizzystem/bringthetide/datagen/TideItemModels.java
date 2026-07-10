@@ -29,6 +29,12 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.BASIN_CORE.getId().getPath(), modLoc("block/basin_core"));
         withExistingParent(TideBlocks.SINKHOLE_CORE.getId().getPath(), modLoc("block/sinkhole_core"));
         withExistingParent(TideBlocks.VORTEX_CORE.getId().getPath(), modLoc("block/vortex_core"));
+        withExistingParent(TideBlocks.FLOW_UPGRADE.getId().getPath(), modLoc("block/flow_upgrade"));
+        withExistingParent(TideBlocks.BOOTY_UPGRADE.getId().getPath(), modLoc("block/booty_upgrade"));
+        withExistingParent(TideBlocks.RANGE_UPGRADE.getId().getPath(), modLoc("block/range_upgrade"));
+        withExistingParent(TideBlocks.ITEM_FILTER.getId().getPath(), modLoc("block/item_filter"));
+        withExistingParent(TideBlocks.FLUID_FILTER.getId().getPath(), modLoc("block/fluid_filter"));
+        withExistingParent(TideBlocks.ENTITY_FILTER.getId().getPath(), modLoc("block/entity_filter"));
 
         //basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
         basicItem(TideItems.DRIFTWOOD_WAND.get());

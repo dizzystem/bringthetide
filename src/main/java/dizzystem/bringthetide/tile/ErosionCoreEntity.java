@@ -88,8 +88,9 @@ public class ErosionCoreEntity extends FluidCoreEntity {
         ErosionRecipe recipe = maybeRecipe.get();
         involvedCores.forEach(pos -> {
             if (level.getBlockEntity(pos) instanceof ErosionCoreEntity erosionCore){
-                erosionCore.setMaxCraftingTimer(recipe.getCraftingTime() / getSpeed());
-                erosionCore.setCraftingTimer(recipe.getCraftingTime() / getSpeed());
+                int timer = (int) (recipe.getCraftingTime() / getSpeed());
+                erosionCore.setMaxCraftingTimer(timer);
+                erosionCore.setCraftingTimer(timer);
                 erosionCore.setCraftingEntity(entity);
                 BlockState blockState = level.getBlockState(pos);
                 level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
@@ -107,7 +108,7 @@ public class ErosionCoreEntity extends FluidCoreEntity {
         PoolHandler.addOngoingCraft(entity, new OngoingCraft(involvedCores, recipe));
         //Stop the item entity's horizontal momentum so it doesn't float into another block and mess up
         // the animation.
-        entity.setDeltaMovement(0, entity.getDeltaMovement().y(), 0);
+        entity.setDeltaMovement(0, Math.min(0, entity.getDeltaMovement().y()), 0);
     }
 
     @Override

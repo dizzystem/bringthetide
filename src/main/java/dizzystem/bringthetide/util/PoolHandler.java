@@ -188,7 +188,7 @@ public class PoolHandler {
 
         //in theory every core in the same pool should have the same speed, but we might as well handle
         // it if they aren't
-        int maxSpeed = 1;
+        int minTicksPerAction = 99999;
         for (PoolCore core : cores){
             if (level != core.level()){
                 continue;
@@ -202,14 +202,14 @@ public class PoolHandler {
                 HashSet<BlockPos> poolFluids = coreEntity.getPoolFluids();
                 if (poolFluids.contains(pos)){
                     coreEntity.entityInPool(entity, level, pos);
-                    if (coreEntity.getSpeed() > maxSpeed){
-                        maxSpeed = coreEntity.getSpeed();
+                    if (coreEntity.getTicksPerAction() < minTicksPerAction){
+                        minTicksPerAction = coreEntity.getTicksPerAction();
                     }
                 }
             }
         }
 
-        entityCooldowns.put(entity, 80 / maxSpeed);
+        entityCooldowns.put(entity, minTicksPerAction);
         beginCrafts();
     }
 

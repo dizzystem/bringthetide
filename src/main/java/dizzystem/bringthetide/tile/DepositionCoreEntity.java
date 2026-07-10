@@ -41,10 +41,12 @@ import static java.util.Map.entry;
 
 public class DepositionCoreEntity extends ItemCoreEntity {
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
-            entry(new Vec3i(1, 0, 0), Blocks.PRISMARINE),
+            entry(new Vec3i(-2, 0, -1), Blocks.PRISMARINE),
+            entry(new Vec3i(-2, 0, 0), Blocks.PRISMARINE),
             entry(new Vec3i(-1, 0, 0), Blocks.PRISMARINE),
-            entry(new Vec3i(1, 0, -1), Blocks.PRISMARINE),
-            entry(new Vec3i(-1, 0, -1), Blocks.PRISMARINE)
+            entry(new Vec3i(1, 0, 0), Blocks.PRISMARINE),
+            entry(new Vec3i(2, 0, 0), Blocks.PRISMARINE),
+            entry(new Vec3i(2, 0, -1), Blocks.PRISMARINE)
     );
 
     public DepositionCoreEntity(BlockPos blockPos, BlockState blockState){
@@ -103,8 +105,9 @@ public class DepositionCoreEntity extends ItemCoreEntity {
         DepositionRecipe recipe = maybeRecipe.get();
         involvedCores.forEach(pos -> {
             if (level.getBlockEntity(pos) instanceof DepositionCoreEntity depositionCore){
-                depositionCore.setMaxCraftingTimer(recipe.getCraftingTime() / getSpeed());
-                depositionCore.setCraftingTimer(recipe.getCraftingTime() / getSpeed());
+                int timer = (int) (recipe.getCraftingTime() / getSpeed());
+                depositionCore.setMaxCraftingTimer(timer);
+                depositionCore.setCraftingTimer(timer);
                 depositionCore.setCraftingEntity(entity);
                 BlockState blockState = level.getBlockState(pos);
                 level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
@@ -122,7 +125,7 @@ public class DepositionCoreEntity extends ItemCoreEntity {
         PoolHandler.addOngoingCraft(entity, new OngoingCraft(involvedCores, recipe));
         //Stop the item entity's horizontal momentum so it doesn't float into another block and mess up
         // the animation.
-        entity.setDeltaMovement(0, entity.getDeltaMovement().y(), 0);
+        entity.setDeltaMovement(0, Math.min(0, entity.getDeltaMovement().y()), 0);
     }
 
     @Override

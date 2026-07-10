@@ -54,7 +54,7 @@ public class TrawlCoreEntity extends CoreEntity {
             LootParams lootparams = (new LootParams.Builder(level))
                     .withParameter(LootContextParams.ORIGIN, poolCentre)
                     .withParameter(LootContextParams.TOOL, fishingRod)
-                    .withLuck(0)
+                    .withLuck(this.getLuck())
                     .create(LootContextParamSets.FISHING);
             LootTable loottable = level.getServer().getLootData().getLootTable(BuiltInLootTables.FISHING);
             List<ItemStack> list = loottable.getRandomItems(lootparams);

@@ -34,8 +34,16 @@ import static java.util.Map.entry;
 
 public class BasinCoreEntity extends ItemCoreEntity {
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
+            entry(new Vec3i(-1, 0, -2), Blocks.PRISMARINE),
+            entry(new Vec3i(-2, 0, -2), Blocks.PRISMARINE),
+            entry(new Vec3i(-2, 0, -1), Blocks.PRISMARINE),
+            entry(new Vec3i(-2, 0, 0), Blocks.PRISMARINE),
             entry(new Vec3i(-1, 0, 0), Blocks.PRISMARINE),
-            entry(new Vec3i(1, 0, 0), Blocks.PRISMARINE)
+            entry(new Vec3i(1, 0, 0), Blocks.PRISMARINE),
+            entry(new Vec3i(2, 0, 0), Blocks.PRISMARINE),
+            entry(new Vec3i(2, 0, -1), Blocks.PRISMARINE),
+            entry(new Vec3i(2, 0, -2), Blocks.PRISMARINE),
+            entry(new Vec3i(1, 0, -2), Blocks.PRISMARINE)
     );
 
     public BasinCoreEntity(BlockPos blockPos, BlockState blockState){

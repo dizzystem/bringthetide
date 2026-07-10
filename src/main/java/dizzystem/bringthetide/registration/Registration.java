@@ -28,6 +28,12 @@ public class Registration {
             event.accept(TideItems.SINKHOLE_CORE_ITEM);
             event.accept(TideItems.TRAWL_CORE_ITEM);
             event.accept(TideItems.VORTEX_CORE_ITEM);
+            event.accept(TideItems.FLOW_UPGRADE_ITEM);
+            event.accept(TideItems.BOOTY_UPGRADE_ITEM);
+            event.accept(TideItems.RANGE_UPGRADE_ITEM);
+            event.accept(TideItems.ITEM_FILTER_ITEM);
+            event.accept(TideItems.FLUID_FILTER_ITEM);
+            event.accept(TideItems.ENTITY_FILTER_ITEM);
         }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(TideItems.DRIFTWOOD_WAND);
