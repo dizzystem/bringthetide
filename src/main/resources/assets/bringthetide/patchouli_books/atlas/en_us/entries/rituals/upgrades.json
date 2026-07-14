@@ -1,0 +1,26 @@
+{
+  "name": "Upgrades",
+  "icon": "bringthetide:flow_upgrade",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "I have designed several upgrade cores that, rather than having an effect of their own, boost the effects of other cores in the same pool in various ways."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:flow_upgrade",
+      "text": "Flow Upgrades double the speed of other cores. This stacks up to a maximum of 6 times."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:booty_upgrade",
+      "text": "Booty Upgrades increase an indefinable quality of cores that one could call \"luck\", perhaps, or \"fortune\". Regardless of the name, it increases the yield of certain cores that benefit from that sort of thing."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:range_upgrade",
+      "text": "Unfortunately, I have not yet managed to find a way to extend the influence of my rituals beyond the boundaries of the pool's edge, so this blueprint is simply wishful thinking at the moment."
+    }
+  ]
+}

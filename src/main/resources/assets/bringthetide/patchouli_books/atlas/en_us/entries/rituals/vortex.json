@@ -1,0 +1,15 @@
+{
+  "name": "Vortex Ritual",
+  "icon": "bringthetide:vortex_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual creates flaying bursts of bubbles upon living creatures that enter the pool, doing player damage to them."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:vortex_core"
+    }
+  ]
+}

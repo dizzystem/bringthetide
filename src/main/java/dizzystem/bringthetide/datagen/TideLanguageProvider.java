@@ -20,13 +20,18 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.LARGE_PRISMARINE_BUD.get(), "Large Prismarine Bud");
         add(TideBlocks.PRISMARINE_CLUSTER.get(), "Prismarine Cluster");
         add(TideBlocks.DRIFTWOOD_LOG.get(), "Driftwood Log");
+        add(TideBlocks.TANK.get(), "Prismarine Tank");
+
+        add(TideBlocks.BASIN_CORE.get(), "Basin Core");
         add(TideBlocks.CURRENT_CORE.get(), "Current Core");
         add(TideBlocks.DEPOSITION_CORE.get(), "Deposition Core");
         add(TideBlocks.EROSION_CORE.get(), "Erosion Core");
+        add(TideBlocks.PELAGIC_CORE.get(), "Pelagic Core");
+        add(TideBlocks.REEF_CORE.get(), "Reef Core");
         add(TideBlocks.SINKHOLE_CORE.get(), "Sinkhole Core");
         add(TideBlocks.TRAWL_CORE.get(), "Trawl Core");
-        add(TideBlocks.BASIN_CORE.get(), "Basin Core");
         add(TideBlocks.VORTEX_CORE.get(), "Vortex Core");
+        add(TideBlocks.WHIRLPOOL_CORE.get(), "Whirlpool Core");
         add(TideBlocks.FLOW_UPGRADE.get(), "Flow Upgrade");
         add(TideBlocks.BOOTY_UPGRADE.get(), "Booty Upgrade");
         add(TideBlocks.RANGE_UPGRADE.get(), "Range Upgrade");

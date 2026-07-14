@@ -1,0 +1,15 @@
+{
+  "name": "Basin Ritual",
+  "icon": "bringthetide:basin_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual consumes reagents placed upon Basin Cores to apply a corresponding effect to a living creature that enters the pool. In general, the effect lasts roughly twice as long as a potion brewed from an awkward potion with those reagents would last."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:basin_core"
+    }
+  ]
+}

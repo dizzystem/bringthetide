@@ -1,0 +1,15 @@
+{
+  "name": "Erosion Ritual",
+  "icon": "bringthetide:erosion_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual calls upon the erosive power of the Primordial Ocean to wear away at or break apart items thrown into the pool. This will require a certain quantity of fluid to be placed into the Erosion Core, depending on the desired result."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:erosion_core"
+    }
+  ]
+}

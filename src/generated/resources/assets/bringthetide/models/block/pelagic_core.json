@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "bringthetide:block/core_sandstone_face",
+    "side": "bringthetide:block/core_sandstone",
+    "top": "bringthetide:block/core_sandstone"
+  }
+}

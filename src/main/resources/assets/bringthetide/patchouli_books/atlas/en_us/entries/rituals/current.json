@@ -1,0 +1,15 @@
+{
+  "name": "Current Ritual",
+  "icon": "bringthetide:current_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual sweeps up items in the pool upon a current, collecting them into a container placed directly above the Current Core if one is present. This could be useful when combined with other Cores that generate loose items in the pool to automate their collection."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:current_core"
+    }
+  ]
+}

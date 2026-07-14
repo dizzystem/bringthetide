@@ -5,5 +5,6 @@
   "creative_tab": "minecraft:tools_and_utilities",
   "use_resource_pack": true,
   "filler_texture": "bringthetide:textures/gui/page_filler.png",
-  "model": "bringthetide:atlas"
+  "model": "bringthetide:atlas",
+  "show_progress": false
 }

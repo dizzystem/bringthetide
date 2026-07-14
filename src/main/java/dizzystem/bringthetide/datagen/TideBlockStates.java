@@ -4,6 +4,7 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.GlassBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
@@ -18,24 +19,32 @@ public class TideBlockStates extends BlockStateProvider {
         simpleBlock(TideBlocks.BUDDING_PRISMARINE.get());
         createPrismarineClusters();
         logBlock(TideBlocks.DRIFTWOOD_LOG.get());
+        simpleBlock(TideBlocks.TANK.get(),
+                models().cubeAll(TideBlocks.TANK.getId().getPath(), modLoc("block/tank")).renderType("cutout"));
 
         //sandstone cores
         horizontalBlock(TideBlocks.EROSION_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/erosion_core"));
+        horizontalBlock(TideBlocks.PELAGIC_CORE.get(), modLoc("block/core_sandstone"),
+                modLoc("block/core_sandstone_face"), modLoc("block/core_sandstone"));
         horizontalBlock(TideBlocks.SINKHOLE_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/sinkhole_core"));
         horizontalBlock(TideBlocks.VORTEX_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/vortex_core"));
 
         //prismarine cores
+        horizontalBlock(TideBlocks.BASIN_CORE.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/basin_core"));
         horizontalBlock(TideBlocks.CURRENT_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/current_core"));
         horizontalBlock(TideBlocks.DEPOSITION_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/deposition_core"));
+        horizontalBlock(TideBlocks.REEF_CORE.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine"));
         horizontalBlock(TideBlocks.TRAWL_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/trawl_core"));
-        horizontalBlock(TideBlocks.BASIN_CORE.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/basin_core"));
+        horizontalBlock(TideBlocks.WHIRLPOOL_CORE.get(), modLoc("block/core_prismarine"),
+                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine"));
 
         //upgrades
         horizontalBlock(TideBlocks.FLOW_UPGRADE.get(), modLoc("block/core_prismarine"),

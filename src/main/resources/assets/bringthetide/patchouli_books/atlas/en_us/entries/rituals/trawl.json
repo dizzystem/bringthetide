@@ -1,0 +1,15 @@
+{
+  "name": "Trawl Ritual",
+  "icon": "bringthetide:trawl_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual pulls fish and fish-like objects through the veil from the Primordial Ocean. The results are similar to what I would find if I were to fish in the centre of the pool with a regular fishing rod."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:trawl_core"
+    }
+  ]
+}

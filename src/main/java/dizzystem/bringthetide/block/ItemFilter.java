@@ -1,6 +1,6 @@
 package dizzystem.bringthetide.block;
 
-import dizzystem.bringthetide.tile.ItemFilterEntity;
+import dizzystem.bringthetide.block.tile.ItemFilterEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;

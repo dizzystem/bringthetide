@@ -1,6 +1,6 @@
 package dizzystem.bringthetide.block;
 
-import dizzystem.bringthetide.tile.BootyUpgradeEntity;
+import dizzystem.bringthetide.block.tile.BootyUpgradeEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;

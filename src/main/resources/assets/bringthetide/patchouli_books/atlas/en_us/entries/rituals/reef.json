@@ -1,0 +1,15 @@
+{
+  "name": "Reef Ritual",
+  "icon": "bringthetide:basin_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual calls on the life-giving properties of the Primordial Ocean's coral reefs to cause adult animals in the pool to breed and baby animals in the pool to grow twice as fast."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:reef_core"
+    }
+  ]
+}

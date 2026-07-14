@@ -4,8 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import dizzystem.bringthetide.BringTheTide;
-import dizzystem.bringthetide.tile.CoreEntity;
-import dizzystem.bringthetide.tile.ItemCoreEntity;
+import dizzystem.bringthetide.block.tile.CoreEntity;
+import dizzystem.bringthetide.block.tile.ItemCoreEntity;
+import dizzystem.bringthetide.util.RenderHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,14 +26,8 @@ import org.joml.Vector3f;
 import java.util.Objects;
 
 public class ItemCoreRenderer extends CoreRenderer {
-    private final TextureAtlasSprite bubbleSprite;
-
     public ItemCoreRenderer(BlockEntityRendererProvider.Context context){
         super(context);
-
-        this.bubbleSprite = Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
-                TextureAtlas.LOCATION_BLOCKS
-        ).apply(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "block/large_bubble")));
     }
 
     @Override
@@ -46,9 +41,7 @@ public class ItemCoreRenderer extends CoreRenderer {
             return;
         }
 
-        Quaternionf cameraRotation = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
-        Quaternionf timeRotation = Axis.YP.rotationDegrees((float)(millis % 4000) * 360f / 4000f);
-        float bob = (float) Math.cos((2000 - (millis % 4000)) * Math.PI*2f / 2000f) * 0.2f;
+        float bob = (float) Math.cos((2000 - (millis % 4000)) * Math.PI*2f / 2000f) * 0.1f;
         Vector3f spiral;
         if (entity.craftingEntity != null && entity.maxCraftingTimer > 0){
             if (entity.craftingTimer <= 0){
@@ -96,48 +89,8 @@ public class ItemCoreRenderer extends CoreRenderer {
             spiral = new Vector3f(0, 0, 0);
         }
 
-        poseStack.pushPose();
-        //if crafting, spiral in towards the item
-        poseStack.translate(spiral.x, spiral.y, spiral.z);
-        poseStack.scale(0.5f, 0.5f, 0.5f);
-        //float above the core
-        poseStack.translate(1f, 2.8f + bob, 1f);
-        //slowly rotate
-        poseStack.mulPose(timeRotation);
-
-        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-        itemRenderer.renderStatic(itemStack, ItemDisplayContext.FIXED, LightTexture.FULL_BRIGHT, combinedOverlay,
-                poseStack, bufferSource, Minecraft.getInstance().level, 0);
-        poseStack.popPose();
-
-        poseStack.pushPose();
-        //move a tiny bit closer to the player so we render on top of the item
-        Vec3 spritePos = entity.getBlockPos().getCenter();
-        Vec3 cameraPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition()
-                .add(0, -1, 0); //camera position is 1 off
-        Vec3 towardPlayer = cameraPos.subtract(spritePos).normalize();
-        poseStack.translate(
-                0.25 * towardPlayer.x,
-                0.25 * towardPlayer.y,
-                0.25 * towardPlayer.z);
-        //if crafting, spiral in towards the item
-        poseStack.translate(spiral.x, spiral.y, spiral.z);
-        poseStack.scale(0.5f, 0.5f, 0.5f);
-        //float above the core at the same position as the item
-        //bob up and down
-        poseStack.translate(1f, 2.8f + bob, 1f);
-        //face the player
-        poseStack.mulPose(cameraRotation);
-        //align the centre of our sprite to the centre of the item
-        //this needs to happen after rotation so that the rotation happens around the same point for both renders
-        poseStack.translate(-0.925f, -0.925f, 0f);
-
-        VertexConsumer builder = bufferSource.getBuffer(RenderType.cutout());
-        renderIconFullBright(poseStack, builder,
-                0, 0, 1.6f,1.6f,
-                0, 0, 20, 20,
-                this.bubbleSprite, 0xFFFFFF,
-                1f, LightTexture.FULL_BRIGHT);
-        poseStack.popPose();
+        RenderHandler.renderItemBubble(entity, poseStack, bufferSource,
+                new Vec3(0.5f + spiral.x, 1.4f + bob + spiral.y, 0.5f + spiral.z),
+                0.5f, itemStack, combinedOverlay);
     }
 }

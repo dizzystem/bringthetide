@@ -1,0 +1,15 @@
+{
+  "name": "Sinkhole Ritual",
+  "icon": "bringthetide:sinkhole_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual drives deep pressure shockwaves into the ground below, bringing up shattered rocks and dropping them in the centre of the pool. Once the area below the pool is entirely mined out, it will begin to produce cobblestone instead."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:sinkhole_core"
+    }
+  ]
+}

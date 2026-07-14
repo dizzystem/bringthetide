@@ -2,8 +2,8 @@ package dizzystem.bringthetide.registration;
 
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.block.*;
+import dizzystem.bringthetide.block.tile.*;
 import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
-import dizzystem.bringthetide.tile.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -50,20 +50,29 @@ public class TideBlocks {
     public static final RegistryObject<RotatedPillarBlock> DRIFTWOOD_LOG = BLOCKS.register("driftwood_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(2).sound(SoundType.WOOD)
                     .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE)));
+    public static final RegistryObject<Block> TANK = BLOCKS.register("fluid_tank",
+            Tank::new);
+
+    public static final RegistryObject<Block> BASIN_CORE = BLOCKS.register("basin_core",
+            BasinCore::new);
     public static final RegistryObject<Block> CURRENT_CORE = BLOCKS.register("current_core",
             CurrentCore::new);
     public static final RegistryObject<Block> DEPOSITION_CORE = BLOCKS.register("deposition_core",
             DepositionCore::new);
     public static final RegistryObject<Block> EROSION_CORE = BLOCKS.register("erosion_core",
             ErosionCore::new);
+    public static final RegistryObject<Block> PELAGIC_CORE = BLOCKS.register("pelagic_core",
+            PelagicCore::new);
+    public static final RegistryObject<Block> REEF_CORE = BLOCKS.register("reef_core",
+            ReefCore::new);
     public static final RegistryObject<Block> SINKHOLE_CORE = BLOCKS.register("sinkhole_core",
             SinkholeCore::new);
     public static final RegistryObject<Block> TRAWL_CORE = BLOCKS.register("trawl_core",
             TrawlCore::new);
-    public static final RegistryObject<Block> BASIN_CORE = BLOCKS.register("basin_core",
-            BasinCore::new);
     public static final RegistryObject<Block> VORTEX_CORE = BLOCKS.register("vortex_core",
             VortexCore::new);
+    public static final RegistryObject<Block> WHIRLPOOL_CORE = BLOCKS.register("whirlpool_core",
+            WhirlpoolCore::new);
     public static final RegistryObject<Block> FLOW_UPGRADE = BLOCKS.register("flow_upgrade",
             FlowUpgrade::new);
     public static final RegistryObject<Block> BOOTY_UPGRADE = BLOCKS.register("booty_upgrade",
@@ -79,6 +88,13 @@ public class TideBlocks {
     public static final RegistryObject<LiquidBlock> BLOCK_IMBUED_SEAWATER = BLOCKS.register(
             "block_imbued_seawater", BlockImbuedSeawater::new);
 
+    public static final RegistryObject<BlockEntityType<TankEntity>> TANK_ENTITY =
+            BLOCK_ENTITIES.register("tank_entity",
+                    () -> BlockEntityType.Builder.of(TankEntity::new, TANK.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<BasinCoreEntity>> BASIN_CORE_ENTITY =
+            BLOCK_ENTITIES.register("basin_core_entity",
+                    () -> BlockEntityType.Builder.of(BasinCoreEntity::new, BASIN_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<CurrentCoreEntity>> CURRENT_CORE_ENTITY =
             BLOCK_ENTITIES.register("current_core_entity",
                     () -> BlockEntityType.Builder.of(CurrentCoreEntity::new, CURRENT_CORE.get()).build(null));
@@ -88,18 +104,24 @@ public class TideBlocks {
     public static final RegistryObject<BlockEntityType<ErosionCoreEntity>> EROSION_CORE_ENTITY =
             BLOCK_ENTITIES.register("erosion_core_entity",
                     () -> BlockEntityType.Builder.of(ErosionCoreEntity::new, EROSION_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PelagicCoreEntity>> PELAGIC_CORE_ENTITY =
+            BLOCK_ENTITIES.register("pelagic_core_entity",
+                    () -> BlockEntityType.Builder.of(PelagicCoreEntity::new, PELAGIC_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ReefCoreEntity>> REEF_CORE_ENTITY =
+            BLOCK_ENTITIES.register("reef_core_entity",
+                    () -> BlockEntityType.Builder.of(ReefCoreEntity::new, REEF_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<SinkholeCoreEntity>> SINKHOLE_CORE_ENTITY =
             BLOCK_ENTITIES.register("sinkhole_core_entity",
                     () -> BlockEntityType.Builder.of(SinkholeCoreEntity::new, SINKHOLE_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<TrawlCoreEntity>> TRAWL_CORE_ENTITY =
             BLOCK_ENTITIES.register("trawl_core_entity",
                     () -> BlockEntityType.Builder.of(TrawlCoreEntity::new, TRAWL_CORE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<BasinCoreEntity>> BASIN_CORE_ENTITY =
-            BLOCK_ENTITIES.register("basin_core_entity",
-                    () -> BlockEntityType.Builder.of(BasinCoreEntity::new, BASIN_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<VortexCoreEntity>> VORTEX_CORE_ENTITY =
             BLOCK_ENTITIES.register("vortex_core_entity",
                     () -> BlockEntityType.Builder.of(VortexCoreEntity::new, VORTEX_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<WhirlpoolCoreEntity>> WHIRLPOOL_CORE_ENTITY =
+            BLOCK_ENTITIES.register("whirlpool_core_entity",
+                    () -> BlockEntityType.Builder.of(WhirlpoolCoreEntity::new, WHIRLPOOL_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<FlowUpgradeEntity>> FLOW_UPGRADE_ENTITY =
             BLOCK_ENTITIES.register("flow_upgrade_entity",
                     () -> BlockEntityType.Builder.of(FlowUpgradeEntity::new, FLOW_UPGRADE.get()).build(null));

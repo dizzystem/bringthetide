@@ -1,0 +1,15 @@
+{
+  "name": "Deposition Ritual",
+  "icon": "bringthetide:deposition_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual calls upon the depositive power of the Primordial Ocean to imbue an item thrown into the pool with the essence of one or more other items, each of which must be placed upon a Deposition Core."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:deposition_core"
+    }
+  ]
+}

@@ -26,12 +26,19 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.SMALL_PRISMARINE_BUD.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_LOG_ITEM = ITEMS.register("driftwood_log",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_LOG.get(), new Item.Properties()));
+    public static final RegistryObject<Item> TANK_ITEM = ITEMS.register("fluid_tank",
+            () -> new BlockItem(TideBlocks.TANK.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> CURRENT_CORE_ITEM = ITEMS.register("current_core",
             () -> new BlockItem(TideBlocks.CURRENT_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> DEPOSITION_CORE_ITEM = ITEMS.register("deposition_core",
             () -> new BlockItem(TideBlocks.DEPOSITION_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> EROSION_CORE_ITEM = ITEMS.register("erosion_core",
             () -> new BlockItem(TideBlocks.EROSION_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> REEF_CORE_ITEM = ITEMS.register("reef_core",
+            () -> new BlockItem(TideBlocks.REEF_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PELAGIC_CORE_ITEM = ITEMS.register("pelagic_core",
+            () -> new BlockItem(TideBlocks.PELAGIC_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> SINKHOLE_CORE_ITEM = ITEMS.register("sinkhole_core",
             () -> new BlockItem(TideBlocks.SINKHOLE_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> TRAWL_CORE_ITEM = ITEMS.register("trawl_core",
@@ -40,6 +47,8 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.BASIN_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> VORTEX_CORE_ITEM = ITEMS.register("vortex_core",
             () -> new BlockItem(TideBlocks.VORTEX_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> WHIRLPOOL_CORE_ITEM = ITEMS.register("whirlpool_core",
+            () -> new BlockItem(TideBlocks.WHIRLPOOL_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> FLOW_UPGRADE_ITEM = ITEMS.register("flow_upgrade",
             () -> new BlockItem(TideBlocks.FLOW_UPGRADE.get(), new Item.Properties()));
     public static final RegistryObject<Item> BOOTY_UPGRADE_ITEM = ITEMS.register("booty_upgrade",

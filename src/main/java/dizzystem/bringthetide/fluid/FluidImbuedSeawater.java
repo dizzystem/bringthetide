@@ -208,34 +208,4 @@ public abstract class FluidImbuedSeawater extends ForgeFlowingFluid {
     protected int getSlopeDistance(LevelReader p_76027_, BlockPos p_76028_, int p_76029_, Direction p_76030_, BlockState p_76031_, BlockPos p_76032_, Short2ObjectMap<Pair<BlockState, FluidState>> p_76033_, Short2BooleanMap p_76034_) {
         return 1000;
     }
-
-    @Override
-    @ParametersAreNonnullByDefault
-    public void tick(Level level, BlockPos blockPos, FluidState fluidState){
-        super.tick(level, blockPos, fluidState);
-
-        FluidState newfluidstate = this.getNewLiquid(level, blockPos, level.getBlockState(blockPos));
-        int i = this.getSpreadDelay(level, blockPos, fluidState, newfluidstate);
-
-        if (fluidState.isSource()){
-            boolean ticked = false;
-            for (var direction : Direction.values()){
-                var adjPos = blockPos.relative(direction);
-                var adjState = level.getBlockState(adjPos);
-
-                if (adjState.is(TideTags.GROWTH_ACCELERATABLE) && adjState.isRandomlyTicking()){
-                    //LogUtils.getLogger().info("Ticking block");
-                    ticked = true;
-                    adjState.randomTick((ServerLevel) level, adjPos, level.getRandom());
-                    if (level.getRandom().nextInt(VANISH_CHANCE) == 0){
-                        level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
-                    }
-                }
-            }
-
-            if (ticked && !level.getBlockState(blockPos).isAir()){
-                level.scheduleTick(blockPos, newfluidstate.getType(), i);
-            }
-        }
-    }
 }

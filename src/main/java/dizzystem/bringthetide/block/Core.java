@@ -1,8 +1,7 @@
 package dizzystem.bringthetide.block;
 
-import dizzystem.bringthetide.tile.CoreEntity;
-import dizzystem.bringthetide.tile.DepositionCoreEntity;
-import dizzystem.bringthetide.tile.ErosionCoreEntity;
+import dizzystem.bringthetide.block.tile.CoreEntity;
+import dizzystem.bringthetide.util.FluidHandler;
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,10 +26,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -107,41 +102,9 @@ public abstract class Core extends Block implements EntityBlock {
         }
 
         //right clicking fluids in or out
-        LazyOptional<IFluidHandler> OFluidHandler = be.getCapability(ForgeCapabilities.FLUID_HANDLER);
-        ItemStack item = player.getItemInHand(hand);
-        if (OFluidHandler.isPresent() && FluidUtil.getFluidHandler(item).isPresent()){
-            IFluidHandler fluidHandler = OFluidHandler.orElse(null);
-            FluidStack coreFluid = fluidHandler.getFluidInTank(0);
-            FluidActionResult result;
-            if (!coreFluid.isEmpty()){ //take out the fluid
-                result = FluidUtil.tryFillContainer(item, fluidHandler, coreFluid.getAmount(),
-                        player, true);
-                if (result.isSuccess()){
-                    if (item.getCount() > 1){
-                        item.shrink(1);
-                        player.getInventory().placeItemBackInInventory(result.result);
-                    } else {
-                        player.setItemInHand(hand, result.result);
-                    }
-                    be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
-                    return InteractionResult.sidedSuccess(level.isClientSide());
-                }
-            }
-
-            result = FluidUtil.tryEmptyContainer(item, fluidHandler, ErosionCoreEntity.TANK_CAPACITY,
-                    player, true);
-            if (result.isSuccess()){ //put in fluid
-                if (!player.isCreative()) {
-                    if (item.getCount() > 1) {
-                        item.shrink(1);
-                        player.getInventory().placeItemBackInInventory(result.result);
-                    } else {
-                        player.setItemInHand(hand, result.result);
-                    }
-                }
-                be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
-                return InteractionResult.sidedSuccess(level.isClientSide());
-            }
+        boolean rightClickFluid = FluidHandler.tryRightClickFluidIntoTank(player, hand, be);
+        if (rightClickFluid){
+            return InteractionResult.sidedSuccess(level.isClientSide());
         }
 
         //right clicking items in or out
@@ -165,4 +128,5 @@ public abstract class Core extends Block implements EntityBlock {
 
         return InteractionResult.PASS;
     }
+
 }

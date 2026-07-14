@@ -1,0 +1,19 @@
+{
+  "name": "Wands",
+  "icon": "bringthetide:driftwood_wand",
+  "category": "bringthetide:equipment",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "By infusing wood with a connection to the Primordial Ocean, I have designed a wand with which I can open limited portals that tap into aspects of its power. I have detailed further instructions in the Rituals section of this book."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:driftwood_wand"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "My starting wand was serviceable, but with the new materials I now have access to, I can improve upon the original design greatly. todo"
+    }
+  ]
+}

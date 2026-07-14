@@ -1,0 +1,25 @@
+{
+  "name": "The Dolphin Costume",
+  "icon": "bringthetide:costume_helmet",
+  "category": "bringthetide:equipment",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "By infusing animal hide with materials connected to the Primordial Ocean, I have designed a set of arcane garb that will enhance the power of any wand I am holding.$(br2)Yes, I'm fully aware of its... undignified... appearance. The form of a dolphin is simply the form with the greatest resonance to the Primordial Ocean."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "...It does not matter. If it will bring me closer to my goal, I will wear whatever ridiculous costume this world forces upon me."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:costume_helmet",
+      "recipe2": "bringthetide:costume_chestplate"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:costume_leggings",
+      "recipe2": "bringthetide:costume_boots"
+    }
+  ]
+}

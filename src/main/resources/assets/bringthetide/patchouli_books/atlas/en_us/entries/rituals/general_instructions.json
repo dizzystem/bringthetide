@@ -1,0 +1,24 @@
+{
+  "name": "General Instructions",
+  "icon": "bringthetide:driftwood_wand",
+  "category": "bringthetide:rituals",
+  "priority": true,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "With some care, I can open a portal of a sort to the Primordial Ocean to let through certain... aspects of its power.$(br2)First, I must place a ritual core to determine the effect of my prospective ritual. The core will require certain blocks around it to function, which I must also place."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Second, I must complete the edge of the pool. A valid pool must be fully enclosed, including diagonals, as well as include all of the blocks from the first step above in its shape. I will know when I have successfully done this if the edge begins to glow red.$(br2)Finally, I must fill the pool. For this, I will require a wand attuned to the Primordial Ocean."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Using the wand upon water in the pool will imbue it with the Ocean's power, turning it aqua in colour.$(br2)Water source blocks adjacent to two or more imbued water source blocks will be automatically converted as well, in the same way that new water source blocks form when adjacent to two or more water source blocks."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "But I must be careful - the power of my wand limits the number of times I can imbue water in a pool, as indicated by the red glow turning grey.$(br2)Perhaps there is some way I can increase its power?"
+    }
+  ]
+}

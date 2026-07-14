@@ -1,0 +1,16 @@
+{
+  "type": "bringthetide:erosion",
+  "fluids": [
+    "{Amount:10,FluidName:\"minecraft:water\"}"
+  ],
+  "ingredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "count": 3,
+    "item": "minecraft:blaze_powder"
+  }
+}

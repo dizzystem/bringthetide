@@ -1,6 +1,6 @@
 package dizzystem.bringthetide.block;
 
-import dizzystem.bringthetide.tile.TrawlCoreEntity;
+import dizzystem.bringthetide.block.tile.TrawlCoreEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;

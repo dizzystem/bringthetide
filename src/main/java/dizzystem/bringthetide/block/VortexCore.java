@@ -1,7 +1,6 @@
 package dizzystem.bringthetide.block;
 
-import dizzystem.bringthetide.tile.DepositionCoreEntity;
-import dizzystem.bringthetide.tile.VortexCoreEntity;
+import dizzystem.bringthetide.block.tile.VortexCoreEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,8 +20,8 @@ public class VortexCore extends Core {
         super(BlockBehaviour.Properties.of().strength(3.5F));
     }
 
-    @ParametersAreNonnullByDefault
     @Override
+    @ParametersAreNonnullByDefault
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState){
         return new VortexCoreEntity(blockPos, blockState, this.placedBy);
     }
@@ -32,6 +31,7 @@ public class VortexCore extends Core {
     }
 
     @Override
+    @ParametersAreNonnullByDefault
     public void setPlacedBy(Level level, BlockPos blockpos, BlockState blockstate, LivingEntity entity, ItemStack itemstack){
         if (!(entity instanceof Player player)){
             return;

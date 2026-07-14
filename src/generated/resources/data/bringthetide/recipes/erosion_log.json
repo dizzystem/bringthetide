@@ -1,9 +1,12 @@
 {
   "type": "bringthetide:erosion",
+  "fluids": [
+    "{Amount:10,FluidName:\"minecraft:water\"}"
+  ],
   "ingredient": {
     "count": 1,
     "item": {
-      "tag": "minecraft:logs"
+      "tag": "bringthetide:non_driftwood_logs"
     }
   },
   "result": {

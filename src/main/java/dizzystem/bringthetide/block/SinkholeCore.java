@@ -1,6 +1,6 @@
 package dizzystem.bringthetide.block;
 
-import dizzystem.bringthetide.tile.SinkholeCoreEntity;
+import dizzystem.bringthetide.block.tile.SinkholeCoreEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -13,13 +13,29 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.UUID;
 
 public class SinkholeCore extends Core {
+    UUID placedBy;
+
     public SinkholeCore() {
         super(Properties.of().strength(3.5F));
     }
 
-    @ParametersAreNonnullByDefault
     @Override
+    @ParametersAreNonnullByDefault
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState){
-        return new SinkholeCoreEntity(blockPos, blockState);
+        return new SinkholeCoreEntity(blockPos, blockState, this.placedBy);
+    }
+
+    public UUID getPlacedBy(){
+        return this.placedBy;
+    }
+
+    @Override
+    @ParametersAreNonnullByDefault
+    public void setPlacedBy(Level level, BlockPos blockpos, BlockState blockstate, LivingEntity entity, ItemStack itemstack){
+        if (!(entity instanceof Player player)){
+            return;
+        }
+
+        this.placedBy = player.getUUID();
     }
 }

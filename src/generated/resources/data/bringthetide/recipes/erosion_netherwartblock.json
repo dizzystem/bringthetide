@@ -1,5 +1,8 @@
 {
   "type": "bringthetide:erosion",
+  "fluids": [
+    "{Amount:10,FluidName:\"minecraft:water\"}"
+  ],
   "ingredient": {
     "count": 1,
     "item": {
@@ -7,7 +10,7 @@
     }
   },
   "result": {
-    "count": 4,
+    "count": 9,
     "item": "minecraft:nether_wart"
   }
 }

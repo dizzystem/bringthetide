@@ -20,15 +20,19 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.MEDIUM_PRISMARINE_BUD.getId().getPath(), modLoc("block/medium_prismarine_bud"));
         withExistingParent(TideBlocks.LARGE_PRISMARINE_BUD.getId().getPath(), modLoc("block/large_prismarine_bud"));
         withExistingParent(TideBlocks.PRISMARINE_CLUSTER.getId().getPath(), modLoc("block/prismarine_cluster"));
+        withExistingParent(TideBlocks.TANK.getId().getPath(), modLoc("block/fluid_tank"));
 
         withExistingParent(TideBlocks.DRIFTWOOD_LOG.getId().getPath(), modLoc("block/driftwood_log"));
+        withExistingParent(TideBlocks.BASIN_CORE.getId().getPath(), modLoc("block/basin_core"));
         withExistingParent(TideBlocks.CURRENT_CORE.getId().getPath(), modLoc("block/current_core"));
         withExistingParent(TideBlocks.DEPOSITION_CORE.getId().getPath(), modLoc("block/deposition_core"));
         withExistingParent(TideBlocks.EROSION_CORE.getId().getPath(), modLoc("block/erosion_core"));
+        withExistingParent(TideBlocks.PELAGIC_CORE.getId().getPath(), modLoc("block/pelagic_core"));
+        withExistingParent(TideBlocks.REEF_CORE.getId().getPath(), modLoc("block/reef_core"));
         withExistingParent(TideBlocks.TRAWL_CORE.getId().getPath(), modLoc("block/trawl_core"));
-        withExistingParent(TideBlocks.BASIN_CORE.getId().getPath(), modLoc("block/basin_core"));
         withExistingParent(TideBlocks.SINKHOLE_CORE.getId().getPath(), modLoc("block/sinkhole_core"));
         withExistingParent(TideBlocks.VORTEX_CORE.getId().getPath(), modLoc("block/vortex_core"));
+        withExistingParent(TideBlocks.WHIRLPOOL_CORE.getId().getPath(), modLoc("block/whirlpool_core"));
         withExistingParent(TideBlocks.FLOW_UPGRADE.getId().getPath(), modLoc("block/flow_upgrade"));
         withExistingParent(TideBlocks.BOOTY_UPGRADE.getId().getPath(), modLoc("block/booty_upgrade"));
         withExistingParent(TideBlocks.RANGE_UPGRADE.getId().getPath(), modLoc("block/range_upgrade"));

@@ -4,7 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.BringTheTide;
-import dizzystem.bringthetide.tile.CoreEntity;
+import dizzystem.bringthetide.block.tile.CoreEntity;
+import dizzystem.bringthetide.util.RenderHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -13,20 +14,15 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -52,58 +48,6 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
         return Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
                 TextureAtlas.LOCATION_BLOCKS
         ).apply(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, path)));
-    }
-
-    /**
-     * from <a href="https://stackoverflow.com/questions/3684269/component-of-a-quaternion-rotation-around-an-axis">StackOverflow</a>
-     * Decompose the rotation into 2 parts.
-     * @param twist rotation around the "direction" vector
-     * @param swing rotation around axis that is perpendicular to "direction" vector
-     */
-    public static void SwingTwistDecomposition(Quaternionf rotation, Vector3f direction, Quaternionf swing,
-                                               Quaternionf twist){
-        Vector3f rotationAxis = new Vector3f(rotation.x, rotation.y, rotation.z);
-        Vector3f projection = direction.mul(rotationAxis.dot(direction));
-        twist.set(projection.x, projection.y, projection.z, rotation.w);
-        swing.set(new Quaternionf(rotation).mul(twist.conjugate()));
-    }
-
-    /**
-     * from <a href="https://github.com/VazkiiMods/Botania/blob/1.20.x/Xplat/src/main/java/vazkii/botania/client/core/helper/RenderHelper.java#L469">Botania</a>
-     *
-     * @param startX   Start x position in blocks
-     * @param startY   Start position in blocks
-     * @param endX     End x position in blocks
-     * @param endY     End y position in blocks
-     *
-     * @param uvStartX UV start x position in "pixels" (1/16th sprite size)
-     * @param uvStartY UV start position in "pixels" (1/16th sprite size)
-     * @param uvEndX   UV end x position in "pixels" (1/16th sprite size)
-     * @param uvEndY   UV end y position in "pixels" (1/16th sprite size)
-     */
-    public static void renderIconFullBright(
-            PoseStack ms, VertexConsumer buffer,
-            float startX, float startY, float endX, float endY,
-            int uvStartX, int uvStartY, int uvEndX, int uvEndY,
-            TextureAtlasSprite icon, int color, float alpha, int light) {
-        Matrix4f mat = ms.last().pose();
-        Matrix3f normal = ms.last().normal();
-        float red = ((color >> 16) & 0xFF) / 255F;
-        float green = ((color >> 8) & 0xFF) / 255F;
-        float blue = (color & 0xFF) / 255F;
-
-        buffer.vertex(mat, endX, startY, 0).color(red, green, blue, alpha)
-                .uv(icon.getU(uvStartX), icon.getV(uvEndY)).overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(light).normal(normal, 0, 0, 1).endVertex();
-        buffer.vertex(mat, startX, startY, 0).color(red, green, blue, alpha)
-                .uv(icon.getU(uvEndX), icon.getV(uvEndY)).overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(light).normal(normal, 0, 0, 1).endVertex();
-        buffer.vertex(mat, startX, endY, 0).color(red, green, blue, alpha)
-                .uv(icon.getU(uvEndX), icon.getV(uvStartY)).overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(light).normal(normal, 0, 0, 1).endVertex();
-        buffer.vertex(mat, endX, endY, 0).color(red, green, blue, alpha)
-                .uv(icon.getU(uvStartX), icon.getV(uvStartY)).overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(light).normal(normal, 0, 0, 1).endVertex();
     }
 
     /**
@@ -261,7 +205,7 @@ public class CoreRenderer implements BlockEntityRenderer<CoreEntity> {
             poseStack.translate(-0.5f, -0.5f, 0);
 
             VertexConsumer builder = bufferSource.getBuffer(RenderType.translucent());
-            renderIconFullBright(poseStack, builder,
+            RenderHandler.renderIconFullBright(poseStack, builder,
                     0, 0, 1,1,
                     0, 0, 16, 16,
                     sprite, color,

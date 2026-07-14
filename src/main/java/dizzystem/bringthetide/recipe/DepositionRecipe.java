@@ -1,14 +1,11 @@
 package dizzystem.bringthetide.recipe;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.registration.TideRecipes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -19,7 +16,6 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +35,7 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients(){
+    public @NotNull NonNullList<Ingredient> getIngredients(){
         NonNullList<Ingredient> list = NonNullList.create();
         list.add(this.mainIngredient);
         list.addAll(List.of(catalysts));
@@ -109,24 +105,24 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public ResourceLocation getId() {
+    public @NotNull ResourceLocation getId() {
         return ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_"+result.getItem());
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<?> getSerializer() {
         return TideRecipes.DEPOSITION_SERIALIZER.get();
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public @NotNull RecipeType<?> getType() {
         return TideRecipes.DEPOSITION.get();
     }
 
     public static class Serializer implements RecipeSerializer<DepositionRecipe> {
         @Override
         @ParametersAreNonnullByDefault
-        public DepositionRecipe fromJson(ResourceLocation recipeId, JsonObject jsonObject) {
+        public @NotNull DepositionRecipe fromJson(ResourceLocation recipeId, JsonObject jsonObject) {
             JsonObject ingredientJson = GsonHelper.getAsJsonObject(jsonObject, "mainIngredient");
             Ingredient mainIngredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(ingredientJson, "item"),
                     false);

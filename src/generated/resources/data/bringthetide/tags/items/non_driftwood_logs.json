@@ -1,0 +1,8 @@
+{
+  "remove": [
+    "bringthetide:driftwood_log"
+  ],
+  "values": [
+    "#minecraft:logs"
+  ]
+}

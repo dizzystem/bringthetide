@@ -20,9 +20,6 @@ public class TideBlockTags extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider){
-        tag(TideTags.GROWTH_ACCELERATABLE)
-                .add(Blocks.BUDDING_AMETHYST)
-                .add(TideBlocks.BUDDING_PRISMARINE.get());
         tag(TideTags.VALID_POOL_BLOCK)
                 .add(Blocks.PRISMARINE)
                 .add(Blocks.PRISMARINE_STAIRS)
@@ -35,13 +32,16 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(Blocks.SANDSTONE_SLAB)
                 .add(Blocks.CUT_SANDSTONE)
                 .add(Blocks.CUT_SANDSTONE_SLAB)
+                .add(TideBlocks.BASIN_CORE.get())
                 .add(TideBlocks.CURRENT_CORE.get())
                 .add(TideBlocks.DEPOSITION_CORE.get())
                 .add(TideBlocks.EROSION_CORE.get())
+                .add(TideBlocks.PELAGIC_CORE.get())
+                .add(TideBlocks.REEF_CORE.get())
                 .add(TideBlocks.SINKHOLE_CORE.get())
                 .add(TideBlocks.TRAWL_CORE.get())
-                .add(TideBlocks.BASIN_CORE.get())
                 .add(TideBlocks.VORTEX_CORE.get())
+                .add(TideBlocks.WHIRLPOOL_CORE.get())
                 .add(TideBlocks.FLOW_UPGRADE.get())
                 .add(TideBlocks.BOOTY_UPGRADE.get())
                 .add(TideBlocks.RANGE_UPGRADE.get())

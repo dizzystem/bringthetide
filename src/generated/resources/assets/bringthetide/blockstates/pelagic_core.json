@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bringthetide:block/pelagic_core",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bringthetide:block/pelagic_core"
+    },
+    "facing=south": {
+      "model": "bringthetide:block/pelagic_core",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bringthetide:block/pelagic_core",
+      "y": 270
+    }
+  }
+}
