@@ -4,7 +4,9 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.client.particle.DropletParticleType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -23,7 +25,7 @@ public class TideParticles {
     public static final Supplier<SimpleParticleType> SPARKLE = PARTICLE_TYPES.register("sparkle",
             () -> new SimpleParticleType(false));
     public static final Supplier<DropletParticleType> DROPLET = PARTICLE_TYPES.register("droplet",
-            () -> new DropletParticleType(false));
+            () -> new DropletParticleType(new FluidStack(Fluids.WATER, 1000), false));
 
     public static void init(IEventBus modEventBus) {
         PARTICLE_TYPES.register(modEventBus);

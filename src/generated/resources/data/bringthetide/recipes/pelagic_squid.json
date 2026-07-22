@@ -1,0 +1,12 @@
+{
+  "type": "bringthetide:pelagic",
+  "ingredients": [
+    {
+      "item": "minecraft:ink_sac"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "minecraft:squid_spawn_egg"
+  }
+}

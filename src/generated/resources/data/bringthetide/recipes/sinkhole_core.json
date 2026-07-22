@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "minecraft:sandstone_slab"
+    },
+    "B": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "F": {
+      "item": "bringthetide:fish_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "---",
+    "FBF",
+    "---"
+  ],
+  "result": {
+    "item": "bringthetide:sinkhole_core"
+  },
+  "show_notification": true
+}

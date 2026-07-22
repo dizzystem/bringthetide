@@ -1,5 +1,6 @@
 {
   "name": "Equipment",
   "description": "",
-  "icon": "bringthetide:costume_helmet"
+  "icon": "bringthetide:costume_helmet",
+  "sortnum" : -8
 }

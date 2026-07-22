@@ -31,6 +31,8 @@ public class TrawlCoreEntity extends CoreEntity {
 
     public TrawlCoreEntity(BlockPos blockPos, BlockState blockState){
         super(TideBlocks.TRAWL_CORE_ENTITY.get(), blockPos, blockState);
+        //10 seconds base
+        setBaseTicksPerAction(200);
     }
 
     public Map<Vec3i, Object> getRequiredShape(){
@@ -48,7 +50,6 @@ public class TrawlCoreEntity extends CoreEntity {
         Vec3 poolCentre = this.getPoolCentre().getCenter();
         ItemStack fishingRod = new ItemStack(Items.FISHING_ROD, 1);
 
-        //every 4 seconds
         if (ticks % getTicksPerAction() == 0){
             ItemFishedEvent event = null;
             LootParams lootparams = (new LootParams.Builder(level))

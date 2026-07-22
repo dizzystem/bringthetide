@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "minecraft:prismarine_brick_slab"
+    },
+    "S": {
+      "item": "minecraft:seagrass"
+    },
+    "T": {
+      "item": "bringthetide:turtle_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "---",
+    "TST",
+    "---"
+  ],
+  "result": {
+    "item": "bringthetide:reef_core"
+  },
+  "show_notification": true
+}

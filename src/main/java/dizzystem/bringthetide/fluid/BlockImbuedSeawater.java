@@ -36,13 +36,9 @@ public class BlockImbuedSeawater extends LiquidBlock {
     @ParametersAreNonnullByDefault
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(blockState, level, blockPos, oldState, movedByPiston);
+
         if (blockState.getFluidState().isSource()){
-            LogUtils.getLogger().info("Seawater placed at {}", blockPos);
-            if (PoolHandler.verifyPoolFilled(level, blockPos, null, null)){
-                LogUtils.getLogger().info("Valid pool");
-            } else {
-                LogUtils.getLogger().info("Invalid pool");
-            }
+            PoolHandler.schedulePoolCheck(level, blockPos);
         }
     }
 

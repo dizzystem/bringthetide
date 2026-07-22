@@ -2,25 +2,21 @@ package dizzystem.bringthetide.datagen;
 
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.api.TideTags;
-import dizzystem.bringthetide.recipe.DepositionRecipe;
 import dizzystem.bringthetide.recipe.DepositionRecipeBuilder;
-import dizzystem.bringthetide.recipe.ErosionRecipe;
 import dizzystem.bringthetide.recipe.ErosionRecipeBuilder;
+import dizzystem.bringthetide.recipe.PelagicRecipeBuilder;
 import dizzystem.bringthetide.registration.TideItems;
 import dizzystem.bringthetide.registration.TideRecipes;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
-import vazkii.patchouli.api.PatchouliAPI;
-import vazkii.patchouli.api.PatchouliConfigAccess;
 
 import java.util.function.Consumer;
 
@@ -143,6 +139,66 @@ public class TideRecipeProvider extends RecipeProvider {
                 .fluid(new FluidStack(Fluids.WATER, 10))
                 .result(new ItemStack(Items.MELON_SLICE, 9))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_melon"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.COPPER_BLOCK))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.EXPOSED_COPPER, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_copperblock"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.EXPOSED_COPPER))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.WEATHERED_COPPER, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcopper"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.WEATHERED_COPPER))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.OXIDIZED_COPPER, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcopper"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.CUT_COPPER))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.EXPOSED_CUT_COPPER, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_cutcopper"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.EXPOSED_CUT_COPPER))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.WEATHERED_CUT_COPPER, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcutcopper"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.WEATHERED_CUT_COPPER))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcutcopper"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.CUT_COPPER_SLAB))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.EXPOSED_CUT_COPPER_SLAB, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_cutcopperslab"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.EXPOSED_CUT_COPPER_SLAB))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.WEATHERED_CUT_COPPER_SLAB, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcutcopperslab"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.WEATHERED_CUT_COPPER_SLAB))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER_SLAB, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcutcopperslab"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.CUT_COPPER_STAIRS))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.EXPOSED_CUT_COPPER_STAIRS, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_cutcopperstairs"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.EXPOSED_CUT_COPPER_STAIRS))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.WEATHERED_CUT_COPPER_STAIRS, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcutcopperstairs"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.WEATHERED_CUT_COPPER_STAIRS))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER_STAIRS, 9))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcutcopperstairs"));
 
         RecipeSerializer<?> depositionSerializer = TideRecipes.DEPOSITION_SERIALIZER.get();
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
@@ -151,11 +207,62 @@ public class TideRecipeProvider extends RecipeProvider {
                 .result(new ItemStack(TideItems.SEASHELL_ALLOY_INGOT.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_seashellalloyingot"));
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.IRON_INGOT))
+                .catalyst(Ingredient.of(Items.SCUTE))
+                .catalyst(Ingredient.of(Items.SEAGRASS))
+                .result(new ItemStack(TideItems.TURTLE_ALLOY_INGOT.get(), 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_turtlealloyingot"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.GOLD_INGOT))
+                .catalyst(Ingredient.of(Items.COD))
+                .catalyst(Ingredient.of(Items.TROPICAL_FISH))
+                .catalyst(Ingredient.of(Items.PUFFERFISH))
+                .result(new ItemStack(TideItems.FISH_ALLOY_INGOT.get(), 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_fishalloyingot"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
                 .mainIngredient(Ingredient.of(Items.LEATHER))
                 .catalyst(Ingredient.of(Items.KELP))
                 .catalyst(Ingredient.of(Items.BONE_MEAL))
                 .result(new ItemStack(TideItems.SEABOUND_SKIN.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_seaboundskin"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.POISONOUS_POTATO))
+                .catalyst(Ingredient.of(Items.KELP))
+                .catalyst(Ingredient.of(Items.KELP))
+                .result(new ItemStack(Items.SLIME_BALL, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_slimeball"));
+
+        RecipeSerializer<?> pelagicSerializer = TideRecipes.PELAGIC_SERIALIZER.get();
+        PelagicRecipeBuilder.customRecipe(pelagicSerializer)
+                        .ingredient(Ingredient.of(Items.ROTTEN_FLESH))
+                .result(new ItemStack(Items.DROWNED_SPAWN_EGG))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_drowned"));
+        PelagicRecipeBuilder.customRecipe(pelagicSerializer)
+                        .ingredient(Ingredient.of(Items.ROTTEN_FLESH))
+                        .ingredient(Ingredient.of(Items.BREAD))
+                .result(new ItemStack(Items.ZOMBIE_VILLAGER_SPAWN_EGG))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_zombievillager"));
+        PelagicRecipeBuilder.customRecipe(pelagicSerializer)
+                        .ingredient(Ingredient.of(Items.COD))
+                .result(new ItemStack(Items.GUARDIAN_SPAWN_EGG))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_guardian"));
+        PelagicRecipeBuilder.customRecipe(pelagicSerializer)
+                        .ingredient(Ingredient.of(Items.COD))
+                        .ingredient(Ingredient.of(Items.PRISMARINE_SHARD))
+                .result(new ItemStack(Items.ELDER_GUARDIAN_SPAWN_EGG))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_elderguardian"));
+        PelagicRecipeBuilder.customRecipe(pelagicSerializer)
+                        .ingredient(Ingredient.of(Items.INK_SAC))
+                .result(new ItemStack(Items.SQUID_SPAWN_EGG))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_squid"));
+        PelagicRecipeBuilder.customRecipe(pelagicSerializer)
+                        .ingredient(Ingredient.of(Items.SEAGRASS))
+                .result(new ItemStack(Items.TURTLE_SPAWN_EGG))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_turtle"));
+        PelagicRecipeBuilder.customRecipe(pelagicSerializer)
+                .ingredient(Ingredient.of(Items.SLIME_BALL))
+                .result(new ItemStack(Items.SLIME_SPAWN_EGG))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_slime"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, TideItems.COSTUME_HELMET.get())
                 .pattern("xxx")
@@ -199,13 +306,138 @@ public class TideRecipeProvider extends RecipeProvider {
                         TideItems.DRIFTWOOD_LOG_ITEM.get()))
                 .save(consumer);
 
+        //sandstone cores
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.EROSION_CORE_ITEM.get())
                 .pattern("---")
-                .pattern("GBG")
+                .pattern("FBF")
                 .pattern("---")
                 .define('-', Items.SANDSTONE_SLAB)
-                .define('G', Items.GRAVEL)
+                .define('F', TideItems.FISH_ALLOY_INGOT.get())
                 .define('B', Items.WATER_BUCKET)
+                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.FISH_ALLOY_INGOT.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PELAGIC_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("CBC")
+                .pattern("---")
+                .define('-', Items.SANDSTONE_SLAB)
+                .define('C', Items.COPPER_INGOT)
+                .define('B', Items.ROTTEN_FLESH)
+                .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.COPPER_INGOT))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SINKHOLE_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("FBF")
+                .pattern("---")
+                .define('-', Items.SANDSTONE_SLAB)
+                .define('F', TideItems.FISH_ALLOY_INGOT.get())
+                .define('B', Items.IRON_PICKAXE)
+                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.FISH_ALLOY_INGOT.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.VORTEX_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("FBF")
+                .pattern("---")
+                .define('-', Items.SANDSTONE_SLAB)
+                .define('F', TideItems.FISH_ALLOY_INGOT.get())
+                .define('B', Items.IRON_SWORD)
+                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.FISH_ALLOY_INGOT.get()))
+                .save(consumer);
+
+        //prismarine cores
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BASIN_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("TBT")
+                .pattern("---")
+                .define('-', Items.PRISMARINE_BRICK_SLAB)
+                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('B', Items.GLASS_BOTTLE)
+                .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_ALLOY_INGOT.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.CURRENT_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("THT")
+                .pattern("---")
+                .define('-', Items.PRISMARINE_BRICK_SLAB)
+                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('H', Items.HOPPER)
+                .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_ALLOY_INGOT.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DEPOSITION_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("CDC")
+                .pattern("---")
+                .define('-', Items.PRISMARINE_BRICK_SLAB)
+                .define('D', TideItems.DRIFTWOOD_LOG_ITEM.get())
+                .define('C', Items.COPPER_INGOT)
+                .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.COPPER_INGOT))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.REEF_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("TST")
+                .pattern("---")
+                .define('-', Items.PRISMARINE_BRICK_SLAB)
+                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('S', Items.SEAGRASS)
+                .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_ALLOY_INGOT.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.TRAWL_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("CFC")
+                .pattern("---")
+                .define('-', Items.PRISMARINE_BRICK_SLAB)
+                .define('F', Items.FISHING_ROD)
+                .define('C', Items.COPPER_INGOT)
+                .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.COPPER_INGOT))
+                .save(consumer);
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.WHIRLPOOL_CORE_ITEM.get())
+//                .pattern("---")
+//                .pattern("DBD")
+//                .pattern("---")
+//                .define('-', Items.PRISMARINE_BRICK_SLAB)
+//                .define('D', TideItems.DRIFTWOOD_LOG_ITEM.get())
+//                .define('B', Items.COPPER_INGOT)
+//                .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
+//                        Items.GRAVEL))
+//                .save(consumer);
+
+        //upgrades
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.FLOW_UPGRADE_ITEM.get())
+                .pattern("---")
+                .pattern("SPS")
+                .pattern("---")
+                .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
+                .define('P', Items.PRISMARINE_SHARD)
+                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
+                .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.GRAVEL))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BOUNTY_UPGRADE_ITEM.get())
+                .pattern("---")
+                .pattern("SPS")
+                .pattern("---")
+                .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
+                .define('P', Items.PRISMARINE_CRYSTALS)
+                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
+                .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.GRAVEL))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.RANGE_UPGRADE_ITEM.get())
+                .pattern("---")
+                .pattern("SIS")
+                .pattern("---")
+                .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
+                .define('I', Items.INK_SAC)
+                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
                 .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
                         Items.GRAVEL))
                 .save(consumer);

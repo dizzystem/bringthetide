@@ -33,7 +33,7 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.VORTEX_CORE.get(), "Vortex Core");
         add(TideBlocks.WHIRLPOOL_CORE.get(), "Whirlpool Core");
         add(TideBlocks.FLOW_UPGRADE.get(), "Flow Upgrade");
-        add(TideBlocks.BOOTY_UPGRADE.get(), "Booty Upgrade");
+        add(TideBlocks.BOUNTY_UPGRADE.get(), "Bounty Upgrade");
         add(TideBlocks.RANGE_UPGRADE.get(), "Range Upgrade");
         add(TideBlocks.ITEM_FILTER.get(), "Item Filter Upgrade");
         add(TideBlocks.FLUID_FILTER.get(), "Fluid Filter Upgrade");
@@ -45,7 +45,9 @@ public class TideLanguageProvider extends LanguageProvider {
         //add(TideItems.IMBUED_SEAWATER_BUCKET.get(), "Imbued Seawater Bucket");
         add(TideItems.DRIFTWOOD_WAND.get(), "Driftwood Wand");
         add(TideItems.CREATIVE_WAND.get(), "Creative Wand");
-        add(TideItems.SEASHELL_ALLOY_INGOT.get(), "Seashell Alloy Ingot");
+        add(TideItems.SEASHELL_ALLOY_INGOT.get(), "Seashell Brass Ingot");
+        add(TideItems.TURTLE_ALLOY_INGOT.get(), "Turtle Steel Ingot");
+        add(TideItems.FISH_ALLOY_INGOT.get(), "Puffergold Ingot");
         add(TideItems.SEABOUND_SKIN.get(), "Seabound Skin");
         add(TideItems.COSTUME_HELMET.get(), "Dolphin Costume Head");
         add(TideItems.COSTUME_CHESTPLATE.get(), "Dolphin Costume Body");

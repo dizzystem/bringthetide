@@ -1,0 +1,21 @@
+{
+  "type": "bringthetide:deposition",
+  "catalysts": [
+    {
+      "item": "minecraft:kelp"
+    },
+    {
+      "item": "minecraft:kelp"
+    }
+  ],
+  "mainIngredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:poisonous_potato"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:slime_ball"
+  }
+}

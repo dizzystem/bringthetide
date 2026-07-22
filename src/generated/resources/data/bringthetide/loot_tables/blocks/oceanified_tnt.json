@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "bringthetide:booty_upgrade"
+          "name": "minecraft:air"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "bringthetide:blocks/booty_upgrade"
+  "random_sequence": "bringthetide:blocks/oceanified_tnt"
 }

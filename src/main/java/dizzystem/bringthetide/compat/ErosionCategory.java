@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -49,14 +50,12 @@ public class ErosionCategory implements IRecipeCategory<ErosionRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
-    }
-
-    @Override
     public IDrawable getIcon() {
         return this.icon;
     }
+
+    @Override
+    public @Nullable IDrawable getBackground() { return background; }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, ErosionRecipe recipe, IFocusGroup focuses) {

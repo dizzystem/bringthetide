@@ -1,0 +1,15 @@
+{
+  "type": "bringthetide:pelagic",
+  "ingredients": [
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "minecraft:elder_guardian_spawn_egg"
+  }
+}

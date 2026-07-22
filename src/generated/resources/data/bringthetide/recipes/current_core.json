@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "minecraft:prismarine_brick_slab"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "T": {
+      "item": "bringthetide:turtle_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "---",
+    "THT",
+    "---"
+  ],
+  "result": {
+    "item": "bringthetide:current_core"
+  },
+  "show_notification": true
+}

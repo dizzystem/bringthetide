@@ -1,0 +1,11 @@
+{
+  "name": "Misc",
+  "icon": "bringthetide:seabound_skin",
+  "category": "bringthetide:resources",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Ritual of Deposition allows me to transform certain base materials into an improved form.$(li)With kelp and bonemeal as a catalyst, I can turn leather into seabound skin, a fabric with great conductivity for the power of the Primordial Ocean. Oddly, the leather turns grey-white in the process."
+    }
+  ]
+}

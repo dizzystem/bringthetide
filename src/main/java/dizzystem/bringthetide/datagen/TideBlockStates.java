@@ -4,7 +4,7 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GlassBlock;
+import net.minecraft.world.level.block.TntBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
@@ -21,12 +21,14 @@ public class TideBlockStates extends BlockStateProvider {
         logBlock(TideBlocks.DRIFTWOOD_LOG.get());
         simpleBlock(TideBlocks.TANK.get(),
                 models().cubeAll(TideBlocks.TANK.getId().getPath(), modLoc("block/tank")).renderType("cutout"));
-
+        simpleBlock(TideBlocks.OCEANIFIED_TNT.get(),
+                models().cubeBottomTop(TideBlocks.OCEANIFIED_TNT.getId().getPath(), modLoc("block/tnt_side"),
+                        modLoc("block/tnt_bottom"), modLoc("block/tnt_top")));
         //sandstone cores
         horizontalBlock(TideBlocks.EROSION_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/erosion_core"));
         horizontalBlock(TideBlocks.PELAGIC_CORE.get(), modLoc("block/core_sandstone"),
-                modLoc("block/core_sandstone_face"), modLoc("block/core_sandstone"));
+                modLoc("block/core_sandstone_face"), modLoc("block/pelagic_core"));
         horizontalBlock(TideBlocks.SINKHOLE_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/sinkhole_core"));
         horizontalBlock(TideBlocks.VORTEX_CORE.get(), modLoc("block/core_sandstone"),
@@ -47,18 +49,18 @@ public class TideBlockStates extends BlockStateProvider {
                 modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine"));
 
         //upgrades
-        horizontalBlock(TideBlocks.FLOW_UPGRADE.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
-        horizontalBlock(TideBlocks.BOOTY_UPGRADE.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
-        horizontalBlock(TideBlocks.RANGE_UPGRADE.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
-        horizontalBlock(TideBlocks.ITEM_FILTER.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
-        horizontalBlock(TideBlocks.FLUID_FILTER.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
-        horizontalBlock(TideBlocks.ENTITY_FILTER.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine_face"));
+        horizontalBlock(TideBlocks.FLOW_UPGRADE.get(), modLoc("block/core_copper"),
+                modLoc("block/core_copper_face"), modLoc("block/flow_upgrade"));
+        horizontalBlock(TideBlocks.BOUNTY_UPGRADE.get(), modLoc("block/core_copper"),
+                modLoc("block/core_copper_face"), modLoc("block/bounty_upgrade"));
+        horizontalBlock(TideBlocks.RANGE_UPGRADE.get(), modLoc("block/core_copper"),
+                modLoc("block/core_copper_face"), modLoc("block/range_upgrade"));
+        horizontalBlock(TideBlocks.ITEM_FILTER.get(), modLoc("block/core_copper"),
+                modLoc("block/core_copper_face"), modLoc("block/filter_upgrade"));
+        horizontalBlock(TideBlocks.FLUID_FILTER.get(), modLoc("block/core_copper"),
+                modLoc("block/core_copper_face"), modLoc("block/filter_upgrade"));
+        horizontalBlock(TideBlocks.ENTITY_FILTER.get(), modLoc("block/core_copper"),
+                modLoc("block/core_copper_face"), modLoc("block/filter_upgrade"));
 
         simpleBlock(TideBlocks.BLOCK_IMBUED_SEAWATER.get(),
                 models().cubeAll("block_imbued_seawater", modLoc("block/fluids/imbued_seawater")));

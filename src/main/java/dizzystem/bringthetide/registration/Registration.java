@@ -15,21 +15,29 @@ public class Registration {
         TideParticles.init(modEventBus);
         TideLoot.init(modEventBus);
         TideRecipes.init(modEventBus);
+        TideEntities.init(modEventBus);
     }
 
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(TideItems.BUDDING_PRISMARINE_ITEM);
             event.accept(TideItems.DRIFTWOOD_LOG_ITEM);
+            event.accept(TideItems.SEABOUND_SKIN);
+            event.accept(TideItems.SEASHELL_ALLOY_INGOT);
+            event.accept(TideItems.TURTLE_ALLOY_INGOT);
+            event.accept(TideItems.FISH_ALLOY_INGOT);
+
             event.accept(TideItems.BASIN_CORE_ITEM);
             event.accept(TideItems.CURRENT_CORE_ITEM);
             event.accept(TideItems.DEPOSITION_CORE_ITEM);
             event.accept(TideItems.EROSION_CORE_ITEM);
+            event.accept(TideItems.PELAGIC_CORE_ITEM);
+            event.accept(TideItems.REEF_CORE_ITEM);
             event.accept(TideItems.SINKHOLE_CORE_ITEM);
             event.accept(TideItems.TRAWL_CORE_ITEM);
             event.accept(TideItems.VORTEX_CORE_ITEM);
+            event.accept(TideItems.WHIRLPOOL_CORE_ITEM);
             event.accept(TideItems.FLOW_UPGRADE_ITEM);
-            event.accept(TideItems.BOOTY_UPGRADE_ITEM);
+            event.accept(TideItems.BOUNTY_UPGRADE_ITEM);
             event.accept(TideItems.RANGE_UPGRADE_ITEM);
             event.accept(TideItems.ITEM_FILTER_ITEM);
             event.accept(TideItems.FLUID_FILTER_ITEM);

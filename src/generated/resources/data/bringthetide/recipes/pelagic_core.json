@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "minecraft:sandstone_slab"
+    },
+    "B": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "pattern": [
+    "---",
+    "CBC",
+    "---"
+  ],
+  "result": {
+    "item": "bringthetide:pelagic_core"
+  },
+  "show_notification": true
+}

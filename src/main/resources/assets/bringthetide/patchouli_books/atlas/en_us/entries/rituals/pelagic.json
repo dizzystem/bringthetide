@@ -1,0 +1,15 @@
+{
+  "name": "Pelagic Zone Ritual",
+  "icon": "bringthetide:pelagic_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual consumes reagents placed upon Pelagic Cores to summon a corresponding creature from the Primordial Ocean. This could be useful when combined with a Vortex Core to create an automated mob farm."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:pelagic_core"
+    }
+  ]
+}

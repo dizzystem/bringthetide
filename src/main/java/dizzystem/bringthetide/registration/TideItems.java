@@ -51,8 +51,8 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.WHIRLPOOL_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> FLOW_UPGRADE_ITEM = ITEMS.register("flow_upgrade",
             () -> new BlockItem(TideBlocks.FLOW_UPGRADE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> BOOTY_UPGRADE_ITEM = ITEMS.register("booty_upgrade",
-            () -> new BlockItem(TideBlocks.BOOTY_UPGRADE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> BOUNTY_UPGRADE_ITEM = ITEMS.register("bounty_upgrade",
+            () -> new BlockItem(TideBlocks.BOUNTY_UPGRADE.get(), new Item.Properties()));
     public static final RegistryObject<Item> RANGE_UPGRADE_ITEM = ITEMS.register("range_upgrade",
             () -> new BlockItem(TideBlocks.RANGE_UPGRADE.get(), new Item.Properties()));
     public static final RegistryObject<Item> ITEM_FILTER_ITEM = ITEMS.register("item_filter",
@@ -66,6 +66,10 @@ public class TideItems {
 //            () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_WAND = ITEMS.register("driftwood_wand", DriftwoodWand::new);
     public static final RegistryObject<Item> CREATIVE_WAND = ITEMS.register("creative_wand", CreativeWand::new);
+    public static final RegistryObject<Item> TURTLE_ALLOY_INGOT = ITEMS.register("turtle_alloy_ingot",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> FISH_ALLOY_INGOT = ITEMS.register("fish_alloy_ingot",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SEASHELL_ALLOY_INGOT = ITEMS.register("seashell_alloy_ingot",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SEABOUND_SKIN = ITEMS.register("seabound_skin",

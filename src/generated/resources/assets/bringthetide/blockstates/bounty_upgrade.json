@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "bringthetide:block/bounty_upgrade",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "bringthetide:block/bounty_upgrade"
+    },
+    "facing=south": {
+      "model": "bringthetide:block/bounty_upgrade",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bringthetide:block/bounty_upgrade",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "bringthetide:pelagic",
+  "ingredients": [
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:bread"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "minecraft:zombie_villager_spawn_egg"
+  }
+}

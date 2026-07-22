@@ -33,11 +33,6 @@ public class DropletParticleType extends ParticleType<DropletParticleType> imple
         this.fluid = fluid;
     }
 
-    public DropletParticleType(boolean overrideLimiter) {
-        //"default" particle for the sake of registration
-        this(new FluidStack(Fluids.WATER, 1000), overrideLimiter);
-    }
-
     public FluidStack getFluid() {
         return fluid;
     }

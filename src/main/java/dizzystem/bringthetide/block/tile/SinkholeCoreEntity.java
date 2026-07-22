@@ -27,12 +27,12 @@ import static java.util.Map.entry;
 
 public class SinkholeCoreEntity extends CoreEntity {
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
-            entry(new Vec3i(1, 0, 0), Blocks.SANDSTONE),
-            entry(new Vec3i(1, 0, -1), Blocks.SANDSTONE),
-            entry(new Vec3i(2, 0, -1), Blocks.SANDSTONE),
-            entry(new Vec3i(2, 0, -2), Blocks.SANDSTONE),
-            entry(new Vec3i(3, 0, -2), Blocks.SANDSTONE),
-            entry(new Vec3i(3, 0, -3), Blocks.SANDSTONE)
+            entry(new Vec3i(1, 0, 0), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(1, 0, -1), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(2, 0, -1), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(2, 0, -2), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(3, 0, -2), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(3, 0, -3), Blocks.CUT_SANDSTONE)
     );
     private final List<ItemStack> tools = List.of(
             new ItemStack(Items.IRON_PICKAXE),

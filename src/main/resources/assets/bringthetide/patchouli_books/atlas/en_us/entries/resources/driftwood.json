@@ -1,0 +1,11 @@
+{
+  "name": "Driftwood",
+  "icon": "bringthetide:driftwood_log",
+  "category": "bringthetide:resources",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Driftwood can be found in shipwreck chests or crafted with the Ritual of Erosion from any other wood log."
+    }
+  ]
+}

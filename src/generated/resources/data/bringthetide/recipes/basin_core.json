@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "minecraft:prismarine_brick_slab"
+    },
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "T": {
+      "item": "bringthetide:turtle_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "---",
+    "TBT",
+    "---"
+  ],
+  "result": {
+    "item": "bringthetide:basin_core"
+  },
+  "show_notification": true
+}

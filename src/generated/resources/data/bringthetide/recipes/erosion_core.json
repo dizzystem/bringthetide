@@ -8,13 +8,13 @@
     "B": {
       "item": "minecraft:water_bucket"
     },
-    "G": {
-      "item": "minecraft:gravel"
+    "F": {
+      "item": "bringthetide:fish_alloy_ingot"
     }
   },
   "pattern": [
     "---",
-    "GBG",
+    "FBF",
     "---"
   ],
   "result": {

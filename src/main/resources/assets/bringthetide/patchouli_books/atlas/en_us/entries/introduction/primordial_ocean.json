@@ -1,0 +1,19 @@
+{
+  "name": "The Primordial Ocean",
+  "icon": "bringthetide:driftwood_log",
+  "category": "bringthetide:introduction",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "I remember the day I first glimpsed the Primordial Ocean.$(br2)A pile of driftwood on the beach had fallen in the rough shape of a circle. On a whim, I looked into it as I passed, and on the other side...$(br2)Something beyond imagining. Even now, it is difficult to think of the magnitude of what I saw beyond the portal. "
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Another beach, luminously red with strange white stripes running through the sand. Another ocean, with glowing cyan water, host to strange life that boggled my mind.$(br2)A huge clam on the red sand opened to display an equally huge white pearl. Far out to sea, a vast tentacle breached the surface with a roaring crash of water. In the water, a shoal of knives, like one would find in an ordinary kitchen, darted back and forth like fish."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "I must have stood there for minutes, my heart pounding at the discovery.$(br2)I could have jumped through. I $(o)should$() have jumped through. But in that moment I was struck by cowardice, and I stepped back, and the vision was gone."
+    }
+  ]
+}

@@ -2,10 +2,11 @@ package dizzystem.bringthetide.datagen;
 
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.api.TideTags;
+import dizzystem.bringthetide.registration.Registration;
 import dizzystem.bringthetide.registration.TideBlocks;
-import dizzystem.bringthetide.registration.TideFluids;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -24,9 +25,6 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(Blocks.PRISMARINE)
                 .add(Blocks.PRISMARINE_STAIRS)
                 .add(Blocks.PRISMARINE_SLAB)
-                .add(Blocks.PRISMARINE_BRICKS)
-                .add(Blocks.PRISMARINE_BRICK_STAIRS)
-                .add(Blocks.PRISMARINE_BRICK_SLAB)
                 .add(Blocks.SANDSTONE)
                 .add(Blocks.SANDSTONE_STAIRS)
                 .add(Blocks.SANDSTONE_SLAB)
@@ -43,10 +41,18 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(TideBlocks.VORTEX_CORE.get())
                 .add(TideBlocks.WHIRLPOOL_CORE.get())
                 .add(TideBlocks.FLOW_UPGRADE.get())
-                .add(TideBlocks.BOOTY_UPGRADE.get())
+                .add(TideBlocks.BOUNTY_UPGRADE.get())
                 .add(TideBlocks.RANGE_UPGRADE.get())
                 .add(TideBlocks.ITEM_FILTER.get())
                 .add(TideBlocks.FLUID_FILTER.get())
                 .add(TideBlocks.ENTITY_FILTER.get());
+        tag(TideTags.DEAD_CORAL_WALL_FANS)
+                .add(Blocks.DEAD_BRAIN_CORAL_WALL_FAN)
+                .add(Blocks.DEAD_BUBBLE_CORAL_WALL_FAN)
+                .add(Blocks.DEAD_FIRE_CORAL_WALL_FAN)
+                .add(Blocks.DEAD_HORN_CORAL_WALL_FAN)
+                .add(Blocks.DEAD_TUBE_CORAL_WALL_FAN);
+        tag(BlockTags.MINEABLE_WITH_AXE)
+                .add(TideBlocks.DRIFTWOOD_LOG.get());
     }
 }

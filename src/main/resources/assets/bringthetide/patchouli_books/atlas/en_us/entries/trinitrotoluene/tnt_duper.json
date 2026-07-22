@@ -1,0 +1,46 @@
+{
+  "name": "Trinitrotoluene Duplicator",
+  "icon": "bringthetide:trawl_core",
+  "category": "bringthetide:trinitrotoluene",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Also known as a \"TNT Duper\", these redstone contraptions have long been used by accomplished redstone engineers to summon forth lit TNT from the shores of the Primordial Ocean using the sympathetic link of a dead coral fan, in addition to several somewhat less ocean-themed redstone components."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "multiblock": {
+        "mapping" : {
+          "R" : "minecraft:detector_rail[shape=east_west]",
+          "S" : "minecraft:slime_block",
+          "P" : "minecraft:sticky_piston[facing=west]",
+          "B" : "minecraft:sandstone",
+          "L" : "minecraft:lever[facing=south]",
+          "W" : "minecraft:sandstone_wall",
+          "T" : "minecraft:tnt",
+          "C" : "minecraft:dead_tube_coral_wall_fan[facing=south,waterlogged=false]",
+          "0" : "minecraft:oak_fence_gate[facing=north,open=true]"
+        },
+        "pattern" : [
+          ["   ", "   ", " R ", " S ", " P ", " BL"],
+          ["   ", " W ", "SS ", " S ", "   ", "   "],
+          ["   ", " T ", "S  ", "SC ", "   ", "   "],
+          [" W ", " 0 ", " W ", "   ", "   ", "   "]
+        ],
+        "text": "A minecart is required upon the detector rail."
+      }
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Notes:$(li)Any kind of wall will work, as well as any kind of fence gate and any kind of dead coral wall fan.$(li)A minecart must be placed on the detector rail before the lever is pulled.$(li)Once the contraption is complete, pulling the lever twice will produce a lit TNT at the position of the fence gate. I can automate this process by setting up a redstone clock in place of the lever."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Notes:$(li)Note that if the redstone pulse to the sticky piston is too short, it will fail to pull the contraption when it retracts.$(li)The TNT block in the contraption will become volatile once the contraption has moved it next to the coral fan. Placing or breaking any block adjacent to it will cause it to immediately become lit; to avoid this, break the TNT before making changes, and replace it above the fence gate afterwards."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "As the lit TNT produced this way is from the same source that my rituals tap into, I attempted the obvious experiment of passing one through the other.$(br2)Curiously, lit TNT that enters a ritual will come out with an altered colour and, when detonating, apply the effects of that same ritual upon the radius of its explosion instead of breaking blocks or damaging creatures like regular TNT would. This could have intriguing applications..."
+    }
+  ]
+}

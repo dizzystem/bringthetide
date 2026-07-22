@@ -2,16 +2,20 @@ package dizzystem.bringthetide.util;
 
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
+import dizzystem.bringthetide.entity.OceanifiedTnt;
 import dizzystem.bringthetide.item.DolphinCostumeItem;
 import dizzystem.bringthetide.item.Wand;
 import dizzystem.bringthetide.registration.TideBlocks;
+import dizzystem.bringthetide.registration.TideEntities;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.block.tile.CoreEntity;
 import net.minecraft.core.*;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -21,6 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
@@ -173,6 +178,18 @@ public class PoolHandler {
     }
 
     /**
+     * Returns whether the given fluid is part of the pool that the given core is also part of.
+     */
+    public static boolean poolContainsFluidBlock(Level level, BlockPos core, BlockPos fluid){
+        if (level.getBlockEntity(core) instanceof CoreEntity coreEntity){
+            HashSet<BlockPos> poolFluids = coreEntity.getPoolFluids();
+            return poolFluids.contains(fluid);
+        }
+
+        return false;
+    }
+
+    /**
      * Called when an entity enters an imbued seawater block, which may or may not be part of a pool.
      *
      * @param pos The BlockPos of the core.
@@ -185,8 +202,19 @@ public class PoolHandler {
             return;
         }
 
-        //in theory every core in the same pool should have the same speed, but we might as well handle
-        // it if they aren't
+        //tnt effect propagation
+        if (entity instanceof PrimedTnt tnt && !(entity instanceof OceanifiedTnt)){
+            OceanifiedTnt newTnt = new OceanifiedTnt(TideEntities.OCEANIFIED_TNT.get(), level, pos);
+            CompoundTag data = new CompoundTag();
+            tnt.save(data);
+            newTnt.load(data);
+            tnt.remove(Entity.RemovalReason.DISCARDED);
+            level.addFreshEntity(newTnt);
+            return;
+        }
+
+        //todo: give each core its own cooldown, it doesn't really make sense to have a shared cooldown when
+        //  they can be different speeds
         int minTicksPerAction = 99999;
         for (PoolCore core : cores){
             if (level != core.level()){
@@ -198,8 +226,8 @@ public class PoolHandler {
                 if (!coreEntity.poolFilled){
                     continue;
                 }
-                HashSet<BlockPos> poolFluids = coreEntity.getPoolFluids();
-                if (poolFluids.contains(pos)){
+
+                if (poolContainsFluidBlock(level, core.corePos(), pos)){
                     coreEntity.entityInPool(entity, level, pos);
                     if (coreEntity.getTicksPerAction() < minTicksPerAction){
                         minTicksPerAction = coreEntity.getTicksPerAction();
@@ -307,8 +335,13 @@ public class PoolHandler {
     public static boolean matchBlock(BlockState blockState, Object requirement){
         if (requirement instanceof Block){
             return blockState.is((Block) requirement);
-        } else if (requirement instanceof HolderSet<?>){
-            return blockState.is((HolderSet<Block>) requirement);
+        } else if (requirement instanceof List<?> listRequirement){
+            for (Block block : (List<Block>) listRequirement){
+                if (blockState.is(block)){
+                    return true;
+                }
+            }
+            return false;
         } else if (requirement instanceof TagKey<?>){
             return blockState.is((TagKey<Block>) requirement);
         }
@@ -319,8 +352,8 @@ public class PoolHandler {
     public static BlockState[] allBlocksMatching(Object requirement){
         if (requirement instanceof Block blockRequirement){
             return new BlockState[]{ blockRequirement.defaultBlockState() };
-        } else if (requirement instanceof HolderSet<?> setRequirement){
-            return ((HolderSet<Block>) setRequirement).stream().map(Holder::value)
+        } else if (requirement instanceof List<?> listRequirement){
+            return ((List<Block>) listRequirement).stream()
                     .map(Block::defaultBlockState).toArray(BlockState[]::new);
         } else if (requirement instanceof TagKey<?> tagRequirement){
             return ForgeRegistries.BLOCKS.tags().getTag((TagKey<Block>) tagRequirement).stream()
@@ -333,7 +366,6 @@ public class PoolHandler {
     //pool filling minigame
     public static boolean wandUse(Player player, ItemStack wand, Level level, BlockPos pos){
         BlockState turnInto = null;
-        boolean inPool = false;
 
         //we already checked it's a fluid and a source block in the wand
         if (level.dimensionType().ultraWarm()){ //lava in the nether instead of water
@@ -350,34 +382,54 @@ public class PoolHandler {
             }
         }
 
+        //give our cores a chance to block us
+        boolean inPool = false;
         for (PoolCore core : cores){
             if (level != core.level()){
                 continue;
             }
 
-            BlockEntity blockEntity = level.getBlockEntity(core.corePos());
-            if (blockEntity instanceof CoreEntity coreEntity){
-                if (coreEntity.placeFluid(player, wand, level, pos)){
-                    inPool = true;
-                }
-            }
-        }
+            BlockPos corePos = core.corePos();
 
-        if (inPool){
+            if (!poolContainsFluidBlock(level, corePos, pos)){
+                continue;
+            }
+
             level.setBlockAndUpdate(pos, turnInto);
             for (int i=0;i<4;i++){
                 level.addParticle(TideParticles.BUBBLE.get(),
                         pos.getX() + Math.random(),
                         pos.getY() + 1,
                         pos.getZ() + Math.random(),
-                        0,
-                        0,
-                        0);
+            BlockEntity blockEntity = level.getBlockEntity(corePos);
+            if (blockEntity instanceof CoreEntity coreEntity &&
+                    !coreEntity.placeFluid(player, wand, level, pos)){
+                return false;
             }
-            return true;
+
+            //we also need to make sure there's any cores at all
+            inPool = true;
+
+            BlockState blockState = level.getBlockState(corePos);
+            level.sendBlockUpdated(corePos, blockState, blockState, Block.UPDATE_CLIENTS);
         }
 
-        return false;
+        if (!inPool){
+            return false;
+        }
+
+        level.setBlockAndUpdate(pos, turnInto);
+        for (int i=0;i<4;i++){
+            level.addParticle(TideParticles.BUBBLE.get(),
+                    pos.getX() + Math.random(),
+                    pos.getY() + 1,
+                    pos.getZ() + Math.random(),
+                    0,
+                    0,
+                    0);
+        }
+
+        return true;
     }
 
     public static float getThalassityCost(Player player, ItemStack wand, Level level){
@@ -396,5 +448,45 @@ public class PoolHandler {
         }
 
         return 1f / totalPower;
+    }
+
+    public static void schedulePoolCheck(Level level, BlockPos blockPos){
+        for (PoolCore core : cores){
+            if (level != core.level()){
+                continue;
+            }
+
+            if (poolContainsFluidBlock(level, core.corePos(), blockPos) &&
+                    level.getBlockEntity(core.corePos()) instanceof CoreEntity coreEntity){
+                coreEntity.schedulePoolCheck();
+            }
+        }
+    }
+
+    public static void aoeApplyRitualEffect(Level level, OceanifiedTnt tnt, float radius) {
+        //the tnt code multiplies the radius by 2, i have no idea why but i'm keeping it to keep the behaviour consistent
+        List<Entity> entities = level.getEntities(tnt, new AABB(
+                tnt.getX() - radius * 2 - 1,
+                tnt.getY() - radius * 2 - 1,
+                tnt.getZ() - radius * 2 - 1,
+                tnt.getX() + radius * 2 + 1,
+                tnt.getY() + radius * 2 + 1,
+                tnt.getZ() + radius * 2 + 1
+        ));
+
+        //todo: do blocks for rituals that affect blocks
+
+        //rituals that affect entities
+        for (Entity entity : entities) {
+            double dist = Math.sqrt(entity.distanceToSqr(tnt.position()));
+            if (dist <= radius * 2) {
+                BlockPos poolBlock = tnt.getPoolBlock();
+                if (poolBlock != null){
+                    entityInPool(entity, level, poolBlock);
+                }
+            }
+        }
+
+        //todo: do a tick for rituals that just tick
     }
 }

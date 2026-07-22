@@ -1,0 +1,12 @@
+{
+  "type": "bringthetide:pelagic",
+  "ingredients": [
+    {
+      "item": "minecraft:cod"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "minecraft:guardian_spawn_egg"
+  }
+}

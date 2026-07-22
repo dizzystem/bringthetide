@@ -34,7 +34,7 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.VORTEX_CORE.getId().getPath(), modLoc("block/vortex_core"));
         withExistingParent(TideBlocks.WHIRLPOOL_CORE.getId().getPath(), modLoc("block/whirlpool_core"));
         withExistingParent(TideBlocks.FLOW_UPGRADE.getId().getPath(), modLoc("block/flow_upgrade"));
-        withExistingParent(TideBlocks.BOOTY_UPGRADE.getId().getPath(), modLoc("block/booty_upgrade"));
+        withExistingParent(TideBlocks.BOUNTY_UPGRADE.getId().getPath(), modLoc("block/bounty_upgrade"));
         withExistingParent(TideBlocks.RANGE_UPGRADE.getId().getPath(), modLoc("block/range_upgrade"));
         withExistingParent(TideBlocks.ITEM_FILTER.getId().getPath(), modLoc("block/item_filter"));
         withExistingParent(TideBlocks.FLUID_FILTER.getId().getPath(), modLoc("block/fluid_filter"));
@@ -43,6 +43,8 @@ public class TideItemModels extends ItemModelProvider {
         //basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
         basicItem(TideItems.DRIFTWOOD_WAND.get());
         basicItem(TideItems.CREATIVE_WAND.get());
+        basicItem(TideItems.TURTLE_ALLOY_INGOT.get());
+        basicItem(TideItems.FISH_ALLOY_INGOT.get());
         basicItem(TideItems.SEASHELL_ALLOY_INGOT.get());
         basicItem(TideItems.SEABOUND_SKIN.get());
         basicItem(TideItems.COSTUME_HELMET.get());

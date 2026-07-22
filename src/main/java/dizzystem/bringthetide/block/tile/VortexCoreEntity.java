@@ -32,12 +32,12 @@ import static java.util.Map.entry;
 public class VortexCoreEntity extends CoreEntity {
     public static final String PLACEDBY_TAG = "Placed By";
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
-            entry(new Vec3i(1, 0, 0), Blocks.SANDSTONE),
-            entry(new Vec3i(1, 0, -1), Blocks.SANDSTONE),
-            entry(new Vec3i(2, 0, -1), Blocks.SANDSTONE),
-            entry(new Vec3i(2, 0, -2), Blocks.SANDSTONE),
-            entry(new Vec3i(3, 0, -2), Blocks.SANDSTONE),
-            entry(new Vec3i(3, 0, -3), Blocks.SANDSTONE)
+            entry(new Vec3i(1, 0, 0), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(1, 0, -1), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(2, 0, -1), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(2, 0, -2), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(3, 0, -2), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(3, 0, -3), Blocks.CUT_SANDSTONE)
     );
     private final ItemStack weapon = new ItemStack(Items.IRON_SWORD);
     UUID placedBy;

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gravel": {
+    "has_fish_alloy": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:gravel"
+              "bringthetide:fish_alloy_ingot"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_gravel",
+      "has_fish_alloy",
       "has_the_recipe"
     ]
   ],

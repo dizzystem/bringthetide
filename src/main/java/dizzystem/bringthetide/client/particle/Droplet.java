@@ -3,6 +3,7 @@ package dizzystem.bringthetide.client.particle;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.DripParticle;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
@@ -31,14 +32,15 @@ public class Droplet extends TextureSheetParticle {
         this.xd = xSpeed;
         this.yd = ySpeed;
         this.zd = zSpeed;
+        this.hasPhysics = false;
 
         FluidStack fluidStack = type.getFluid();
-//        ResourceLocation stillTexture = IClientFluidTypeExtensions.of(fluidStack.getFluid())
-//                .getStillTexture(fluidStack);
-//        TextureAtlasSprite sprite = Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
-//                TextureAtlas.LOCATION_BLOCKS
-//        ).apply(stillTexture));
-//        this.setSprite(sprite);
+        ResourceLocation stillTexture = IClientFluidTypeExtensions.of(fluidStack.getFluid())
+                .getStillTexture(fluidStack);
+        TextureAtlasSprite sprite = Objects.requireNonNull(Minecraft.getInstance().getTextureAtlas(
+                TextureAtlas.LOCATION_BLOCKS
+        ).apply(stillTexture));
+        this.setSprite(sprite);
 //        this.quadSize /= 2.0F;
         this.uo = this.random.nextFloat() * 3.0F;
         this.vo = this.random.nextFloat() * 3.0F;
@@ -77,13 +79,13 @@ public class Droplet extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
-        this.setSpriteFromAge(spriteSet);
+//        this.setSpriteFromAge(spriteSet);
         //Vec3 towardsCentre = this.centre.subtract(getPos()).normalize().scale(0.1);
         //this.move(towardsCentre.x, towardsCentre.y, towardsCentre.z);
     }
 
     @Override
     public @NotNull ParticleRenderType getRenderType(){
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+        return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
     }
 }

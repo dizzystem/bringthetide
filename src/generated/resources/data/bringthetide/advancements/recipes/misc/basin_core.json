@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bringthetide:basin_core"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_turtle_alloy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bringthetide:turtle_alloy_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_turtle_alloy",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bringthetide:basin_core"
+    ]
+  },
+  "sends_telemetry_event": false
+}

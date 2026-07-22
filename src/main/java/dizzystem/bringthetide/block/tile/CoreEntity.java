@@ -3,6 +3,7 @@ package dizzystem.bringthetide.block.tile;
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.TideBlocks;
+import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
@@ -35,8 +36,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntity {
-    public boolean poolFormed = false, poolFilled = false, scheduleCheckPool = false, scheduleRegisterCore = false;
-    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0;
+    public boolean poolFormed = false, poolFilled = false, schedulePoolCheck = false, scheduleReset = false,
+            scheduleRegisterCore = false;
+    public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0, baseTicksPerAction = 80;
     public float thalassity = 1f, renderThalassity = 0f, speed = 1f, luck = 1f, range = 1f;
     public ItemEntity craftingEntity;
     public ArrayList<Vec3i> missingBlocks = new ArrayList<>();
@@ -63,9 +65,16 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public void setLuck(float luck){ this.luck = luck; }
     public void setRange(float range){ this.range = range; }
     public float getSpeed(){ return speed; }
-    public int getTicksPerAction(){ return (int) (80 / speed); }
+    public int getTicksPerAction(){ return (int) (getBaseTicksPerAction() / speed); }
     public float getLuck() { return luck; }
     public float getRange() { return range; }
+
+    //default every 4 seconds, overrideable
+    public void setBaseTicksPerAction(int ticks) { this.baseTicksPerAction = ticks; }
+    public int getBaseTicksPerAction(){ return baseTicksPerAction; }
+
+    public void setThalassity(float thalassity) { this.thalassity = thalassity; }
+    public float getThalassity() { return thalassity; }
 
     /**
      * The required additional blocks around the core to make it function as part of a ritual.
@@ -169,6 +178,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         tag.putFloat("fillQuota", this.thalassity);
         tag.putBoolean("poolFormed", this.poolFormed);
         tag.putBoolean("poolFilled", this.poolFilled);
+        tag.putBoolean("scheduleReset", this.scheduleReset);
     }
 
     //This is used for both saving and updating clients with our data.
@@ -188,9 +198,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         } else {
             this.craftingEntity = (ItemEntity) level.getEntity(entityId);
         }
-        this.thalassity = tag.getInt("fillQuota");
+        this.thalassity = tag.getFloat("fillQuota");
         this.poolFormed = tag.getBoolean("poolFormed");
         this.poolFilled = tag.getBoolean("poolFilled");
+        this.scheduleReset = tag.getBoolean("scheduleReset");
     }
 
     //saving
@@ -354,7 +365,6 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
         //do the missing block check clientside as well so our renderer can render the missing blocks
         if (this.ticks++ % 20 == 0){
-            Level level = this.level;
             BlockPos pos = this.getBlockPos();
             BlockState blockState = this.getBlockState();
 
@@ -368,7 +378,20 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     }
 
     public void resetQuota() {
-        this.thalassity = 1f;
+        setThalassity(1f);
+
+        Level level = this.level;
+        for (BlockPos core : poolCores){
+            if (level.getBlockEntity(core) instanceof CoreEntity coreEntity){
+                coreEntity.setThalassity(1f);
+                BlockState state = level.getBlockState(core);
+                level.sendBlockUpdated(core, state, state, Block.UPDATE_CLIENTS);
+            }
+        }
+    }
+
+    public void scheduleReset(){
+        this.scheduleReset = true;
     }
 
     public void tickServer(){
@@ -377,8 +400,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             PoolHandler.endCrafts(this.craftingEntity);
         }
 
-        if (this.scheduleCheckPool){
-            this.scheduleCheckPool = false;
+        if (this.schedulePoolCheck){
+            this.schedulePoolCheck = false;
             //check if the pool's filled
             Direction facing = this.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING);
             BlockPos insidePool = getBlockPos().relative(facing);
@@ -388,11 +411,13 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                 this.poolFluids = poolFluids;
                 this.poolFormed = true;
                 this.poolFilled = true;
-            } else if (this.thalassity <= 0.00001){ //check if we have any thalassity left
-                //if not turn all our seawater back into water
-                clearImbuedWater();
-                resetQuota();
             }
+        }
+
+        if (this.scheduleReset){
+            this.scheduleReset = false;
+            clearImbuedWater();
+            resetQuota();
         }
 
         if (this.scheduleRegisterCore){
@@ -492,6 +517,17 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                     }
                 }
             }
+
+            if (formed) {
+                for (var blockPos : this.poolFluids) {
+                    if (!level.getBlockState(blockPos).canBeReplaced(TideFluids.IMBUED_SEAWATER.get())){
+                        LogUtils.getLogger().info("pool isn't formed!");
+                        formed = false;
+                        break;
+                    }
+                }
+            }
+
             if (!formed){
                 clearImbuedWater();
                 resetQuota();
@@ -531,14 +567,24 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     /* ===pool filling minigame=== */
     public void schedulePoolCheck(){
-        this.scheduleCheckPool = true;
+        this.schedulePoolCheck = true;
     }
 
+    /**
+     * This is called when someone tries to imbues a fluid block in our pool with a wand.
+     * @return whether we allow it
+     */
     public boolean placeFluid(Player player, ItemStack wand, Level level, BlockPos pos){
         if (!this.poolFormed){
             return false;
         }
         if (!this.poolFluids.contains(pos)){
+            return false;
+        }
+
+        if (this.thalassity <= 0.00001){ //check if we have any thalassity left
+            //if not turn all our seawater back into water
+            scheduleReset();
             return false;
         }
 

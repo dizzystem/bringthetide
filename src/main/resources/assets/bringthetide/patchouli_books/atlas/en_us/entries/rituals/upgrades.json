@@ -14,8 +14,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "bringthetide:booty_upgrade",
-      "text": "Booty Upgrades increase an indefinable quality of cores that one could call \"luck\", perhaps, or \"fortune\". Regardless of the name, it increases the yield of certain cores that benefit from that sort of thing."
+      "recipe": "bringthetide:bounty_upgrade",
+      "text": "Bounty Upgrades increase an indefinable quality of cores that one could call \"luck\", perhaps, or \"fortune\". Regardless of the name, it increases the yield of certain cores that benefit from that sort of thing."
     },
     {
       "type": "patchouli:crafting",

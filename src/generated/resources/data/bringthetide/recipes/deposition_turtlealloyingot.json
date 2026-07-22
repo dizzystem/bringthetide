@@ -1,0 +1,21 @@
+{
+  "type": "bringthetide:deposition",
+  "catalysts": [
+    {
+      "item": "minecraft:scute"
+    },
+    {
+      "item": "minecraft:seagrass"
+    }
+  ],
+  "mainIngredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "bringthetide:turtle_alloy_ingot"
+  }
+}

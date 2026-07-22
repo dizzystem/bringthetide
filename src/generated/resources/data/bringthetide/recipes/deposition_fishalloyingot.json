@@ -1,0 +1,24 @@
+{
+  "type": "bringthetide:deposition",
+  "catalysts": [
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:tropical_fish"
+    },
+    {
+      "item": "minecraft:pufferfish"
+    }
+  ],
+  "mainIngredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "bringthetide:fish_alloy_ingot"
+  }
+}

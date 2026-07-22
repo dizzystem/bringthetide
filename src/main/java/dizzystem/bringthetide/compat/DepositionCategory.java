@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.Nullable;
 
 public class DepositionCategory implements IRecipeCategory<DepositionRecipe> {
     public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition");
@@ -45,14 +46,12 @@ public class DepositionCategory implements IRecipeCategory<DepositionRecipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
-    }
-
-    @Override
     public IDrawable getIcon() {
         return this.icon;
     }
+
+    @Override
+    public @Nullable IDrawable getBackground() { return background; }
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, DepositionRecipe recipe, IFocusGroup focuses) {

@@ -4,10 +4,7 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.block.*;
 import dizzystem.bringthetide.block.tile.*;
 import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -52,6 +49,8 @@ public class TideBlocks {
                     .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE)));
     public static final RegistryObject<Block> TANK = BLOCKS.register("fluid_tank",
             Tank::new);
+    public static final RegistryObject<Block> OCEANIFIED_TNT = BLOCKS.register("oceanified_tnt",
+            () -> new Block(BlockBehaviour.Properties.of()));
 
     public static final RegistryObject<Block> BASIN_CORE = BLOCKS.register("basin_core",
             BasinCore::new);
@@ -75,8 +74,8 @@ public class TideBlocks {
             WhirlpoolCore::new);
     public static final RegistryObject<Block> FLOW_UPGRADE = BLOCKS.register("flow_upgrade",
             FlowUpgrade::new);
-    public static final RegistryObject<Block> BOOTY_UPGRADE = BLOCKS.register("booty_upgrade",
-            BootyUpgrade::new);
+    public static final RegistryObject<Block> BOUNTY_UPGRADE = BLOCKS.register("bounty_upgrade",
+            BountyUpgrade::new);
     public static final RegistryObject<Block> RANGE_UPGRADE = BLOCKS.register("range_upgrade",
             RangeUpgrade::new);
     public static final RegistryObject<Block> ITEM_FILTER = BLOCKS.register("item_filter",
@@ -125,9 +124,9 @@ public class TideBlocks {
     public static final RegistryObject<BlockEntityType<FlowUpgradeEntity>> FLOW_UPGRADE_ENTITY =
             BLOCK_ENTITIES.register("flow_upgrade_entity",
                     () -> BlockEntityType.Builder.of(FlowUpgradeEntity::new, FLOW_UPGRADE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<BootyUpgradeEntity>> BOOTY_UPGRADE_ENTITY =
-            BLOCK_ENTITIES.register("booty_upgrade_entity",
-                    () -> BlockEntityType.Builder.of(BootyUpgradeEntity::new, BOOTY_UPGRADE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<BountyUpgradeEntity>> BOUNTY_UPGRADE_ENTITY =
+            BLOCK_ENTITIES.register("bounty_upgrade_entity",
+                    () -> BlockEntityType.Builder.of(BountyUpgradeEntity::new, BOUNTY_UPGRADE.get()).build(null));
     public static final RegistryObject<BlockEntityType<RangeUpgradeEntity>> RANGE_UPGRADE_ENTITY =
             BLOCK_ENTITIES.register("range_upgrade_entity",
                     () -> BlockEntityType.Builder.of(RangeUpgradeEntity::new, RANGE_UPGRADE.get()).build(null));

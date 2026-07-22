@@ -3,14 +3,26 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "Tank",
+                  "target": "BlockEntityTag.Tank"
+                }
+              ],
+              "source": "block_entity"
+            }
+          ],
           "name": "bringthetide:fluid_tank"
         }
       ],

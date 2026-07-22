@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "minecraft:prismarine_brick_slab"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "D": {
+      "item": "bringthetide:driftwood_log"
+    }
+  },
+  "pattern": [
+    "---",
+    "CDC",
+    "---"
+  ],
+  "result": {
+    "item": "bringthetide:deposition_core"
+  },
+  "show_notification": true
+}

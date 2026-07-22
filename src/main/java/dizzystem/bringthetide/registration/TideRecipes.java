@@ -3,6 +3,7 @@ package dizzystem.bringthetide.registration;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.recipe.DepositionRecipe;
 import dizzystem.bringthetide.recipe.ErosionRecipe;
+import dizzystem.bringthetide.recipe.PelagicRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -32,6 +33,13 @@ public class TideRecipes {
     );
     public static final Supplier<RecipeSerializer<DepositionRecipe>> DEPOSITION_SERIALIZER =
             RECIPE_SERIALIZERS.register("deposition", DepositionRecipe.Serializer::new);
+
+    public static final Supplier<RecipeType<PelagicRecipe>> PELAGIC = RECIPE_TYPES.register(
+            "pelagic",
+            () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic"))
+    );
+    public static final Supplier<RecipeSerializer<PelagicRecipe>> PELAGIC_SERIALIZER =
+            RECIPE_SERIALIZERS.register("pelagic", PelagicRecipe.Serializer::new);
 
     public static void init(IEventBus modEventBus) {
         RECIPE_TYPES.register(modEventBus);

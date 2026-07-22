@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "-": {
+      "item": "minecraft:oxidized_cut_copper_slab"
+    },
+    "P": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "S": {
+      "item": "bringthetide:seashell_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "---",
+    "SPS",
+    "---"
+  ],
+  "result": {
+    "item": "bringthetide:flow_upgrade"
+  },
+  "show_notification": true
+}

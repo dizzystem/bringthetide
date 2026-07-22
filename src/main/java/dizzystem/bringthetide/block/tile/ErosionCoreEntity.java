@@ -1,6 +1,7 @@
 package dizzystem.bringthetide.block.tile;
 
 import com.mojang.logging.LogUtils;
+import dizzystem.bringthetide.client.particle.DropletParticleType;
 import dizzystem.bringthetide.recipe.ErosionRecipe;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -35,10 +36,10 @@ import static java.util.Map.entry;
 
 public class ErosionCoreEntity extends FluidCoreEntity {
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
-            entry(new Vec3i(1, 0, 0), Blocks.SANDSTONE),
-            entry(new Vec3i(-1, 0, 0), Blocks.SANDSTONE),
-            entry(new Vec3i(1, 0, -1), Blocks.SANDSTONE),
-            entry(new Vec3i(-1, 0, -1), Blocks.SANDSTONE)
+            entry(new Vec3i(1, 0, 0), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(-1, 0, 0), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(1, 0, -1), Blocks.CUT_SANDSTONE),
+            entry(new Vec3i(-1, 0, -1), Blocks.CUT_SANDSTONE)
     );
 
     public ErosionCoreEntity(BlockPos blockPos, BlockState blockState){
@@ -258,27 +259,23 @@ public class ErosionCoreEntity extends FluidCoreEntity {
         Level level = getLevel();
         RandomSource random = level.getRandom();
         if (this.craftingEntity != null && !this.getFluid().isEmpty() &&
-                random.nextInt(5) == 0){
-            Vec3 bubblePos = getBlockPos().getCenter().add(0, 0.8, 0).add(
-                    0.25 - 0.5 * random.nextFloat(),
-                    0.25 - 0.5 * random.nextFloat(),
-                    0.25 - 0.5 * random.nextFloat()
-            );
+                random.nextInt(4) == 0){
             FluidStack fluid = this.getFluid();
-            Vec3 centre = this.craftingEntity.position().add(0, 0.5, 0).add(
+            Vec3 from = this.craftingEntity.position().add(0, -0.25, 0).add(
                     0.25 - 0.5 * random.nextFloat(),
-                    0.25 - 0.5 * random.nextFloat(),
+                    0,
                     0.25 - 0.5 * random.nextFloat()
             );
+            Vec3 to = this.craftingEntity.position().add(0, 0.5, 0);
 
-            Vec3 towardsCentre = centre.subtract(bubblePos).scale(0.1);
-            level.addParticle(TideParticles.DROPLET.get(),
-                    bubblePos.x,
-                    bubblePos.y,
-                    bubblePos.z,
-                    towardsCentre.x,
-                    towardsCentre.y,
-                    towardsCentre.z);
+            Vec3 towards = to.subtract(from).scale(0.25);
+            level.addParticle(new DropletParticleType(fluid, false),
+                    from.x,
+                    from.y,
+                    from.z,
+                    towards.x,
+                    towards.y,
+                    towards.z);
         }
     }
 }
