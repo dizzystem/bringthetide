@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "bringthetide:driftwood_planks"
+    }
+  },
+  "pattern": [
+    "DD"
+  ],
+  "result": {
+    "item": "bringthetide:driftwood_pressure_plate"
+  },
+  "show_notification": true
+}

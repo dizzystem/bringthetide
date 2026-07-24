@@ -1,5 +1,12 @@
 {
   "values": [
-    "bringthetide:driftwood_log"
+    "bringthetide:driftwood_log",
+    "bringthetide:driftwood_planks",
+    "bringthetide:driftwood_stairs",
+    "bringthetide:driftwood_slab",
+    "bringthetide:driftwood_fence",
+    "bringthetide:driftwood_fence_gate",
+    "bringthetide:driftwood_pressure_plate",
+    "bringthetide:driftwood_button"
   ]
 }

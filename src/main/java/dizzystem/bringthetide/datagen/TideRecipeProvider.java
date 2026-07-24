@@ -16,6 +16,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
@@ -199,6 +200,56 @@ public class TideRecipeProvider extends RecipeProvider {
                 .fluid(new FluidStack(Fluids.WATER, 10))
                 .result(new ItemStack(Items.OXIDIZED_CUT_COPPER_STAIRS, 9))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcutcopperstairs"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.BRAIN_CORAL_BLOCK))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.BRAIN_CORAL, 4))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_braincoralblock"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.BUBBLE_CORAL_BLOCK))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.BUBBLE_CORAL, 4))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_bubblecoralblock"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.FIRE_CORAL_BLOCK))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.FIRE_CORAL, 4))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_firecoralblock"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.HORN_CORAL_BLOCK))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.HORN_CORAL, 4))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_horncoralblock"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.TUBE_CORAL_BLOCK))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.TUBE_CORAL, 4))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_tubecoralblock"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.BRAIN_CORAL))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.BRAIN_CORAL_FAN, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_braincoral"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.BUBBLE_CORAL))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.BUBBLE_CORAL_FAN, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_bubblecoral"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.FIRE_CORAL))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.FIRE_CORAL_FAN, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_firecoral"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.HORN_CORAL))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.HORN_CORAL_FAN, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_horncoral"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.TUBE_CORAL))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.TUBE_CORAL_FAN, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_tubecoral"));
 
         RecipeSerializer<?> depositionSerializer = TideRecipes.DEPOSITION_SERIALIZER.get();
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
@@ -231,6 +282,36 @@ public class TideRecipeProvider extends RecipeProvider {
                 .catalyst(Ingredient.of(Items.KELP))
                 .result(new ItemStack(Items.SLIME_BALL, 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_slimeball"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.COBBLESTONE))
+                .catalyst(Ingredient.of(Items.PINK_DYE))
+                .catalyst(Ingredient.of(Items.BONE_MEAL))
+                .result(new ItemStack(Items.BRAIN_CORAL_BLOCK, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_braincoral"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.COBBLESTONE))
+                .catalyst(Ingredient.of(Items.MAGENTA_DYE))
+                .catalyst(Ingredient.of(Items.BONE_MEAL))
+                .result(new ItemStack(Items.BUBBLE_CORAL_BLOCK, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_bubblecoral"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.COBBLESTONE))
+                .catalyst(Ingredient.of(Items.RED_DYE))
+                .catalyst(Ingredient.of(Items.BONE_MEAL))
+                .result(new ItemStack(Items.FIRE_CORAL_BLOCK, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_firecoral"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.COBBLESTONE))
+                .catalyst(Ingredient.of(Items.YELLOW_DYE))
+                .catalyst(Ingredient.of(Items.BONE_MEAL))
+                .result(new ItemStack(Items.HORN_CORAL_BLOCK, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_horncoral"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.COBBLESTONE))
+                .catalyst(Ingredient.of(Items.BLUE_DYE))
+                .catalyst(Ingredient.of(Items.BONE_MEAL))
+                .result(new ItemStack(Items.TUBE_CORAL_BLOCK, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_tubecoral"));
 
         RecipeSerializer<?> pelagicSerializer = TideRecipes.PELAGIC_SERIALIZER.get();
         PelagicRecipeBuilder.customRecipe(pelagicSerializer)
@@ -440,6 +521,63 @@ public class TideRecipeProvider extends RecipeProvider {
                 .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
                 .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
                         Items.GRAVEL))
+                .save(consumer);
+
+        //furniture set
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.DRIFTWOOD_PLANKS_ITEM.get(), 4)
+                .requires(TideItems.DRIFTWOOD_LOG_ITEM.get())
+                .unlockedBy("has_driftwood", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_LOG_ITEM.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_STAIRS_ITEM.get(), 4)
+                .pattern("D  ")
+                .pattern("DD ")
+                .pattern("DDD")
+                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_SLAB_ITEM.get(), 6)
+                .pattern("DDD")
+                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_FENCE_ITEM.get(), 3)
+                .pattern("DSD")
+                .pattern("DSD")
+                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('S', Items.STICK)
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_FENCE_GATE_ITEM.get())
+                .pattern("SDS")
+                .pattern("SDS")
+                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('S', Items.STICK)
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                .save(consumer);
+//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_SIGN_ITEM.get(), 3)
+//                .pattern("DDD")
+//                .pattern("DDD")
+//                .pattern(" S ")
+//                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+//                .define('S', Items.STICK)
+//                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+//                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+//                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_PRESSURE_PLATE_ITEM.get())
+                .pattern("DD")
+                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.DRIFTWOOD_BUTTON_ITEM.get())
+                .requires(TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
                 .save(consumer);
     };
 }

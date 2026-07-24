@@ -4,9 +4,11 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.registration.Registration;
 import dizzystem.bringthetide.registration.TideBlocks;
+import dizzystem.bringthetide.registration.TideItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -53,6 +55,39 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(Blocks.DEAD_HORN_CORAL_WALL_FAN)
                 .add(Blocks.DEAD_TUBE_CORAL_WALL_FAN);
         tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(TideBlocks.DRIFTWOOD_LOG.get());
+                .add(TideBlocks.DRIFTWOOD_LOG.get())
+                .add(TideBlocks.DRIFTWOOD_PLANKS.get())
+                .add(TideBlocks.DRIFTWOOD_STAIRS.get())
+                .add(TideBlocks.DRIFTWOOD_SLAB.get())
+                .add(TideBlocks.DRIFTWOOD_FENCE.get())
+                .add(TideBlocks.DRIFTWOOD_FENCE_GATE.get())
+//                .add(TideBlocks.DRIFTWOOD_SIGN.get())
+//                .add(TideBlocks.DRIFTWOOD_WALL_SIGN.get())
+                .add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get())
+                .add(TideBlocks.DRIFTWOOD_BUTTON.get());
+        tag(BlockTags.PLANKS)
+                .add(TideBlocks.DRIFTWOOD_PLANKS.get());
+        tag(BlockTags.STAIRS)
+                .add(TideBlocks.DRIFTWOOD_STAIRS.get());
+        tag(BlockTags.WOODEN_STAIRS)
+                .add(TideBlocks.DRIFTWOOD_STAIRS.get());
+        tag(BlockTags.SLABS)
+                .add(TideBlocks.DRIFTWOOD_SLAB.get());
+        tag(BlockTags.WOODEN_SLABS)
+                .add(TideBlocks.DRIFTWOOD_SLAB.get());
+        tag(BlockTags.FENCES)
+                .add(TideBlocks.DRIFTWOOD_FENCE.get());
+        tag(BlockTags.WOODEN_FENCES)
+                .add(TideBlocks.DRIFTWOOD_FENCE.get());
+        tag(BlockTags.FENCE_GATES)
+                .add(TideBlocks.DRIFTWOOD_FENCE_GATE.get());
+//        tag(BlockTags.SIGNS)
+//                .add(TideBlocks.DRIFTWOOD_SIGN.get());
+        tag(BlockTags.WOODEN_PRESSURE_PLATES)
+                .add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get());
+        tag(BlockTags.BUTTONS)
+                .add(TideBlocks.DRIFTWOOD_BUTTON.get());
+        tag(BlockTags.WOODEN_BUTTONS)
+                .add(TideBlocks.DRIFTWOOD_BUTTON.get());
     }
 }

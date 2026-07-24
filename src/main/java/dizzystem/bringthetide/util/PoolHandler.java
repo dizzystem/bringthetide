@@ -395,12 +395,6 @@ public class PoolHandler {
                 continue;
             }
 
-            level.setBlockAndUpdate(pos, turnInto);
-            for (int i=0;i<4;i++){
-                level.addParticle(TideParticles.BUBBLE.get(),
-                        pos.getX() + Math.random(),
-                        pos.getY() + 1,
-                        pos.getZ() + Math.random(),
             BlockEntity blockEntity = level.getBlockEntity(corePos);
             if (blockEntity instanceof CoreEntity coreEntity &&
                     !coreEntity.placeFluid(player, wand, level, pos)){

@@ -19,6 +19,15 @@ public class TideBlockStates extends BlockStateProvider {
         simpleBlock(TideBlocks.BUDDING_PRISMARINE.get());
         createPrismarineClusters();
         logBlock(TideBlocks.DRIFTWOOD_LOG.get());
+        simpleBlock(TideBlocks.DRIFTWOOD_PLANKS.get());
+        stairsBlock(TideBlocks.DRIFTWOOD_STAIRS.get(), modLoc("block/driftwood_planks"));
+        slabBlock(TideBlocks.DRIFTWOOD_SLAB.get(), modLoc("block/driftwood_planks"), modLoc("block/driftwood_planks"));
+        fenceBlock(TideBlocks.DRIFTWOOD_FENCE.get(), modLoc("block/driftwood_planks"));
+        fenceGateBlock(TideBlocks.DRIFTWOOD_FENCE_GATE.get(), modLoc("block/driftwood_planks"));
+//        signBlock(TideBlocks.DRIFTWOOD_SIGN.get(), TideBlocks.DRIFTWOOD_WALL_SIGN.get(), modLoc("block/driftwood_planks"));
+        pressurePlateBlock(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), modLoc("block/driftwood_planks"));
+        buttonBlock(TideBlocks.DRIFTWOOD_BUTTON.get(), modLoc("block/driftwood_planks"));
+
         simpleBlock(TideBlocks.TANK.get(),
                 models().cubeAll(TideBlocks.TANK.getId().getPath(), modLoc("block/tank")).renderType("cutout"));
         simpleBlock(TideBlocks.OCEANIFIED_TNT.get(),
@@ -42,11 +51,11 @@ public class TideBlockStates extends BlockStateProvider {
         horizontalBlock(TideBlocks.DEPOSITION_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/deposition_core"));
         horizontalBlock(TideBlocks.REEF_CORE.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine"));
+                modLoc("block/core_prismarine_face"), modLoc("block/reef_core"));
         horizontalBlock(TideBlocks.TRAWL_CORE.get(), modLoc("block/core_prismarine"),
                 modLoc("block/core_prismarine_face"), modLoc("block/trawl_core"));
         horizontalBlock(TideBlocks.WHIRLPOOL_CORE.get(), modLoc("block/core_prismarine"),
-                modLoc("block/core_prismarine_face"), modLoc("block/core_prismarine"));
+                modLoc("block/core_prismarine_face"), modLoc("block/whirlpool_core"));
 
         //upgrades
         horizontalBlock(TideBlocks.FLOW_UPGRADE.get(), modLoc("block/core_copper"),

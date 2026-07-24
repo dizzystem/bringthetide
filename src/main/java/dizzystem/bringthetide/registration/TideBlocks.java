@@ -7,8 +7,11 @@ import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -45,8 +48,42 @@ public class TideBlocks {
     public static final RegistryObject<Block> PRISMARINE_CLUSTER = BLOCKS.register("prismarine_cluster",
             () -> new PrismarineClusterBlock(7, 3, clusterBehaviour));
     public static final RegistryObject<RotatedPillarBlock> DRIFTWOOD_LOG = BLOCKS.register("driftwood_log",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(2).sound(SoundType.WOOD)
-                    .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE)));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(2.0f).sound(SoundType.WOOD)
+                    .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE).ignitedByLava()));
+
+    public static final BlockSetType DRIFTWOOD_BLOCK_TYPE = new BlockSetType("driftwood");
+    public static final WoodType DRIFTWOOD_WOOD_TYPE = new WoodType("driftwood", DRIFTWOOD_BLOCK_TYPE);
+    public static final RegistryObject<Block> DRIFTWOOD_PLANKS = BLOCKS.register("driftwood_planks",
+            () -> new Block(BlockBehaviour.Properties.of().strength(2.0f, 3.0f).sound(SoundType.WOOD)
+                    .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE).ignitedByLava()));
+    public static final RegistryObject<StairBlock> DRIFTWOOD_STAIRS = BLOCKS.register("driftwood_stairs",
+            () -> new StairBlock(DRIFTWOOD_PLANKS.get()::defaultBlockState, BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
+    public static final RegistryObject<SlabBlock> DRIFTWOOD_SLAB = BLOCKS.register("driftwood_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
+    public static final RegistryObject<FenceBlock> DRIFTWOOD_FENCE = BLOCKS.register("driftwood_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
+    public static final RegistryObject<FenceGateBlock> DRIFTWOOD_FENCE_GATE = BLOCKS.register("driftwood_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get()), DRIFTWOOD_WOOD_TYPE));
+
+//    public static final RegistryObject<StandingSignBlock> DRIFTWOOD_SIGN = BLOCKS.register("driftwood_sign",
+//            () -> new StandingSignBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)
+//                    .instrument(NoteBlockInstrument.BASS).forceSolidOn().noCollission().strength(1.0F).ignitedByLava(),
+//                    DRIFTWOOD_WOOD_TYPE));
+//    public static final RegistryObject<WallSignBlock> DRIFTWOOD_WALL_SIGN = BLOCKS.register("driftwood_wall_sign",
+//            () -> new WallSignBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_SIGN.get()), DRIFTWOOD_WOOD_TYPE));
+//    public static final RegistryObject<CeilingHangingSignBlock> DRIFTWOOD_HANGING_SIGN = BLOCKS.register("driftwood_hanging_sign",
+//            () -> new CeilingHangingSignBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_SIGN.get()), DRIFTWOOD_WOOD_TYPE));
+
+    public static final RegistryObject<PressurePlateBlock> DRIFTWOOD_PRESSURE_PLATE = BLOCKS.register("driftwood_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING,
+                    BlockBehaviour.Properties.of().forceSolidOn().instrument(NoteBlockInstrument.BASS).noCollission()
+                            .strength(0.5F).ignitedByLava().pushReaction(PushReaction.DESTROY),
+            DRIFTWOOD_BLOCK_TYPE));
+    public static final RegistryObject<ButtonBlock> DRIFTWOOD_BUTTON = BLOCKS.register("driftwood_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.of().noCollission().strength(0.5F)
+                    .pushReaction(PushReaction.DESTROY), DRIFTWOOD_BLOCK_TYPE, 30, true));
+
+
     public static final RegistryObject<Block> TANK = BLOCKS.register("fluid_tank",
             Tank::new);
     public static final RegistryObject<Block> OCEANIFIED_TNT = BLOCKS.register("oceanified_tnt",

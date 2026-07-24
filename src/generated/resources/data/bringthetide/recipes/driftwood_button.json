@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bringthetide:driftwood_planks"
+    }
+  ],
+  "result": {
+    "item": "bringthetide:driftwood_button"
+  }
+}

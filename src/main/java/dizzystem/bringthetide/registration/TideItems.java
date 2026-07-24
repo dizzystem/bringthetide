@@ -24,8 +24,26 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.MEDIUM_PRISMARINE_BUD.get(), new Item.Properties()));
     public static final RegistryObject<Item> SMALL_PRISMARINE_BUD_ITEM = ITEMS.register("small_prismarine_bud",
             () -> new BlockItem(TideBlocks.SMALL_PRISMARINE_BUD.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> DRIFTWOOD_LOG_ITEM = ITEMS.register("driftwood_log",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_LOG.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_PLANKS_ITEM = ITEMS.register("driftwood_planks",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_PLANKS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_STAIRS_ITEM = ITEMS.register("driftwood_stairs",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_STAIRS.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_SLAB_ITEM = ITEMS.register("driftwood_slab",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_SLAB.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_FENCE_ITEM = ITEMS.register("driftwood_fence",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_FENCE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_FENCE_GATE_ITEM = ITEMS.register("driftwood_fence_gate",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_FENCE_GATE.get(), new Item.Properties()));
+//    public static final RegistryObject<Item> DRIFTWOOD_SIGN_ITEM = ITEMS.register("driftwood_sign",
+//            () -> new BlockItem(TideBlocks.DRIFTWOOD_SIGN.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_PRESSURE_PLATE_ITEM = ITEMS.register("driftwood_pressure_plate",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_BUTTON_ITEM = ITEMS.register("driftwood_button",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_BUTTON.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> TANK_ITEM = ITEMS.register("fluid_tank",
             () -> new BlockItem(TideBlocks.TANK.get(), new Item.Properties()));
 

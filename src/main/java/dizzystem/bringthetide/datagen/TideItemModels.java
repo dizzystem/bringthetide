@@ -23,6 +23,20 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.TANK.getId().getPath(), modLoc("block/fluid_tank"));
 
         withExistingParent(TideBlocks.DRIFTWOOD_LOG.getId().getPath(), modLoc("block/driftwood_log"));
+        withExistingParent(TideBlocks.DRIFTWOOD_PLANKS.getId().getPath(), modLoc("block/driftwood_planks"));
+        withExistingParent(TideBlocks.DRIFTWOOD_STAIRS.getId().getPath(), modLoc("block/driftwood_stairs"));
+        withExistingParent(TideBlocks.DRIFTWOOD_SLAB.getId().getPath(), modLoc("block/driftwood_slab"));
+        singleTexture(TideBlocks.DRIFTWOOD_FENCE.getId().getPath(),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "block/fence_inventory"),
+                modLoc("block/driftwood_planks"));
+        withExistingParent(TideBlocks.DRIFTWOOD_FENCE_GATE.getId().getPath(), modLoc("block/driftwood_fence_gate"));
+//        withExistingParent(TideBlocks.DRIFTWOOD_SIGN.getId().getPath(), modLoc("block/driftwood_sign"));
+//        withExistingParent(TideBlocks.DRIFTWOOD_WALL_SIGN.getId().getPath(), modLoc("block/driftwood_sign"));
+        withExistingParent(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.getId().getPath(), modLoc("block/driftwood_pressure_plate"));
+        singleTexture(TideBlocks.DRIFTWOOD_BUTTON.getId().getPath(),
+                ResourceLocation.fromNamespaceAndPath("minecraft", "block/button_inventory"),
+                modLoc("block/driftwood_planks"));
+
         withExistingParent(TideBlocks.BASIN_CORE.getId().getPath(), modLoc("block/basin_core"));
         withExistingParent(TideBlocks.CURRENT_CORE.getId().getPath(), modLoc("block/current_core"));
         withExistingParent(TideBlocks.DEPOSITION_CORE.getId().getPath(), modLoc("block/deposition_core"));

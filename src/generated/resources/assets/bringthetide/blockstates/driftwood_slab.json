@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "bringthetide:block/driftwood_slab"
+    },
+    "type=double": {
+      "model": "bringthetide:block/driftwood_planks"
+    },
+    "type=top": {
+      "model": "bringthetide:block/driftwood_slab_top"
+    }
+  }
+}

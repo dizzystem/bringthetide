@@ -5,7 +5,10 @@ import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideItems;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.registries.RegistryObject;
 
 public class TideLanguageProvider extends LanguageProvider {
     public TideLanguageProvider(PackOutput output, String locale){
@@ -19,7 +22,18 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.MEDIUM_PRISMARINE_BUD.get(), "Medium Prismarine Bud");
         add(TideBlocks.LARGE_PRISMARINE_BUD.get(), "Large Prismarine Bud");
         add(TideBlocks.PRISMARINE_CLUSTER.get(), "Prismarine Cluster");
+
         add(TideBlocks.DRIFTWOOD_LOG.get(), "Driftwood Log");
+        add(TideBlocks.DRIFTWOOD_PLANKS.get(), "Driftwood Planks");
+        add(TideBlocks.DRIFTWOOD_STAIRS.get(), "Driftwood Stairs");
+        add(TideBlocks.DRIFTWOOD_SLAB.get(), "Driftwood Slab");
+        add(TideBlocks.DRIFTWOOD_FENCE.get(), "Driftwood Fence");
+        add(TideBlocks.DRIFTWOOD_FENCE_GATE.get(), "Driftwood Fence Gate");
+//        add(TideBlocks.DRIFTWOOD_SIGN.get(), "Driftwood Sign");
+//        add(TideBlocks.DRIFTWOOD_WALL_SIGN.get(), "Driftwood Sign");
+        add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), "Driftwood Pressure Plate");
+        add(TideBlocks.DRIFTWOOD_BUTTON.get(), "Driftwood Button");
+
         add(TideBlocks.TANK.get(), "Prismarine Tank");
 
         add(TideBlocks.BASIN_CORE.get(), "Basin Core");

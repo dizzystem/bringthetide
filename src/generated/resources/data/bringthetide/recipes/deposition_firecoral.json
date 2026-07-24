@@ -1,0 +1,21 @@
+{
+  "type": "bringthetide:deposition",
+  "catalysts": [
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "mainIngredient": {
+    "count": 1,
+    "item": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "result": {
+    "count": 1,
+    "item": "minecraft:fire_coral_block"
+  }
+}

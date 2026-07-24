@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "This ritual calls upon the depositive power of the Primordial Ocean to imbue an item thrown into the pool with the essence of one or more other items, each of which must be placed upon a Deposition Core."
+      "text": "This ritual calls upon the depositive power of the Primordial Ocean to imbue an item thrown into the pool with the essence of one or more other items, each of which must be placed upon a Deposition Core. Note that I can automate filling the cores with hoppers."
     },
     {
       "type": "patchouli:crafting",

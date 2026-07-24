@@ -32,7 +32,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Notes:$(li)Any kind of wall will work, as well as any kind of fence gate and any kind of dead coral wall fan.$(li)A minecart must be placed on the detector rail before the lever is pulled.$(li)Once the contraption is complete, pulling the lever twice will produce a lit TNT at the position of the fence gate. I can automate this process by setting up a redstone clock in place of the lever."
+      "text": "Notes:$(li)Any kind of wall will work, as well as any kind of fence gate and any kind of dead coral wall fan. (Coral fans will die when placed out of water.)$(li)A minecart must be placed on the detector rail before the lever is pulled.$(li)Once the contraption is complete, pulling the lever twice will produce a lit TNT at the position of the fence gate. I can automate this process by setting up a redstone clock in place of the lever."
     },
     {
       "type": "patchouli:text",
