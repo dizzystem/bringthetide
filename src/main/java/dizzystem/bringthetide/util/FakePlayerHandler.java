@@ -10,9 +10,9 @@ import java.util.UUID;
 public class FakePlayerHandler {
     public static FakePlayer getFakePlayer(ServerLevel level, UUID uuid){
         if (uuid != null){
-            return FakePlayerFactory.get(level, new GameProfile(uuid, null));
+            return FakePlayerFactory.get(level, new GameProfile(uuid, "the Tide"));
         } else {
-            return FakePlayerFactory.get(level, new GameProfile(null, "TideFakePlayer"));
+            return FakePlayerFactory.get(level, new GameProfile(null, "the Tide"));
         }
     }
 }

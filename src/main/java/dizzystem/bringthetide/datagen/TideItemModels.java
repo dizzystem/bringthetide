@@ -45,6 +45,7 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.REEF_CORE.getId().getPath(), modLoc("block/reef_core"));
         withExistingParent(TideBlocks.TRAWL_CORE.getId().getPath(), modLoc("block/trawl_core"));
         withExistingParent(TideBlocks.SINKHOLE_CORE.getId().getPath(), modLoc("block/sinkhole_core"));
+        withExistingParent(TideBlocks.SEABED_CORE.getId().getPath(), modLoc("block/seabed_core"));
         withExistingParent(TideBlocks.VORTEX_CORE.getId().getPath(), modLoc("block/vortex_core"));
         withExistingParent(TideBlocks.WHIRLPOOL_CORE.getId().getPath(), modLoc("block/whirlpool_core"));
         withExistingParent(TideBlocks.FLOW_UPGRADE.getId().getPath(), modLoc("block/flow_upgrade"));

@@ -41,15 +41,9 @@ public class SinkholeCoreEntity extends CoreEntity {
             new ItemStack(Items.IRON_HOE),
             new ItemStack(Items.IRON_SWORD)
     );
-    UUID placedBy;
-
-    public SinkholeCoreEntity(BlockPos blockPos, BlockState blockState, UUID placedBy){
-        super(TideBlocks.SINKHOLE_CORE_ENTITY.get(), blockPos, blockState);
-        this.placedBy = placedBy;
-    }
 
     public SinkholeCoreEntity(BlockPos blockPos, BlockState blockState){
-        this(blockPos, blockState, null);
+        super(TideBlocks.SINKHOLE_CORE_ENTITY.get(), blockPos, blockState);
     }
 
     public Map<Vec3i, Object> getRequiredShape(){
@@ -62,50 +56,40 @@ public class SinkholeCoreEntity extends CoreEntity {
         level.addFreshEntity(entity);
     }
 
-    public void tickServer(){
-        super.tickServer();
+    //this is called every getTicksPerAction() ticks
+    @Override
+    public void doPeriodicAction(ServerLevel level, Vec3 pos){
+        int minY = level.getMinBuildHeight() + 1;
+        int maxY = getBlockPos().getY() - 1;
+        RandomSource random = level.getRandom();
+        BlockPos[] poolFluids = getPoolFluids().toArray(new BlockPos[getPoolFluids().size()]);
 
-        if (!this.isPoolActive()){
-            return;
-        }
-
-        BlockPos poolCentre = this.getPoolCentre();
-
-        //every 4 seconds
-        if (ticks % getTicksPerAction() == 0){
-            ServerLevel level = (ServerLevel) getLevel();
-            int minY = level.getMinBuildHeight() + 1;
-            int maxY = getBlockPos().getY() - 1;
-            RandomSource random = level.getRandom();
-            BlockPos[] poolFluids = getPoolFluids().toArray(new BlockPos[getPoolFluids().size()]);
-
-            int successes = 0;
-            //try 64 times to find a mineable block, up to 4 total
-            for (int i=0;i<64;i++){
-                if (doQuarryAttempt(level, minY, maxY, random, poolFluids)){
-                    successes++;
-                }
-
-                if (successes >= 4){
-                    break;
-                }
+        int successes = 0;
+        //try 64 times to find a mineable block, up to 4 total
+        for (int i=0;i<64;i++){
+            if (doQuarryAttempt(level, minY, maxY, random, poolFluids)){
+                successes++;
             }
 
-            if (successes <= 0){
-                ItemStack cobble = new ItemStack(Items.COBBLESTONE, 4);
-                dropItem(cobble);
+            if (successes >= 4){
+                break;
             }
-
-            level.sendParticles(TideParticles.SPLASH.get(),
-                    poolCentre.getX() + 0.5,
-                    poolCentre.getY() + 1.5,
-                    poolCentre.getZ() + 0.5,
-                    10,
-                    0,
-                    0,
-                    0,
-                    0.1);
         }
+
+        if (successes <= 0){
+            ItemStack cobble = new ItemStack(Items.COBBLESTONE, 4);
+            dropItem(cobble);
+        }
+
+        level.sendParticles(TideParticles.SPLASH.get(),
+                pos.x,
+                pos.y + 1,
+                pos.z,
+                10,
+                0,
+                0,
+                0,
+                0.1);
     }
 
     protected boolean doQuarryAttempt(ServerLevel level, int minY, int maxY, RandomSource random, BlockPos[] poolFluids){
@@ -129,7 +113,7 @@ public class SinkholeCoreEntity extends CoreEntity {
             return false;
         }
 
-        FakePlayer fp = FakePlayerHandler.getFakePlayer(level, this.placedBy);
+        FakePlayer fp = FakePlayerHandler.getFakePlayer(level, this.getPlacedBy());
         EnchantmentHelper.setEnchantments(Map.of(Enchantments.BLOCK_FORTUNE, (int) this.getLuck()), correctTool);
         fp.setItemInHand(InteractionHand.MAIN_HAND, correctTool);
 

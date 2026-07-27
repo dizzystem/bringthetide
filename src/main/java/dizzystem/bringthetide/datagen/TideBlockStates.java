@@ -38,6 +38,8 @@ public class TideBlockStates extends BlockStateProvider {
                 modLoc("block/core_sandstone_face"), modLoc("block/erosion_core"));
         horizontalBlock(TideBlocks.PELAGIC_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/pelagic_core"));
+        horizontalBlock(TideBlocks.SEABED_CORE.get(), modLoc("block/core_sandstone"),
+                modLoc("block/core_sandstone_face"), modLoc("block/sinkhole_core"));
         horizontalBlock(TideBlocks.SINKHOLE_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/sinkhole_core"));
         horizontalBlock(TideBlocks.VORTEX_CORE.get(), modLoc("block/core_sandstone"),

@@ -2,6 +2,7 @@ package dizzystem.bringthetide.block.tile;
 
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
+import dizzystem.bringthetide.entity.OceanifiedTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.extensions.IForgeBlockEntity;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,6 +49,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public BlockPos poolCentre = getBlockPos();
     public Map<BlockPos, BlockState[]> missingBlocksAllowed = new HashMap<>();
     public Map<BlockPos, Integer> renderOverlayData = new HashMap<>();
+    private UUID placedBy;
 
     public CoreEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState){
         super(blockEntityType, blockPos, blockState);
@@ -75,6 +78,9 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     public void setThalassity(float thalassity) { this.thalassity = thalassity; }
     public float getThalassity() { return thalassity; }
+
+    public void setPlacedBy(UUID placedBy) { this.placedBy = placedBy; }
+    public UUID getPlacedBy() { return placedBy; }
 
     /**
      * The required additional blocks around the core to make it function as part of a ritual.
@@ -179,6 +185,9 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         tag.putBoolean("poolFormed", this.poolFormed);
         tag.putBoolean("poolFilled", this.poolFilled);
         tag.putBoolean("scheduleReset", this.scheduleReset);
+        if (this.placedBy != null){
+            tag.putString("placedBy", this.placedBy.toString());
+        }
     }
 
     //This is used for both saving and updating clients with our data.
@@ -202,6 +211,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         this.poolFormed = tag.getBoolean("poolFormed");
         this.poolFilled = tag.getBoolean("poolFilled");
         this.scheduleReset = tag.getBoolean("scheduleReset");
+        if (tag.contains("placedBy")) {
+            //load the player that placed us
+            this.placedBy = UUID.fromString(tag.getString("placedBy"));
+        }
     }
 
     //saving
@@ -429,10 +442,17 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         }
 
         //once per second
-        if (this.ticks++ % 20 != 0){
-            return;
+        if (this.ticks++ % 20 == 0){
+            this.doPoolFormedCheck();
         }
 
+        if (this.isPoolActive() && ticks % getTicksPerAction() == 0){
+            ServerLevel level = (ServerLevel) getLevel();
+            this.doPeriodicAction(level, this.getPoolCentre().getCenter());
+        }
+    }
+
+    private void doPoolFormedCheck() {
         Level level = this.level;
         BlockPos pos = this.getBlockPos();
         BlockState blockState = this.getBlockState();
@@ -552,18 +572,22 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                 level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
         }
-
-        level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
     }
 
+    //override to make core do stuff every getTicksPerAction() ticks
+    public void doPeriodicAction(ServerLevel level, Vec3 origin){}
+
     //override to make core do stuff when an entity falls into it
-    public void entityInPool(Entity entity, Level level, BlockPos pos){}
+    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt){}
 
     //override to make core do crafting
     public void beginCraft(ItemEntity entity, ArrayList<BlockPos> cores){}
 
     //override to make core do crafting
     public void endCraft(ItemEntity entity, ArrayList<BlockPos> cores, Recipe<?> recipe){}
+
+    //override to make core do stuff when a block is placed in it
+    public void blocksInPool(ServerLevel level, Set<BlockPos> blocks, Vec3 origin){}
 
     /* ===pool filling minigame=== */
     public void schedulePoolCheck(){

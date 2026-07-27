@@ -89,38 +89,41 @@ public class TideBlocks {
     public static final RegistryObject<Block> OCEANIFIED_TNT = BLOCKS.register("oceanified_tnt",
             () -> new Block(BlockBehaviour.Properties.of()));
 
+    private static Block.Properties coreProps = BlockBehaviour.Properties.of().strength(3.5F);
     public static final RegistryObject<Block> BASIN_CORE = BLOCKS.register("basin_core",
-            BasinCore::new);
+            () -> new Core(coreProps, BasinCoreEntity::new));
     public static final RegistryObject<Block> CURRENT_CORE = BLOCKS.register("current_core",
-            CurrentCore::new);
+            () -> new Core(coreProps, CurrentCoreEntity::new));
     public static final RegistryObject<Block> DEPOSITION_CORE = BLOCKS.register("deposition_core",
-            DepositionCore::new);
+            () -> new Core(coreProps, DepositionCoreEntity::new));
     public static final RegistryObject<Block> EROSION_CORE = BLOCKS.register("erosion_core",
-            ErosionCore::new);
+            () -> new Core(coreProps, ErosionCoreEntity::new));
     public static final RegistryObject<Block> PELAGIC_CORE = BLOCKS.register("pelagic_core",
-            PelagicCore::new);
+            () -> new Core(coreProps, PelagicCoreEntity::new));
     public static final RegistryObject<Block> REEF_CORE = BLOCKS.register("reef_core",
-            ReefCore::new);
+            () -> new Core(coreProps, ReefCoreEntity::new));
+    public static final RegistryObject<Block> SEABED_CORE = BLOCKS.register("seabed_core",
+            () -> new Core(coreProps, SeabedCoreEntity::new));
     public static final RegistryObject<Block> SINKHOLE_CORE = BLOCKS.register("sinkhole_core",
-            SinkholeCore::new);
+            () -> new Core(coreProps, SinkholeCoreEntity::new));
     public static final RegistryObject<Block> TRAWL_CORE = BLOCKS.register("trawl_core",
-            TrawlCore::new);
+            () -> new Core(coreProps, TrawlCoreEntity::new));
     public static final RegistryObject<Block> VORTEX_CORE = BLOCKS.register("vortex_core",
-            VortexCore::new);
+            () -> new Core(coreProps, VortexCoreEntity::new));
     public static final RegistryObject<Block> WHIRLPOOL_CORE = BLOCKS.register("whirlpool_core",
-            WhirlpoolCore::new);
+            () -> new Core(coreProps, WhirlpoolCoreEntity::new));
     public static final RegistryObject<Block> FLOW_UPGRADE = BLOCKS.register("flow_upgrade",
-            FlowUpgrade::new);
+            () -> new Core(coreProps, FlowUpgradeEntity::new));
     public static final RegistryObject<Block> BOUNTY_UPGRADE = BLOCKS.register("bounty_upgrade",
-            BountyUpgrade::new);
+            () -> new Core(coreProps, BountyUpgradeEntity::new));
     public static final RegistryObject<Block> RANGE_UPGRADE = BLOCKS.register("range_upgrade",
-            RangeUpgrade::new);
+            () -> new Core(coreProps, RangeUpgradeEntity::new));
     public static final RegistryObject<Block> ITEM_FILTER = BLOCKS.register("item_filter",
-            ItemFilter::new);
+            () -> new Core(coreProps, ItemFilterEntity::new));
     public static final RegistryObject<Block> FLUID_FILTER = BLOCKS.register("fluid_filter",
-            FluidFilter::new);
+            () -> new Core(coreProps, FluidFilterEntity::new));
     public static final RegistryObject<Block> ENTITY_FILTER = BLOCKS.register("entity_filter",
-            EntityFilter::new);
+            () -> new Core(coreProps, EntityFilterEntity::new));
     public static final RegistryObject<LiquidBlock> BLOCK_IMBUED_SEAWATER = BLOCKS.register(
             "block_imbued_seawater", BlockImbuedSeawater::new);
 
@@ -146,6 +149,9 @@ public class TideBlocks {
     public static final RegistryObject<BlockEntityType<ReefCoreEntity>> REEF_CORE_ENTITY =
             BLOCK_ENTITIES.register("reef_core_entity",
                     () -> BlockEntityType.Builder.of(ReefCoreEntity::new, REEF_CORE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SeabedCoreEntity>> SEABED_CORE_ENTITY =
+            BLOCK_ENTITIES.register("seabed_core_entity",
+                    () -> BlockEntityType.Builder.of(SeabedCoreEntity::new, SEABED_CORE.get()).build(null));
     public static final RegistryObject<BlockEntityType<SinkholeCoreEntity>> SINKHOLE_CORE_ENTITY =
             BLOCK_ENTITIES.register("sinkhole_core_entity",
                     () -> BlockEntityType.Builder.of(SinkholeCoreEntity::new, SINKHOLE_CORE.get()).build(null));

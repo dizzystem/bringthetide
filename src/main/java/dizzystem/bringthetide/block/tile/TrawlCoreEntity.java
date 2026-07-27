@@ -39,21 +39,15 @@ public class TrawlCoreEntity extends CoreEntity {
         return this.requiredShape;
     }
 
-    public void tickServer() {
-        super.tickServer();
-
-        if (!this.isPoolActive()) {
-            return;
-        }
-
-        ServerLevel level = (ServerLevel) getLevel();
-        Vec3 poolCentre = this.getPoolCentre().getCenter();
+    //this is called every getTicksPerAction() ticks
+    @Override
+    public void doPeriodicAction(ServerLevel level, Vec3 pos){
         ItemStack fishingRod = new ItemStack(Items.FISHING_ROD, 1);
 
         if (ticks % getTicksPerAction() == 0){
             ItemFishedEvent event = null;
             LootParams lootparams = (new LootParams.Builder(level))
-                    .withParameter(LootContextParams.ORIGIN, poolCentre)
+                    .withParameter(LootContextParams.ORIGIN, pos)
                     .withParameter(LootContextParams.TOOL, fishingRod)
                     .withLuck(this.getLuck())
                     .create(LootContextParamSets.FISHING);
@@ -61,15 +55,15 @@ public class TrawlCoreEntity extends CoreEntity {
             List<ItemStack> list = loottable.getRandomItems(lootparams);
 
             for (ItemStack item : list) {
-                ItemEntity entity = new ItemEntity(level, poolCentre.x, poolCentre.y, poolCentre.z, item);
+                ItemEntity entity = new ItemEntity(level, pos.x, pos.y, pos.z, item);
                 level.addFreshEntity(entity);
             }
 
             if (!list.isEmpty()){
                 level.sendParticles(TideParticles.SPLASH.get(),
-                        poolCentre.x,
-                        poolCentre.y + 1,
-                        poolCentre.z,
+                        pos.x,
+                        pos.y + 1,
+                        pos.z,
                         10,
                         0,
                         0,

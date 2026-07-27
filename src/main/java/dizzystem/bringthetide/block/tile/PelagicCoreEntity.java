@@ -15,6 +15,7 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
@@ -45,15 +46,9 @@ public class PelagicCoreEntity extends ItemCoreEntity {
         return this.requiredShape;
     }
 
-    public void tickServer() {
-        super.tickServer();
-
-        if (!this.isPoolActive()) {
-            return;
-        }
-
-        ServerLevel level = (ServerLevel) getLevel();
-
+    //this is called every getTicksPerAction() ticks
+    @Override
+    public void doPeriodicAction(ServerLevel level, Vec3 pos){
         //run a recipe
         ArrayList<ItemStack> ingredients = this.getPoolCores().stream().map(
                 corePos -> (level.getBlockEntity(corePos) instanceof PelagicCoreEntity pelagicCoreEntity)
@@ -85,11 +80,11 @@ public class PelagicCoreEntity extends ItemCoreEntity {
         for (var itemStack : ingredients){
             itemStack.split(1);
         }
-        this.getPoolCores().forEach(pos -> {
+        this.getPoolCores().forEach(corePos -> {
             //send client update
-            if (level.getBlockEntity(pos) instanceof PelagicCoreEntity){
-                BlockState blockState = level.getBlockState(pos);
-                level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
+            if (level.getBlockEntity(corePos) instanceof PelagicCoreEntity){
+                BlockState blockState = level.getBlockState(corePos);
+                level.sendBlockUpdated(corePos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
         });
 
@@ -97,14 +92,13 @@ public class PelagicCoreEntity extends ItemCoreEntity {
             return;
         }
 
-        BlockPos poolCentre = this.getPoolCentre();
         EntityType<?> entitytype = spawnEgg.getType(output.getTag());
-        entitytype.spawn(level, poolCentre, MobSpawnType.SPAWNER);
+        entitytype.spawn(level, BlockPos.containing(pos), MobSpawnType.SPAWNER);
 
         level.sendParticles(TideParticles.SPLASH.get(),
-                poolCentre.getX() + 0.5,
-                poolCentre.getY() + 1.5,
-                poolCentre.getZ() + 0.5,
+                pos.x,
+                pos.y + 1,
+                pos.z,
                 10,
                 0,
                 0,

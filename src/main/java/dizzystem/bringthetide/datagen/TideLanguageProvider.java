@@ -42,6 +42,7 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.EROSION_CORE.get(), "Erosion Core");
         add(TideBlocks.PELAGIC_CORE.get(), "Pelagic Core");
         add(TideBlocks.REEF_CORE.get(), "Reef Core");
+        add(TideBlocks.SEABED_CORE.get(), "Seabed Core");
         add(TideBlocks.SINKHOLE_CORE.get(), "Sinkhole Core");
         add(TideBlocks.TRAWL_CORE.get(), "Trawl Core");
         add(TideBlocks.VORTEX_CORE.get(), "Vortex Core");

@@ -1,15 +1,14 @@
 package dizzystem.bringthetide.event;
 
-import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.client.particle.*;
 import dizzystem.bringthetide.registration.TideParticles;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.slf4j.Logger;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BringTheTide.MODID)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BringTheTide.MODID, value = Dist.CLIENT)
 public class RegisterParticleProviders {
     @SubscribeEvent
     public static void registerParticleProviders(RegisterParticleProvidersEvent event){

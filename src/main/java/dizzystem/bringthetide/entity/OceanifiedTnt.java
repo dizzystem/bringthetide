@@ -3,9 +3,11 @@ package dizzystem.bringthetide.entity;
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.level.Level;
+import org.apache.logging.log4j.core.jmx.Server;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -27,7 +29,7 @@ public class OceanifiedTnt extends PrimedTnt {
     }
 
     protected void explode() {
-        Level level = level();
+        ServerLevel level = (ServerLevel) level();
         PoolHandler.aoeApplyRitualEffect(level, this, 4.0f);
     }
 

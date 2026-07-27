@@ -2,6 +2,7 @@ package dizzystem.bringthetide.block.tile;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
+import dizzystem.bringthetide.entity.OceanifiedTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.util.FakePlayerHandler;
@@ -30,7 +31,6 @@ import java.util.UUID;
 import static java.util.Map.entry;
 
 public class VortexCoreEntity extends CoreEntity {
-    public static final String PLACEDBY_TAG = "Placed By";
     Map<Vec3i, Object> requiredShape = Map.ofEntries(
             entry(new Vec3i(1, 0, 0), Blocks.CUT_SANDSTONE),
             entry(new Vec3i(1, 0, -1), Blocks.CUT_SANDSTONE),
@@ -40,15 +40,9 @@ public class VortexCoreEntity extends CoreEntity {
             entry(new Vec3i(3, 0, -3), Blocks.CUT_SANDSTONE)
     );
     private final ItemStack weapon = new ItemStack(Items.IRON_SWORD);
-    UUID placedBy;
-
-    public VortexCoreEntity(BlockPos blockPos, BlockState blockState, UUID placedBy){
-        super(TideBlocks.VORTEX_CORE_ENTITY.get(), blockPos, blockState);
-        this.placedBy = placedBy;
-    }
 
     public VortexCoreEntity(BlockPos blockPos, BlockState blockState){
-        this(blockPos, blockState, null);
+        super(TideBlocks.VORTEX_CORE_ENTITY.get(), blockPos, blockState);
     }
 
     public Map<Vec3i, Object> getRequiredShape(){
@@ -56,7 +50,8 @@ public class VortexCoreEntity extends CoreEntity {
     }
 
     //called when an entity enters our pool
-    public void entityInPool(Entity entity, Level level, BlockPos pos) {
+    @Override
+    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt) {
         if (!(entity instanceof LivingEntity livingEntity)) {
             return;
         }
@@ -64,8 +59,9 @@ public class VortexCoreEntity extends CoreEntity {
             return;
         }
 
+        UUID placedBy = this.getPlacedBy();
         LogUtils.getLogger().info("simulating attack from {}", placedBy);
-        FakePlayer fp = FakePlayerHandler.getFakePlayer((ServerLevel) level, this.placedBy);
+        FakePlayer fp = FakePlayerHandler.getFakePlayer((ServerLevel) level, placedBy);
         EnchantmentHelper.setEnchantments(Map.of(Enchantments.MOB_LOOTING, (int) this.getLuck()), weapon);
         fp.setItemInHand(InteractionHand.MAIN_HAND, weapon);
 
@@ -87,23 +83,5 @@ public class VortexCoreEntity extends CoreEntity {
                 0,
                 0,
                 0.4);
-    }
-
-    @Override
-    protected void saveClientData(CompoundTag tag) {
-        super.saveClientData(tag);
-        //save the player that placed us
-        if (this.placedBy != null){
-            tag.putString(PLACEDBY_TAG, this.placedBy.toString());
-        }
-    }
-
-    @Override
-    protected void loadClientData(CompoundTag tag) {
-        super.loadClientData(tag);
-        if (tag.contains(PLACEDBY_TAG)) {
-            //load the player that placed us
-            this.placedBy = UUID.fromString(tag.getString(PLACEDBY_TAG));
-        }
     }
 }

@@ -1,6 +1,7 @@
 package dizzystem.bringthetide.block;
 
 import dizzystem.bringthetide.block.tile.CoreEntity;
+import dizzystem.bringthetide.block.tile.ErosionCoreEntity;
 import dizzystem.bringthetide.util.FluidHandler;
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
@@ -8,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -31,13 +33,17 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.UUID;
+import java.util.function.BiFunction;
 
-public abstract class Core extends Block implements EntityBlock {
+public class Core extends Block implements EntityBlock {
     public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+    private final BiFunction<BlockPos, BlockState, ? extends CoreEntity> coreEntityConstructor;
 
-    public Core(Properties properties) {
+    public Core(Properties properties, BiFunction<BlockPos, BlockState, ? extends CoreEntity> coreEntityConstructor){
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(HORIZONTAL_FACING, Direction.NORTH));
+        this.coreEntityConstructor = coreEntityConstructor;
     }
 
     @ParametersAreNonnullByDefault
@@ -120,13 +126,34 @@ public abstract class Core extends Block implements EntityBlock {
                 be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
                 return InteractionResult.sidedSuccess(level.isClientSide());
             } else if (!playerStack.isEmpty()){ //put in an item
-                ItemHandlerHelper.insertItem(itemHandler, playerStack, false);
-                be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
-                return InteractionResult.sidedSuccess(level.isClientSide());
+                ItemStack remainder = ItemHandlerHelper.insertItem(itemHandler, playerStack, false);
+                if (remainder != playerStack){
+                    player.setItemInHand(hand, remainder);
+                    be.getLevel().gameEvent(null, GameEvent.BLOCK_CHANGE, be.getBlockPos());
+                    return InteractionResult.sidedSuccess(level.isClientSide());
+                }
             }
         }
 
         return InteractionResult.PASS;
     }
 
+    @Override
+    @ParametersAreNonnullByDefault
+    public void setPlacedBy(Level level, BlockPos blockPos, BlockState blockState, LivingEntity entity, ItemStack itemstack){
+        if (!(entity instanceof Player player)){
+            return;
+        }
+
+        //pass on who placed us to our block entity
+        if (level.getBlockEntity(blockPos) instanceof CoreEntity coreEntity){
+            coreEntity.setPlacedBy(player.getUUID());
+        }
+    }
+
+    @ParametersAreNonnullByDefault
+    @Override
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState){
+        return this.coreEntityConstructor.apply(blockPos, blockState);
+    }
 }

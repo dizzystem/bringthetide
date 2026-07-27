@@ -1,5 +1,6 @@
 package dizzystem.bringthetide.block.tile;
 
+import dizzystem.bringthetide.entity.OceanifiedTnt;
 import dizzystem.bringthetide.recipe.DepositionRecipe;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -48,7 +49,8 @@ public class DepositionCoreEntity extends ItemCoreEntity {
     }
 
     //called when an entity enters our pool
-    public void entityInPool(Entity entity, Level level, BlockPos pos){
+    @Override
+    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt){
         if (!(entity instanceof ItemEntity itemEntity)) {
             return;
         }

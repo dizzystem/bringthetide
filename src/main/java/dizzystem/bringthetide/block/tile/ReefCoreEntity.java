@@ -1,5 +1,6 @@
 package dizzystem.bringthetide.block.tile;
 
+import dizzystem.bringthetide.entity.OceanifiedTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -32,7 +33,8 @@ public class ReefCoreEntity extends CoreEntity {
     }
 
     //called when an entity enters our pool
-    public void entityInPool(Entity entity, Level level, BlockPos pos) {
+    @Override
+    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt) {
         if (!(entity instanceof Animal animal)) {
             return;
         }

@@ -2,6 +2,7 @@ package dizzystem.bringthetide.block.tile;
 
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.client.particle.DropletParticleType;
+import dizzystem.bringthetide.entity.OceanifiedTnt;
 import dizzystem.bringthetide.recipe.ErosionRecipe;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -51,7 +52,8 @@ public class ErosionCoreEntity extends FluidCoreEntity {
     }
 
     //called when an entity enters our pool
-    public void entityInPool(Entity entity, Level level, BlockPos pos){
+    @Override
+    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt){
         if (!(entity instanceof ItemEntity itemEntity)) {
             return;
         }

@@ -1,5 +1,6 @@
 package dizzystem.bringthetide.util;
 
+import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
 import dizzystem.bringthetide.entity.OceanifiedTnt;
@@ -12,6 +13,7 @@ import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.block.tile.CoreEntity;
 import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -19,12 +21,15 @@ import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -33,10 +38,12 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PoolHandler {
-    static HashSet<PoolCore> cores = new HashSet<>();
-    static Map<ItemEntity, ArrayList<CraftingAttempt>> craftingAttempts = new HashMap<>();
-    static Map<ItemEntity, OngoingCraft> ongoingCrafts = new HashMap<>();
-    static Map<Entity, Integer> entityCooldowns = new HashMap<>();
+    private static final HashSet<PoolCore> cores = new HashSet<>();
+    private static final Map<ItemEntity, ArrayList<CraftingAttempt>> craftingAttempts = new HashMap<>();
+    private static final Map<ItemEntity, OngoingCraft> ongoingCrafts = new HashMap<>();
+    private static final Map<Entity, Integer> entityCooldowns = new HashMap<>();
+    private static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new ExplosionDamageCalculator();
+    private static Explosion EXPLOSION = null;
 
     private static boolean isValidPoolBlock(BlockState blockState){
         return blockState.is(TideTags.VALID_POOL_BLOCK);
@@ -194,7 +201,7 @@ public class PoolHandler {
      *
      * @param pos The BlockPos of the core.
      */
-    public static void entityInPool(Entity entity, Level level, BlockPos pos){
+    public static void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt){
         //only check the same entity once every 10 ticks
         Integer cooldown = entityCooldowns.get(entity);
         if (cooldown != null && cooldown > 0){
@@ -203,12 +210,12 @@ public class PoolHandler {
         }
 
         //tnt effect propagation
-        if (entity instanceof PrimedTnt tnt && !(entity instanceof OceanifiedTnt)){
+        if (tnt == null && entity instanceof PrimedTnt oldTnt && !(entity instanceof OceanifiedTnt)){
             OceanifiedTnt newTnt = new OceanifiedTnt(TideEntities.OCEANIFIED_TNT.get(), level, pos);
             CompoundTag data = new CompoundTag();
-            tnt.save(data);
+            oldTnt.save(data);
             newTnt.load(data);
-            tnt.remove(Entity.RemovalReason.DISCARDED);
+            oldTnt.remove(Entity.RemovalReason.DISCARDED);
             level.addFreshEntity(newTnt);
             return;
         }
@@ -457,7 +464,8 @@ public class PoolHandler {
         }
     }
 
-    public static void aoeApplyRitualEffect(Level level, OceanifiedTnt tnt, float radius) {
+    //apply a ritual's effects at a distance, through a blue tnt explosion
+    public static void aoeApplyRitualEffect(ServerLevel level, OceanifiedTnt tnt, float radius) {
         //the tnt code multiplies the radius by 2, i have no idea why but i'm keeping it to keep the behaviour consistent
         List<Entity> entities = level.getEntities(tnt, new AABB(
                 tnt.getX() - radius * 2 - 1,
@@ -468,7 +476,57 @@ public class PoolHandler {
                 tnt.getZ() + radius * 2 + 1
         ));
 
-        //todo: do blocks for rituals that affect blocks
+        Set<BlockPos> set = Sets.newHashSet();
+
+        //copied from minecraft/world/level/explosion
+        if (EXPLOSION == null){
+            //we need a dummy explosion to calculate explosion resistance with, but we can keep using it as long as
+            // it never explodes
+            EXPLOSION = new Explosion(level, null, 0, 0, 0,
+                    4.0f, false, Explosion.BlockInteraction.KEEP);
+        }
+
+        for (int j=0;j<16;j++){
+            for (int k=0;k<16;k++){
+                for (int l=0;l<16;l++){
+                    if (j == 0 || j == 15 || k == 0 || k == 15 || l == 0 || l == 15) {
+                        double d0 = (double)((float)j / 15.0F * 2.0F - 1.0F);
+                        double d1 = (double)((float)k / 15.0F * 2.0F - 1.0F);
+                        double d2 = (double)((float)l / 15.0F * 2.0F - 1.0F);
+                        double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+                        d0 /= d3;
+                        d1 /= d3;
+                        d2 /= d3;
+                        float f = radius * (0.7F + level.random.nextFloat() * 0.6F);
+                        double d4 = tnt.getX();
+                        double d6 = tnt.getY();
+                        double d8 = tnt.getZ();
+
+                        for (float f1=0.3F;f>0.0F;f-=0.22500001F) {
+                            BlockPos blockpos = BlockPos.containing(d4, d6, d8);
+                            BlockState blockstate = level.getBlockState(blockpos);
+                            FluidState fluidstate = level.getFluidState(blockpos);
+                            if (!level.isInWorldBounds(blockpos)) {
+                                break;
+                            }
+
+                            Optional<Float> optional = EXPLOSION_DAMAGE_CALCULATOR.getBlockExplosionResistance(EXPLOSION, level, blockpos, blockstate, fluidstate);
+                            if (optional.isPresent()) {
+                                f -= (optional.get() + 0.3F) * 0.3F;
+                            }
+
+                            if (f > 0.0F){
+                                set.add(blockpos);
+                            }
+
+                            d4 += d0 * (double)0.3F;
+                            d6 += d1 * (double)0.3F;
+                            d8 += d2 * (double)0.3F;
+                        }
+                    }
+                }
+            }
+        }
 
         //rituals that affect entities
         for (Entity entity : entities) {
@@ -481,6 +539,20 @@ public class PoolHandler {
             }
         }
 
-        //todo: do a tick for rituals that just tick
+        for (PoolCore core : cores){
+            if (level != core.level()){
+                continue;
+            }
+
+            if (poolContainsFluidBlock(level, core.corePos(), tnt.getPoolBlock()) &&
+                    level.getBlockEntity(core.corePos()) instanceof CoreEntity coreEntity){
+
+                //rituals that just tick
+                coreEntity.doPeriodicAction(level, tnt.position());
+
+                //rituals that affect blocks
+                coreEntity.blocksInPool(level, set, tnt.position());
+            }
+        }
     }
 }

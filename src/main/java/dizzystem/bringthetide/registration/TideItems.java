@@ -59,6 +59,8 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.PELAGIC_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> SINKHOLE_CORE_ITEM = ITEMS.register("sinkhole_core",
             () -> new BlockItem(TideBlocks.SINKHOLE_CORE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SEABED_CORE_ITEM = ITEMS.register("seabed_core",
+            () -> new BlockItem(TideBlocks.SEABED_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> TRAWL_CORE_ITEM = ITEMS.register("trawl_core",
             () -> new BlockItem(TideBlocks.TRAWL_CORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> BASIN_CORE_ITEM = ITEMS.register("basin_core",

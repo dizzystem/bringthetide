@@ -250,6 +250,21 @@ public class TideRecipeProvider extends RecipeProvider {
                 .fluid(new FluidStack(Fluids.WATER, 10))
                 .result(new ItemStack(Items.TUBE_CORAL_FAN, 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_tubecoral"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.COBBLESTONE))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.GRAVEL, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_cobblestone"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.GRAVEL))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.SAND, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_gravel"));
+        ErosionRecipeBuilder.customRecipe(erosionSerializer)
+                .ingredient(Ingredient.of(Items.COARSE_DIRT))
+                .fluid(new FluidStack(Fluids.WATER, 10))
+                .result(new ItemStack(Items.DIRT, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_coarsedirt"));
 
         RecipeSerializer<?> depositionSerializer = TideRecipes.DEPOSITION_SERIALIZER.get();
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
@@ -408,13 +423,23 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(
                         Items.COPPER_INGOT))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SINKHOLE_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SEABED_CORE_ITEM.get())
                 .pattern("---")
-                .pattern("FBF")
+                .pattern("FIF")
                 .pattern("---")
                 .define('-', Items.SANDSTONE_SLAB)
                 .define('F', TideItems.FISH_ALLOY_INGOT.get())
-                .define('B', Items.IRON_PICKAXE)
+                .define('I', Items.IRON_HOE)
+                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.FISH_ALLOY_INGOT.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SINKHOLE_CORE_ITEM.get())
+                .pattern("---")
+                .pattern("FIF")
+                .pattern("---")
+                .define('-', Items.SANDSTONE_SLAB)
+                .define('F', TideItems.FISH_ALLOY_INGOT.get())
+                .define('I', Items.IRON_PICKAXE)
                 .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.FISH_ALLOY_INGOT.get()))
                 .save(consumer);
