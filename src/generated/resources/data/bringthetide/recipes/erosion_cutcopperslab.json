@@ -3,6 +3,7 @@
   "fluids": [
     "{Amount:10,FluidName:\"minecraft:water\"}"
   ],
+  "id": "bringthetide:erosion_cutcopperslab",
   "ingredient": {
     "count": 1,
     "item": {

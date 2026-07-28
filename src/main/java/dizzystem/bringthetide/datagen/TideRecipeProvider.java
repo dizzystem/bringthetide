@@ -281,7 +281,7 @@ public class TideRecipeProvider extends RecipeProvider {
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
                 .mainIngredient(Ingredient.of(Items.GOLD_INGOT))
                 .catalyst(Ingredient.of(Items.COD))
-                .catalyst(Ingredient.of(Items.TROPICAL_FISH))
+                .catalyst(Ingredient.of(Items.SALMON))
                 .catalyst(Ingredient.of(Items.PUFFERFISH))
                 .result(new ItemStack(TideItems.FISH_ALLOY_INGOT.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_fishalloyingot"));

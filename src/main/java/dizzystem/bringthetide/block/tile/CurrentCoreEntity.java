@@ -1,6 +1,6 @@
 package dizzystem.bringthetide.block.tile;
 
-import dizzystem.bringthetide.entity.OceanifiedTnt;
+import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
 import net.minecraft.core.BlockPos;
@@ -39,7 +39,7 @@ public class CurrentCoreEntity extends CoreEntity {
 
     //called when an entity enters our pool
     @Override
-    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt){
+    public void entityInPool(Entity entity, Level level, BlockPos pos, RitualTnt tnt){
         if (!(entity instanceof ItemEntity itemEntity)) {
             return;
         }

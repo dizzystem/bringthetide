@@ -18,9 +18,10 @@ public class EntityRenderers {
         event.registerBlockEntityRenderer(TideBlocks.BASIN_CORE_ENTITY.get(), ItemCoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.CURRENT_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.EROSION_CORE_ENTITY.get(), FluidCoreRenderer::new);
-        event.registerBlockEntityRenderer(TideBlocks.REEF_CORE_ENTITY.get(), ItemCoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.REEF_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.PELAGIC_CORE_ENTITY.get(), ItemCoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.DEPOSITION_CORE_ENTITY.get(), ItemCoreRenderer::new);
+        event.registerBlockEntityRenderer(TideBlocks.SEABED_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.SINKHOLE_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.VORTEX_CORE_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.WHIRLPOOL_CORE_ENTITY.get(), ItemCoreRenderer::new);

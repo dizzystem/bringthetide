@@ -86,7 +86,7 @@ public class TideBlocks {
 
     public static final RegistryObject<Block> TANK = BLOCKS.register("fluid_tank",
             Tank::new);
-    public static final RegistryObject<Block> OCEANIFIED_TNT = BLOCKS.register("oceanified_tnt",
+    public static final RegistryObject<Block> RITUAL_TNT = BLOCKS.register("ritual_tnt",
             () -> new Block(BlockBehaviour.Properties.of()));
 
     private static Block.Properties coreProps = BlockBehaviour.Properties.of().strength(3.5F);

@@ -4,7 +4,6 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.TntBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
@@ -30,8 +29,8 @@ public class TideBlockStates extends BlockStateProvider {
 
         simpleBlock(TideBlocks.TANK.get(),
                 models().cubeAll(TideBlocks.TANK.getId().getPath(), modLoc("block/tank")).renderType("cutout"));
-        simpleBlock(TideBlocks.OCEANIFIED_TNT.get(),
-                models().cubeBottomTop(TideBlocks.OCEANIFIED_TNT.getId().getPath(), modLoc("block/tnt_side"),
+        simpleBlock(TideBlocks.RITUAL_TNT.get(),
+                models().cubeBottomTop(TideBlocks.RITUAL_TNT.getId().getPath(), modLoc("block/tnt_side"),
                         modLoc("block/tnt_bottom"), modLoc("block/tnt_top")));
         //sandstone cores
         horizontalBlock(TideBlocks.EROSION_CORE.get(), modLoc("block/core_sandstone"),

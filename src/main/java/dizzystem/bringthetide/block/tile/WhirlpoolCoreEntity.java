@@ -1,6 +1,6 @@
 package dizzystem.bringthetide.block.tile;
 
-import dizzystem.bringthetide.entity.OceanifiedTnt;
+import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -37,7 +37,7 @@ public class WhirlpoolCoreEntity extends ItemCoreEntity {
 
     //called when an entity enters our pool
     @Override
-    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt) {
+    public void entityInPool(Entity entity, Level level, BlockPos pos, RitualTnt tnt) {
         if (!(entity instanceof LivingEntity livingEntity)) {
             return;
         }

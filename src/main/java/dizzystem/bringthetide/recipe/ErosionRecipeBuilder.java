@@ -63,6 +63,9 @@ public class ErosionRecipeBuilder extends TideRecipeBuilder {
             @Override
             public void serializeRecipeData(JsonObject json) {
                 json.addProperty("type", ForgeRegistries.RECIPE_SERIALIZERS.getKey(serializer).toString());
+                if (id != null){
+                    json.addProperty("id", id.toString());
+                }
                 json.add("ingredient", ingredient);
                 json.add("fluids", fluids);
                 json.add("result", result);

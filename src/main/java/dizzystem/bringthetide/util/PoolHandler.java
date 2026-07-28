@@ -3,7 +3,7 @@ package dizzystem.bringthetide.util;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
-import dizzystem.bringthetide.entity.OceanifiedTnt;
+import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.item.DolphinCostumeItem;
 import dizzystem.bringthetide.item.Wand;
 import dizzystem.bringthetide.registration.TideBlocks;
@@ -190,7 +190,7 @@ public class PoolHandler {
     public static boolean poolContainsFluidBlock(Level level, BlockPos core, BlockPos fluid){
         if (level.getBlockEntity(core) instanceof CoreEntity coreEntity){
             HashSet<BlockPos> poolFluids = coreEntity.getPoolFluids();
-            return poolFluids.contains(fluid);
+            return poolFluids.contains((BlockPos) fluid);
         }
 
         return false;
@@ -201,22 +201,26 @@ public class PoolHandler {
      *
      * @param pos The BlockPos of the core.
      */
-    public static void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt){
-        //only check the same entity once every 10 ticks
-        Integer cooldown = entityCooldowns.get(entity);
-        if (cooldown != null && cooldown > 0){
-            entityCooldowns.put(entity, cooldown-1);
+    public static void entityInPool(Entity entity, Level level, BlockPos pos, RitualTnt tnt){
+        if (entity instanceof RitualTnt){
             return;
         }
 
         //tnt effect propagation
-        if (tnt == null && entity instanceof PrimedTnt oldTnt && !(entity instanceof OceanifiedTnt)){
-            OceanifiedTnt newTnt = new OceanifiedTnt(TideEntities.OCEANIFIED_TNT.get(), level, pos);
+        if (tnt == null && entity instanceof PrimedTnt oldTnt && !(entity instanceof RitualTnt)){
+            RitualTnt newTnt = new RitualTnt(TideEntities.OCEANIFIED_TNT.get(), level, pos);
             CompoundTag data = new CompoundTag();
             oldTnt.save(data);
             newTnt.load(data);
             oldTnt.remove(Entity.RemovalReason.DISCARDED);
             level.addFreshEntity(newTnt);
+            return;
+        }
+
+        //only check the same entity once every 10 ticks
+        Integer cooldown = entityCooldowns.get(entity);
+        if (cooldown != null && cooldown > 0){
+            entityCooldowns.put(entity, cooldown-1);
             return;
         }
 
@@ -234,8 +238,9 @@ public class PoolHandler {
                     continue;
                 }
 
+                //LogUtils.getLogger().info("{} {}", core.corePos(), pos);
                 if (poolContainsFluidBlock(level, core.corePos(), pos)){
-                    coreEntity.entityInPool(entity, level, pos);
+                    coreEntity.entityInPool(entity, level, pos, null);
                     if (coreEntity.getTicksPerAction() < minTicksPerAction){
                         minTicksPerAction = coreEntity.getTicksPerAction();
                     }
@@ -465,17 +470,7 @@ public class PoolHandler {
     }
 
     //apply a ritual's effects at a distance, through a blue tnt explosion
-    public static void aoeApplyRitualEffect(ServerLevel level, OceanifiedTnt tnt, float radius) {
-        //the tnt code multiplies the radius by 2, i have no idea why but i'm keeping it to keep the behaviour consistent
-        List<Entity> entities = level.getEntities(tnt, new AABB(
-                tnt.getX() - radius * 2 - 1,
-                tnt.getY() - radius * 2 - 1,
-                tnt.getZ() - radius * 2 - 1,
-                tnt.getX() + radius * 2 + 1,
-                tnt.getY() + radius * 2 + 1,
-                tnt.getZ() + radius * 2 + 1
-        ));
-
+    public static void aoeApplyRitualEffect(ServerLevel level, RitualTnt tnt, float radius) {
         Set<BlockPos> set = Sets.newHashSet();
 
         //copied from minecraft/world/level/explosion
@@ -528,13 +523,23 @@ public class PoolHandler {
             }
         }
 
+        //the tnt code multiplies the radius by 2, i have no idea why but i'm keeping it to keep the behaviour consistent
+        List<Entity> entities = level.getEntities(tnt, new AABB(
+                tnt.getX() - radius * 2 - 1,
+                tnt.getY() - radius * 2 - 1,
+                tnt.getZ() - radius * 2 - 1,
+                tnt.getX() + radius * 2 + 1,
+                tnt.getY() + radius * 2 + 1,
+                tnt.getZ() + radius * 2 + 1
+        ));
+
         //rituals that affect entities
         for (Entity entity : entities) {
             double dist = Math.sqrt(entity.distanceToSqr(tnt.position()));
             if (dist <= radius * 2) {
                 BlockPos poolBlock = tnt.getPoolBlock();
                 if (poolBlock != null){
-                    entityInPool(entity, level, poolBlock);
+                    entityInPool(entity, level, poolBlock, tnt);
                 }
             }
         }

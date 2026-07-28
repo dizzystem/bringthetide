@@ -9,7 +9,7 @@
       "item": "bringthetide:fish_alloy_ingot"
     },
     "I": {
-      "item": "minecraft:iron_pickaxe"
+      "item": "minecraft:iron_hoe"
     }
   },
   "pattern": [
@@ -18,7 +18,7 @@
     "---"
   ],
   "result": {
-    "item": "bringthetide:sinkhole_core"
+    "item": "bringthetide:seabed_core"
   },
   "show_notification": true
 }

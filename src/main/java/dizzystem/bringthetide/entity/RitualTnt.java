@@ -7,25 +7,24 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.level.Level;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class OceanifiedTnt extends PrimedTnt {
+public class RitualTnt extends PrimedTnt {
     BlockPos poolBlock;
 
-    public OceanifiedTnt(EntityType<? extends OceanifiedTnt> entityType, Level level, BlockPos poolBlock) {
+    public RitualTnt(EntityType<? extends RitualTnt> entityType, Level level, BlockPos poolBlock) {
         super(entityType, level);
 
         this.poolBlock = poolBlock;
     }
 
-    public OceanifiedTnt(EntityType<? extends OceanifiedTnt> entityType, Level level) {
+    public RitualTnt(EntityType<? extends RitualTnt> entityType, Level level) {
         this(entityType, level, null);
     }
 
     public BlockPos getPoolBlock(){
-        return poolBlock;
+        return this.poolBlock;
     }
 
     protected void explode() {

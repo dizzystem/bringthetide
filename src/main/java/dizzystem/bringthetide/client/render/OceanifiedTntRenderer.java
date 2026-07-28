@@ -2,7 +2,7 @@ package dizzystem.bringthetide.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import dizzystem.bringthetide.entity.OceanifiedTnt;
+import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -12,10 +12,9 @@ import net.minecraft.client.renderer.entity.TntMinecartRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.item.PrimedTnt;
 
 //copied from net/minecraft/client/renderer/entity/TntRenderer.java
-public class OceanifiedTntRenderer extends EntityRenderer<OceanifiedTnt>  {
+public class OceanifiedTntRenderer extends EntityRenderer<RitualTnt>  {
     private final BlockRenderDispatcher blockRenderer;
 
     public OceanifiedTntRenderer(EntityRendererProvider.Context ctx){
@@ -24,7 +23,7 @@ public class OceanifiedTntRenderer extends EntityRenderer<OceanifiedTnt>  {
         this.blockRenderer = ctx.getBlockRenderDispatcher();
     }
 
-    public void render(OceanifiedTnt tntEntity, float entityYaw, float partialTicks, PoseStack poseStack,
+    public void render(RitualTnt tntEntity, float entityYaw, float partialTicks, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight) {
         poseStack.pushPose();
         poseStack.translate(0.0F, 0.5F, 0.0F);
@@ -41,13 +40,13 @@ public class OceanifiedTntRenderer extends EntityRenderer<OceanifiedTnt>  {
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
         poseStack.translate(-0.5F, -0.5F, 0.5F);
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
-        TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer, TideBlocks.OCEANIFIED_TNT.get().defaultBlockState(),
+        TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer, TideBlocks.RITUAL_TNT.get().defaultBlockState(),
                 poseStack, bufferSource, packedLight, i / 5 % 2 == 0);
         poseStack.popPose();
         super.render(tntEntity, entityYaw, partialTicks, poseStack, bufferSource, packedLight);
     }
 
-    public ResourceLocation getTextureLocation(OceanifiedTnt tntEntity) {
+    public ResourceLocation getTextureLocation(RitualTnt tntEntity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

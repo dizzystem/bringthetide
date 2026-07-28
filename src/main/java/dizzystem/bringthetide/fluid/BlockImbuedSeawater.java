@@ -28,7 +28,7 @@ public class BlockImbuedSeawater extends LiquidBlock {
             return;
         }
         if (blockState.getFluidState().isSource()){
-            PoolHandler.entityInPool(entity, level, pos);
+            PoolHandler.entityInPool(entity, level, pos.immutable(), null);
         }
     }
 

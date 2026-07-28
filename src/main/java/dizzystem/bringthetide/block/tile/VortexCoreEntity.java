@@ -1,14 +1,12 @@
 package dizzystem.bringthetide.block.tile;
 
-import com.mojang.authlib.GameProfile;
 import com.mojang.logging.LogUtils;
-import dizzystem.bringthetide.entity.OceanifiedTnt;
+import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
 import dizzystem.bringthetide.util.FakePlayerHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -22,9 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -51,7 +47,7 @@ public class VortexCoreEntity extends CoreEntity {
 
     //called when an entity enters our pool
     @Override
-    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt) {
+    public void entityInPool(Entity entity, Level level, BlockPos pos, RitualTnt tnt) {
         if (!(entity instanceof LivingEntity livingEntity)) {
             return;
         }

@@ -2,7 +2,7 @@ package dizzystem.bringthetide.block.tile;
 
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
-import dizzystem.bringthetide.entity.OceanifiedTnt;
+import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -424,6 +424,9 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                 this.poolFluids = poolFluids;
                 this.poolFormed = true;
                 this.poolFilled = true;
+                BlockPos blockPos = this.getBlockPos();
+                BlockState blockState = level.getBlockState(blockPos);
+                level.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
         }
 
@@ -578,7 +581,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public void doPeriodicAction(ServerLevel level, Vec3 origin){}
 
     //override to make core do stuff when an entity falls into it
-    public void entityInPool(Entity entity, Level level, BlockPos pos, OceanifiedTnt tnt){}
+    public void entityInPool(Entity entity, Level level, BlockPos pos, RitualTnt tnt){}
 
     //override to make core do crafting
     public void beginCraft(ItemEntity entity, ArrayList<BlockPos> cores){}
