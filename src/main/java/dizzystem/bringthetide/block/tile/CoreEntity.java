@@ -447,6 +447,9 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
         //once per second
         if (this.ticks++ % 20 == 0){
             this.doPoolFormedCheck();
+            if (this.poolFormed){
+                this.placePoolBase();
+            }
         }
 
         if (this.isPoolActive() && ticks % getTicksPerAction() == 0){
@@ -554,6 +557,7 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             if (!formed){
                 clearImbuedWater();
                 resetQuota();
+                removePoolBase();
                 clearPoolData(level, pos);
                 level.sendBlockUpdated(pos, blockState, blockState, Block.UPDATE_CLIENTS);
             }
@@ -576,6 +580,33 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
             }
         }
     }
+
+    //Replaces any air directly under the pool with some fluid-blocking but otherwise nonsolid blocks to hold the water in.
+    private void placePoolBase() {
+        Level level = this.level;
+
+        for (BlockPos fluid : this.poolFluids){
+            BlockPos underFluid = fluid.relative(Direction.DOWN);
+            if (level.getBlockState(underFluid).isAir() ||
+                    (!level.getBlockState(underFluid).getFluidState().isEmpty() && !level.getBlockState(underFluid).getFluidState().isSource())){
+                level.setBlockAndUpdate(underFluid, TideBlocks.POOL_BASE.get().defaultBlockState());
+            }
+        }
+    }
+
+    //Removes the nonsolid blocks placed by placePoolBase().
+    private void removePoolBase() {
+        Level level = this.level;
+
+        for (BlockPos fluid : this.poolFluids){
+            BlockPos underFluid = fluid.relative(Direction.DOWN);
+            if (level.getBlockState(underFluid).is(TideBlocks.POOL_BASE.get())){
+                level.setBlockAndUpdate(underFluid, Blocks.AIR.defaultBlockState());
+            }
+        }
+
+    }
+
 
     //override to make core do stuff every getTicksPerAction() ticks
     public void doPeriodicAction(ServerLevel level, Vec3 origin){}

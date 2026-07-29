@@ -25,6 +25,8 @@ public class TideItems {
     public static final RegistryObject<Item> SMALL_PRISMARINE_BUD_ITEM = ITEMS.register("small_prismarine_bud",
             () -> new BlockItem(TideBlocks.SMALL_PRISMARINE_BUD.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> PRISMARINE_PILLAR_ITEM = ITEMS.register("prismarine_pillar",
+            () -> new BlockItem(TideBlocks.PRISMARINE_PILLAR.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_LOG_ITEM = ITEMS.register("driftwood_log",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_LOG.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_PLANKS_ITEM = ITEMS.register("driftwood_planks",

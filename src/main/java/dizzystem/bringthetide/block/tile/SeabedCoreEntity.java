@@ -49,7 +49,7 @@ public class SeabedCoreEntity extends CoreEntity {
 
     private void blockInPool(ServerLevel level, BlockPos block, Vec3 origin){
         BlockState blockState = level.getBlockState(block);
-        if (blockState.isAir() || blockState.getFluidState() != Fluids.EMPTY.defaultFluidState()){
+        if (blockState.isAir() || !blockState.getFluidState().isEmpty()){
             //is air or a fluid
             return;
         }

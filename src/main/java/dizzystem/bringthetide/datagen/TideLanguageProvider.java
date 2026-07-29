@@ -23,6 +23,7 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.LARGE_PRISMARINE_BUD.get(), "Large Prismarine Bud");
         add(TideBlocks.PRISMARINE_CLUSTER.get(), "Prismarine Cluster");
 
+        add(TideBlocks.PRISMARINE_PILLAR.get(), "Prismarine Pillar");
         add(TideBlocks.DRIFTWOOD_LOG.get(), "Driftwood Log");
         add(TideBlocks.DRIFTWOOD_PLANKS.get(), "Driftwood Planks");
         add(TideBlocks.DRIFTWOOD_STAIRS.get(), "Driftwood Stairs");
@@ -34,6 +35,7 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), "Driftwood Pressure Plate");
         add(TideBlocks.DRIFTWOOD_BUTTON.get(), "Driftwood Button");
 
+        add(TideBlocks.POOL_BASE.get(), "Pool Base");
         add(TideBlocks.RITUAL_TNT.get(), "Ritual TNT");
         add(TideBlocks.TANK.get(), "Prismarine Tank");
 

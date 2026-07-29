@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "pillar_direction=base": {
+      "model": "bringthetide:block/prismarine_pillar_base"
+    },
+    "pillar_direction=middle": {
+      "model": "bringthetide:block/prismarine_pillar"
+    },
+    "pillar_direction=top": {
+      "model": "bringthetide:block/prismarine_pillar_top"
+    }
+  }
+}

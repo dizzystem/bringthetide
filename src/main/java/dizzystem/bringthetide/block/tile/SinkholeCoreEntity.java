@@ -98,7 +98,7 @@ public class SinkholeCoreEntity extends CoreEntity {
         BlockPos targetPos = new BlockPos(poolFluid.getX(), random.nextInt(minY, maxY), poolFluid.getZ());
         BlockState targetState = level.getBlockState(targetPos);
 
-        if (targetState.is(Blocks.AIR) || targetState.getFluidState() != Fluids.EMPTY.defaultFluidState()){
+        if (targetState.is(Blocks.AIR) || !targetState.getFluidState().isEmpty()){
             return false;
         }
 

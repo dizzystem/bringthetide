@@ -1,0 +1,39 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#bricks"
+        },
+        "east": {
+          "texture": "#bricks"
+        },
+        "north": {
+          "texture": "#bricks"
+        },
+        "south": {
+          "texture": "#bricks"
+        },
+        "up": {
+          "texture": "#bricks"
+        },
+        "west": {
+          "texture": "#bricks"
+        }
+      },
+      "from": [
+        2,
+        0,
+        2
+      ],
+      "to": [
+        14,
+        16,
+        14
+      ]
+    }
+  ],
+  "textures": {
+    "bricks": "bringthetide:block/prismarine_bricks"
+  }
+}

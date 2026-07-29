@@ -4,9 +4,13 @@ import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.block.*;
 import dizzystem.bringthetide.block.tile.*;
 import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -47,6 +51,9 @@ public class TideBlocks {
                     })));
     public static final RegistryObject<Block> PRISMARINE_CLUSTER = BLOCKS.register("prismarine_cluster",
             () -> new PrismarineClusterBlock(7, 3, clusterBehaviour));
+    public static final RegistryObject<ShapedPillar> PRISMARINE_PILLAR  = BLOCKS.register("prismarine_pillar",
+            () -> new ShapedPillar(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN)
+                    .instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(1.5F, 6.0F)));
     public static final RegistryObject<RotatedPillarBlock> DRIFTWOOD_LOG = BLOCKS.register("driftwood_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(2.0f).sound(SoundType.WOOD)
                     .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE).ignitedByLava()));
@@ -83,11 +90,17 @@ public class TideBlocks {
             () -> new ButtonBlock(BlockBehaviour.Properties.of().noCollission().strength(0.5F)
                     .pushReaction(PushReaction.DESTROY), DRIFTWOOD_BLOCK_TYPE, 30, true));
 
+    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos){ return false; }
+    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos, EntityType entity){ return false; }
 
     public static final RegistryObject<Block> TANK = BLOCKS.register("fluid_tank",
             Tank::new);
     public static final RegistryObject<Block> RITUAL_TNT = BLOCKS.register("ritual_tnt",
             () -> new Block(BlockBehaviour.Properties.of()));
+    public static final RegistryObject<Block> POOL_BASE = BLOCKS.register("pool_base",
+            () -> new PoolBase(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).instabreak().noCollission().replaceable()
+                    .sound(SoundType.GLASS).noOcclusion().isValidSpawn(TideBlocks::never).isRedstoneConductor(TideBlocks::never)
+                    .isSuffocating(TideBlocks::never).isViewBlocking(TideBlocks::never).pushReaction(PushReaction.DESTROY)));
 
     private static Block.Properties coreProps = BlockBehaviour.Properties.of().strength(3.5F);
     public static final RegistryObject<Block> BASIN_CORE = BLOCKS.register("basin_core",
