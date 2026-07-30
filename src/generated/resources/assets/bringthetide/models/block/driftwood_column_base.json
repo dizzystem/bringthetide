@@ -55,20 +55,20 @@
       },
       "from": [
         0,
-        14,
+        0,
         0
       ],
       "to": [
         16,
-        16,
+        2,
         16
       ]
     }
   ],
   "textures": {
-    "cap": "bringthetide:block/core_prismarine",
-    "edge": "bringthetide:block/smooth_prismarine",
-    "particle": "bringthetide:block/smooth_prismarine",
-    "side": "bringthetide:block/prismarine_pillar"
+    "cap": "bringthetide:block/driftwood_planks",
+    "edge": "bringthetide:block/driftwood_planks",
+    "particle": "bringthetide:block/driftwood_planks",
+    "side": "bringthetide:block/driftwood_pillar"
   }
 }

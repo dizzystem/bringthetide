@@ -20,6 +20,9 @@ public class Registration {
 
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(TideItems.TANK_ITEM);
+            event.accept(TideItems.EXPLOSION_ROD);
+
             event.accept(TideItems.DRIFTWOOD_LOG_ITEM);
             event.accept(TideItems.DRIFTWOOD_PLANKS_ITEM);
             event.accept(TideItems.DRIFTWOOD_STAIRS_ITEM);
@@ -28,6 +31,9 @@ public class Registration {
             event.accept(TideItems.DRIFTWOOD_FENCE_GATE_ITEM);
             event.accept(TideItems.DRIFTWOOD_PRESSURE_PLATE_ITEM);
             event.accept(TideItems.DRIFTWOOD_BUTTON_ITEM);
+            event.accept(TideItems.DRIFTWOOD_COLUMN_ITEM);
+
+            event.accept(TideItems.PRISMARINE_PILLAR_ITEM);
 
             event.accept(TideItems.SEABOUND_SKIN);
             event.accept(TideItems.SEASHELL_ALLOY_INGOT);

@@ -3,22 +3,22 @@
     {
       "faces": {
         "down": {
-          "texture": "#bricks"
+          "texture": "#edge"
         },
         "east": {
-          "texture": "#bricks"
+          "texture": "#side"
         },
         "north": {
-          "texture": "#bricks"
+          "texture": "#side"
         },
         "south": {
-          "texture": "#bricks"
+          "texture": "#side"
         },
         "up": {
-          "texture": "#bricks"
+          "texture": "#edge"
         },
         "west": {
-          "texture": "#bricks"
+          "texture": "#side"
         }
       },
       "from": [
@@ -35,22 +35,22 @@
     {
       "faces": {
         "down": {
-          "texture": "#bricks"
+          "texture": "#cap"
         },
         "east": {
-          "texture": "#bricks"
+          "texture": "#edge"
         },
         "north": {
-          "texture": "#bricks"
+          "texture": "#edge"
         },
         "south": {
-          "texture": "#bricks"
+          "texture": "#edge"
         },
         "up": {
-          "texture": "#bricks"
+          "texture": "#cap"
         },
         "west": {
-          "texture": "#bricks"
+          "texture": "#edge"
         }
       },
       "from": [
@@ -66,6 +66,9 @@
     }
   ],
   "textures": {
-    "bricks": "bringthetide:block/prismarine_bricks"
+    "cap": "bringthetide:block/core_prismarine",
+    "edge": "bringthetide:block/smooth_prismarine",
+    "particle": "bringthetide:block/smooth_prismarine",
+    "side": "bringthetide:block/prismarine_pillar"
   }
 }

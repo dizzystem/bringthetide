@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gravel": {
+    "has_seashell_alloy": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:gravel"
+              "bringthetide:seashell_alloy_ingot"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_gravel",
+      "has_seashell_alloy",
       "has_the_recipe"
     ]
   ],

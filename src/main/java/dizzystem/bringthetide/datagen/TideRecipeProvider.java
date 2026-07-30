@@ -524,8 +524,8 @@ public class TideRecipeProvider extends RecipeProvider {
                 .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
                 .define('P', Items.PRISMARINE_SHARD)
                 .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
-                .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        Items.GRAVEL))
+                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_ALLOY_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BOUNTY_UPGRADE_ITEM.get())
                 .pattern("---")
@@ -534,8 +534,8 @@ public class TideRecipeProvider extends RecipeProvider {
                 .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
                 .define('P', Items.PRISMARINE_CRYSTALS)
                 .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
-                .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        Items.GRAVEL))
+                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_ALLOY_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.RANGE_UPGRADE_ITEM.get())
                 .pattern("---")
@@ -544,11 +544,11 @@ public class TideRecipeProvider extends RecipeProvider {
                 .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
                 .define('I', Items.INK_SAC)
                 .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
-                .unlockedBy("has_gravel", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        Items.GRAVEL))
+                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_ALLOY_INGOT.get()))
                 .save(consumer);
 
-        //furniture set
+        //driftwood furniture set
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.DRIFTWOOD_PLANKS_ITEM.get(), 4)
                 .requires(TideItems.DRIFTWOOD_LOG_ITEM.get())
                 .unlockedBy("has_driftwood", InventoryChangeTrigger.TriggerInstance.hasItems(
@@ -603,6 +603,33 @@ public class TideRecipeProvider extends RecipeProvider {
                 .requires(TideItems.DRIFTWOOD_PLANKS_ITEM.get())
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_COLUMN_ITEM.get(), 3)
+                .pattern("D")
+                .pattern("D")
+                .pattern("D")
+                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                .save(consumer);
+
+        //prismarine furniture set
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PRISMARINE_PILLAR_ITEM.get(), 3)
+                .pattern("B")
+                .pattern("B")
+                .pattern("B")
+                .define('B', Items.PRISMARINE_BRICKS)
+                .unlockedBy("has_prismarine_bricks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.PRISMARINE_BRICKS))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.EXPLOSION_ROD.get())
+                .pattern("S")
+                .pattern("S")
+                .pattern("S")
+                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
+                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_ALLOY_INGOT.get()))
                 .save(consumer);
     };
 }

@@ -15,6 +15,8 @@
     "bringthetide:range_upgrade",
     "bringthetide:item_filter",
     "bringthetide:fluid_filter",
-    "bringthetide:entity_filter"
+    "bringthetide:entity_filter",
+    "bringthetide:prismarine_pillar",
+    "bringthetide:explosion_rod"
   ]
 }

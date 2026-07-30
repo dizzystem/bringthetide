@@ -1,0 +1,19 @@
+{
+  "name": "Explosion Rod",
+  "icon": "bringthetide:explosion_rod",
+  "category": "bringthetide:trinitrotoluene",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Just as copper has a wondrous capacity to conduct lightning, I have found that seashell brass has a similar capacity to conduct explosions - a very different natural force, despite their superficial similarities. With this property, I have devised an explosion rod, which works like a lightning rod but, rather than lightning, draws in explosions in a radius of 128 blocks."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:explosion_rod"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This will be useful as a safeguard in case my experiments with TNT go awry, as well as to defend my delicate ritual pools from any stray creepers that might wander through them. I should place it somewhere blast-resistant, however - while the rod itself is highly resistant to the explosions it draws in, its surroundings have no such protection."
+    }
+  ]
+}

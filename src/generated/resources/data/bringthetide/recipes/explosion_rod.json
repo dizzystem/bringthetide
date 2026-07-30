@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "bringthetide:seashell_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "S",
+    "S",
+    "S"
+  ],
+  "result": {
+    "item": "bringthetide:explosion_rod"
+  },
+  "show_notification": true
+}

@@ -45,9 +45,13 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_BUTTON_ITEM = ITEMS.register("driftwood_button",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_BUTTON.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_COLUMN_ITEM = ITEMS.register("driftwood_column",
+            () -> new BlockItem(TideBlocks.DRIFTWOOD_COLUMN.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> TANK_ITEM = ITEMS.register("fluid_tank",
             () -> new BlockItem(TideBlocks.TANK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> EXPLOSION_ROD = ITEMS.register("explosion_rod",
+            () -> new BlockItem(TideBlocks.EXPLOSION_ROD.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> CURRENT_CORE_ITEM = ITEMS.register("current_core",
             () -> new BlockItem(TideBlocks.CURRENT_CORE.get(), new Item.Properties()));

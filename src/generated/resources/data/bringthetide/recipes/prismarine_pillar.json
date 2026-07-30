@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:prismarine_bricks"
+    }
+  },
+  "pattern": [
+    "B",
+    "B",
+    "B"
+  ],
+  "result": {
+    "count": 3,
+    "item": "bringthetide:prismarine_pillar"
+  },
+  "show_notification": true
+}

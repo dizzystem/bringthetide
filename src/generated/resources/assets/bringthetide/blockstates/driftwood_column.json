@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "pillar_direction=base": {
+      "model": "bringthetide:block/driftwood_column_base"
+    },
+    "pillar_direction=middle": {
+      "model": "bringthetide:block/driftwood_column"
+    },
+    "pillar_direction=top": {
+      "model": "bringthetide:block/driftwood_column_top"
+    }
+  }
+}

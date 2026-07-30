@@ -71,6 +71,8 @@ public class TideBlocks {
             () -> new FenceBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
     public static final RegistryObject<FenceGateBlock> DRIFTWOOD_FENCE_GATE = BLOCKS.register("driftwood_fence_gate",
             () -> new FenceGateBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get()), DRIFTWOOD_WOOD_TYPE));
+    public static final RegistryObject<ShapedPillar> DRIFTWOOD_COLUMN  = BLOCKS.register("driftwood_column",
+            () -> new ShapedPillar(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
 
 //    public static final RegistryObject<StandingSignBlock> DRIFTWOOD_SIGN = BLOCKS.register("driftwood_sign",
 //            () -> new StandingSignBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)
@@ -101,6 +103,9 @@ public class TideBlocks {
             () -> new PoolBase(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).instabreak().noCollission().replaceable()
                     .sound(SoundType.GLASS).noOcclusion().isValidSpawn(TideBlocks::never).isRedstoneConductor(TideBlocks::never)
                     .isSuffocating(TideBlocks::never).isViewBlocking(TideBlocks::never).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<ExplosionRod> EXPLOSION_ROD = BLOCKS.register("explosion_rod",
+            () -> new ExplosionRod(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).forceSolidOn()
+                    .requiresCorrectToolForDrops().strength(3.0F, 3600.0F).sound(SoundType.COPPER).noOcclusion()));
 
     private static Block.Properties coreProps = BlockBehaviour.Properties.of().strength(3.5F);
     public static final RegistryObject<Block> BASIN_CORE = BLOCKS.register("basin_core",

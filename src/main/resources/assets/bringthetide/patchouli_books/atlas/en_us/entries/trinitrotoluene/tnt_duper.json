@@ -2,6 +2,7 @@
   "name": "Trinitrotoluene Duplicator",
   "icon": "bringthetide:trawl_core",
   "category": "bringthetide:trinitrotoluene",
+  "priority": true,
   "pages": [
     {
       "type": "patchouli:text",

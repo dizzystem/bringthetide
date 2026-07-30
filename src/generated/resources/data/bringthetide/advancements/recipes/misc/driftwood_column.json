@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_seashell_alloy": {
+    "has_driftwood_planks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "bringthetide:seashell_alloy_ingot"
+              "bringthetide:driftwood_planks"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bringthetide:flow_upgrade"
+        "recipe": "bringthetide:driftwood_column"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_seashell_alloy",
+      "has_driftwood_planks",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "bringthetide:flow_upgrade"
+      "bringthetide:driftwood_column"
     ]
   },
   "sends_telemetry_event": false

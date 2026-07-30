@@ -22,7 +22,6 @@ public class TideItemModels extends ItemModelProvider {
         withExistingParent(TideBlocks.PRISMARINE_CLUSTER.getId().getPath(), modLoc("block/prismarine_cluster"));
         withExistingParent(TideBlocks.TANK.getId().getPath(), modLoc("block/fluid_tank"));
 
-        withExistingParent(TideBlocks.PRISMARINE_PILLAR.getId().getPath(), modLoc("block/prismarine_pillar"));
         withExistingParent(TideBlocks.DRIFTWOOD_LOG.getId().getPath(), modLoc("block/driftwood_log"));
         withExistingParent(TideBlocks.DRIFTWOOD_PLANKS.getId().getPath(), modLoc("block/driftwood_planks"));
         withExistingParent(TideBlocks.DRIFTWOOD_STAIRS.getId().getPath(), modLoc("block/driftwood_stairs"));
@@ -37,6 +36,7 @@ public class TideItemModels extends ItemModelProvider {
         singleTexture(TideBlocks.DRIFTWOOD_BUTTON.getId().getPath(),
                 mcLoc("block/button_inventory"),
                 modLoc("block/driftwood_planks"));
+        withExistingParent(TideBlocks.DRIFTWOOD_COLUMN.getId().getPath(), modLoc("block/driftwood_column"));
 
         withExistingParent(TideBlocks.BASIN_CORE.getId().getPath(), modLoc("block/basin_core"));
         withExistingParent(TideBlocks.CURRENT_CORE.getId().getPath(), modLoc("block/current_core"));

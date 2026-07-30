@@ -34,8 +34,8 @@
     }
   ],
   "textures": {
-    "edge": "bringthetide:block/smooth_prismarine",
-    "particle": "bringthetide:block/smooth_prismarine",
-    "side": "bringthetide:block/prismarine_pillar"
+    "edge": "bringthetide:block/driftwood_planks",
+    "particle": "bringthetide:block/driftwood_planks",
+    "side": "bringthetide:block/driftwood_pillar"
   }
 }

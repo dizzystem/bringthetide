@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "bringthetide:flow_upgrade"
+        "recipe": "bringthetide:explosion_rod"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "bringthetide:flow_upgrade"
+      "bringthetide:explosion_rod"
     ]
   },
   "sends_telemetry_event": false

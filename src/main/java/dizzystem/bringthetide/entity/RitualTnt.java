@@ -2,6 +2,7 @@ package dizzystem.bringthetide.entity;
 
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -30,6 +31,7 @@ public class RitualTnt extends PrimedTnt {
     protected void explode() {
         ServerLevel level = (ServerLevel) level();
         PoolHandler.aoeApplyRitualEffect(level, this, 4.0f);
+        level.addParticle(ParticleTypes.EXPLOSION_EMITTER, getX(), getY(), getZ(), 1.0D, 0.0D, 0.0D);
     }
 
     @ParametersAreNonnullByDefault

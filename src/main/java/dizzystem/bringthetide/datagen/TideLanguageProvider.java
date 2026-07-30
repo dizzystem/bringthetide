@@ -34,10 +34,12 @@ public class TideLanguageProvider extends LanguageProvider {
 //        add(TideBlocks.DRIFTWOOD_WALL_SIGN.get(), "Driftwood Sign");
         add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), "Driftwood Pressure Plate");
         add(TideBlocks.DRIFTWOOD_BUTTON.get(), "Driftwood Button");
+        add(TideBlocks.DRIFTWOOD_COLUMN.get(), "Driftwood Column");
 
         add(TideBlocks.POOL_BASE.get(), "Pool Base");
         add(TideBlocks.RITUAL_TNT.get(), "Ritual TNT");
         add(TideBlocks.TANK.get(), "Prismarine Tank");
+        add(TideBlocks.EXPLOSION_ROD.get(), "Explosion Rod");
 
         add(TideBlocks.BASIN_CORE.get(), "Basin Core");
         add(TideBlocks.CURRENT_CORE.get(), "Current Core");
