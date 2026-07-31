@@ -7,17 +7,22 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ExplosionHandler {
     private static final int PROTECTION_RADIUS = 128;
     private static final Map<Level, ExplosionHandler.SaveData> dims = new HashMap<>();
+    private static double explosionX, explosionY, explosionZ;
 
     public static ExplosionHandler.SaveData getDataForLevel(ServerLevel level){
         if (!dims.containsKey(level) || dims.get(level) == null){
@@ -55,16 +60,15 @@ public class ExplosionHandler {
         return new ExplosionHandler.SaveData(rods);
     }
 
-    //Returns true if we redirect the explosion.
-    public static boolean onExplosion(ServerLevel level, Explosion explosion){
-        Explosion newExplosion = null;
-        Vec3 position = explosion.getPosition();
+    //Redirects explosions if they're in range of an explosion rod.
+    public static void onExplosion(ServerLevel level, double x, double y, double z){
+        Vec3 position = new Vec3(x, y, z);
         ArrayList<BlockPos> toRemove = new ArrayList<>();
 
-        //This mixin adds getters for certain private variables that are missing them in the base class.
-        if (!(explosion instanceof ExplosionAccessor explosionAccessor)){
-            return false;
-        }
+        //If they aren't in range of a rod, default to its current location.
+        explosionX = x;
+        explosionY = y;
+        explosionZ = z;
 
         ExplosionHandler.SaveData data = getDataForLevel(level);
         for (BlockPos rodPos : data.getRods()){
@@ -77,29 +81,28 @@ public class ExplosionHandler {
                 Direction facing = level.getBlockState(rodPos).getValue(ExplosionRod.FACING);
                 Vec3 newExplosionPos = rodPos.relative(facing).getCenter();
 
-                newExplosion = new Explosion(
-                        level,
-                        explosion.getDirectSourceEntity(),
-                        explosion.getDamageSource(),
-                        explosionAccessor.getDamageCalculator(),
-                        newExplosionPos.x,
-                        newExplosionPos.y,
-                        newExplosionPos.z,
-                        explosionAccessor.getRadius(),
-                        explosionAccessor.getFire(),
-                        explosionAccessor.getBlockInteraction()
-                );
-                LogUtils.getLogger().info("explosion redirected to {}", newExplosion.getPosition());
+                explosionX = newExplosionPos.x;
+                explosionY = newExplosionPos.y;
+                explosionZ = newExplosionPos.z;
 
-                newExplosion.explode();
-                newExplosion.finalizeExplosion(true);
+                LogUtils.getLogger().info("explosion redirected to {}", newExplosionPos);
                 break;
             }
         }
 
         toRemove.forEach(data::removeRod);
+    }
 
-        return newExplosion != null;
+    public static double getLastExplosionX(){
+        return explosionX;
+    }
+
+    public static double getLastExplosionY(){
+        return explosionY;
+    }
+
+    public static double getLastExplosionZ(){
+        return explosionZ;
     }
 
     //Save data class, instanced per dimension.

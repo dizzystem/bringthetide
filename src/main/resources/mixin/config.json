@@ -1,6 +1,6 @@
 {
   "package" : "dizzystem.bringthetide.mixin",
   "mixins" : [
-    "MixinExplosion"
+    "MixinServerLevel"
   ]
 }
