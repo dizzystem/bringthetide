@@ -1,5 +1,6 @@
-package dizzystem.bringthetide.block.tile;
+package dizzystem.bringthetide.block.tile.core;
 
+import dizzystem.bringthetide.block.tile.FluidCoreEntity;
 import dizzystem.bringthetide.client.particle.DropletParticleType;
 import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.recipe.ErosionRecipe;
@@ -259,7 +260,7 @@ public class ErosionCoreEntity extends FluidCoreEntity {
 
         Level level = getLevel();
         RandomSource random = level.getRandom();
-        if (this.craftingEntity != null && !this.getFluid().isEmpty() &&
+        if (this.craftingEntity != null && !this.craftingEntity.isRemoved() && !this.getFluid().isEmpty() &&
                 random.nextInt(4) == 0){
             FluidStack fluid = this.getFluid();
             Vec3 from = this.craftingEntity.position().add(0, -0.25, 0).add(

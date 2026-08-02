@@ -37,6 +37,8 @@ public class TideItemModels extends ItemModelProvider {
                 mcLoc("block/button_inventory"),
                 modLoc("block/driftwood_planks"));
         withExistingParent(TideBlocks.DRIFTWOOD_COLUMN.getId().getPath(), modLoc("block/driftwood_column"));
+        basicItem(TideItems.DRIFTWOOD_DOOR.get());
+        withExistingParent(TideBlocks.DRIFTWOOD_TRAPDOOR.getId().getPath(), modLoc("block/driftwood_trapdoor_bottom"));
 
         withExistingParent(TideBlocks.BASIN_CORE.getId().getPath(), modLoc("block/basin_core"));
         withExistingParent(TideBlocks.CURRENT_CORE.getId().getPath(), modLoc("block/current_core"));
@@ -67,6 +69,7 @@ public class TideItemModels extends ItemModelProvider {
         basicItem(TideItems.COSTUME_CHESTPLATE.get());
         basicItem(TideItems.COSTUME_LEGGINGS.get());
         basicItem(TideItems.COSTUME_BOOTS.get());
+        basicItem(TideItems.EFFIGY.get());
         //for our patchouli book
         basicItem(ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "atlas"));
     }

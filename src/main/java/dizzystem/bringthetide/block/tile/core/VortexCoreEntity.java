@@ -1,6 +1,7 @@
-package dizzystem.bringthetide.block.tile;
+package dizzystem.bringthetide.block.tile.core;
 
 import com.mojang.logging.LogUtils;
+import dizzystem.bringthetide.block.tile.CoreEntity;
 import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;

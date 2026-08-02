@@ -1,6 +1,6 @@
 {
   "name": "Trinitrotoluene Duplicator",
-  "icon": "bringthetide:trawl_core",
+  "icon": "minecraft:tnt",
   "category": "bringthetide:trinitrotoluene",
   "priority": true,
   "pages": [

@@ -1,5 +1,6 @@
-package dizzystem.bringthetide.block.tile;
+package dizzystem.bringthetide.block.tile.core;
 
+import dizzystem.bringthetide.block.tile.ItemCoreEntity;
 import dizzystem.bringthetide.recipe.PelagicRecipe;
 import dizzystem.bringthetide.registration.TideBlocks;
 import dizzystem.bringthetide.registration.TideParticles;
@@ -7,7 +8,6 @@ import dizzystem.bringthetide.registration.TideRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
@@ -93,7 +93,9 @@ public class PelagicCoreEntity extends ItemCoreEntity {
         }
 
         EntityType<?> entitytype = spawnEgg.getType(output.getTag());
-        entitytype.spawn(level, BlockPos.containing(pos), MobSpawnType.SPAWNER);
+        for (int i=0;i<output.getCount();i++){
+            entitytype.spawn(level, BlockPos.containing(pos), MobSpawnType.SPAWNER);
+        }
 
         level.sendParticles(TideParticles.SPLASH.get(),
                 pos.x,

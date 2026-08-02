@@ -16,7 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.Consumer;
@@ -33,7 +32,7 @@ public class TideRecipeProvider extends RecipeProvider {
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(TideTags.NON_DRIFTWOOD_LOGS))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(TideItems.DRIFTWOOD_LOG_ITEM.get(), 1))
+                .result(new ItemStack(TideItems.DRIFTWOOD_LOG.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_log"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.SANDSTONE))
@@ -148,57 +147,57 @@ public class TideRecipeProvider extends RecipeProvider {
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.EXPOSED_COPPER))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.WEATHERED_COPPER, 9))
+                .result(new ItemStack(Items.WEATHERED_COPPER))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcopper"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.WEATHERED_COPPER))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.OXIDIZED_COPPER, 9))
+                .result(new ItemStack(Items.OXIDIZED_COPPER))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcopper"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.CUT_COPPER))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.EXPOSED_CUT_COPPER, 9))
+                .result(new ItemStack(Items.EXPOSED_CUT_COPPER))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_cutcopper"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.EXPOSED_CUT_COPPER))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.WEATHERED_CUT_COPPER, 9))
+                .result(new ItemStack(Items.WEATHERED_CUT_COPPER))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcutcopper"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.WEATHERED_CUT_COPPER))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER, 9))
+                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcutcopper"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.CUT_COPPER_SLAB))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.EXPOSED_CUT_COPPER_SLAB, 9))
+                .result(new ItemStack(Items.EXPOSED_CUT_COPPER_SLAB))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_cutcopperslab"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.EXPOSED_CUT_COPPER_SLAB))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.WEATHERED_CUT_COPPER_SLAB, 9))
+                .result(new ItemStack(Items.WEATHERED_CUT_COPPER_SLAB))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcutcopperslab"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.WEATHERED_CUT_COPPER_SLAB))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER_SLAB, 9))
+                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER_SLAB))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcutcopperslab"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.CUT_COPPER_STAIRS))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.EXPOSED_CUT_COPPER_STAIRS, 9))
+                .result(new ItemStack(Items.EXPOSED_CUT_COPPER_STAIRS))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_cutcopperstairs"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.EXPOSED_CUT_COPPER_STAIRS))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.WEATHERED_CUT_COPPER_STAIRS, 9))
+                .result(new ItemStack(Items.WEATHERED_CUT_COPPER_STAIRS))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_exposedcutcopperstairs"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.WEATHERED_CUT_COPPER_STAIRS))
                 .fluid(new FluidStack(Fluids.WATER, 10))
-                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER_STAIRS, 9))
+                .result(new ItemStack(Items.OXIDIZED_CUT_COPPER_STAIRS))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "erosion_weatheredcutcopperstairs"));
         ErosionRecipeBuilder.customRecipe(erosionSerializer)
                 .ingredient(Ingredient.of(Items.BRAIN_CORAL_BLOCK))
@@ -331,7 +330,7 @@ public class TideRecipeProvider extends RecipeProvider {
         RecipeSerializer<?> pelagicSerializer = TideRecipes.PELAGIC_SERIALIZER.get();
         PelagicRecipeBuilder.customRecipe(pelagicSerializer)
                         .ingredient(Ingredient.of(Items.ROTTEN_FLESH))
-                .result(new ItemStack(Items.DROWNED_SPAWN_EGG))
+                .result(new ItemStack(Items.DROWNED_SPAWN_EGG, 2))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_drowned"));
         PelagicRecipeBuilder.customRecipe(pelagicSerializer)
                         .ingredient(Ingredient.of(Items.ROTTEN_FLESH))
@@ -340,7 +339,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_zombievillager"));
         PelagicRecipeBuilder.customRecipe(pelagicSerializer)
                         .ingredient(Ingredient.of(Items.COD))
-                .result(new ItemStack(Items.GUARDIAN_SPAWN_EGG))
+                .result(new ItemStack(Items.GUARDIAN_SPAWN_EGG, 2))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "pelagic_guardian"));
         PelagicRecipeBuilder.customRecipe(pelagicSerializer)
                         .ingredient(Ingredient.of(Items.COD))
@@ -397,13 +396,20 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("  x")
                 .pattern(" x ")
                 .pattern("x  ")
-                .define('x', TideItems.DRIFTWOOD_LOG_ITEM.get())
+                .define('x', TideItems.DRIFTWOOD_LOG.get())
                 .unlockedBy("has_driftwood", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_LOG_ITEM.get()))
+                        TideItems.DRIFTWOOD_LOG.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.TANK.get())
+                .pattern("GS")
+                .define('G', Items.GLASS)
+                .define('S', Items.PRISMARINE_BRICK_SLAB)
+                .unlockedBy("has_glass", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.GLASS))
                 .save(consumer);
 
         //sandstone cores
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.EROSION_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.EROSION_CORE.get())
                 .pattern("---")
                 .pattern("FBF")
                 .pattern("---")
@@ -413,7 +419,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.FISH_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PELAGIC_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PELAGIC_CORE.get())
                 .pattern("---")
                 .pattern("CBC")
                 .pattern("---")
@@ -423,7 +429,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(
                         Items.COPPER_INGOT))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SEABED_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SEABED_CORE.get())
                 .pattern("---")
                 .pattern("FIF")
                 .pattern("---")
@@ -433,7 +439,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.FISH_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SINKHOLE_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SINKHOLE_CORE.get())
                 .pattern("---")
                 .pattern("FIF")
                 .pattern("---")
@@ -443,7 +449,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.FISH_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.VORTEX_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.VORTEX_CORE.get())
                 .pattern("---")
                 .pattern("FBF")
                 .pattern("---")
@@ -455,7 +461,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .save(consumer);
 
         //prismarine cores
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BASIN_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BASIN_CORE.get())
                 .pattern("---")
                 .pattern("TBT")
                 .pattern("---")
@@ -465,7 +471,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.TURTLE_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.CURRENT_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.CURRENT_CORE.get())
                 .pattern("---")
                 .pattern("THT")
                 .pattern("---")
@@ -475,17 +481,17 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.TURTLE_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DEPOSITION_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DEPOSITION_CORE.get())
                 .pattern("---")
                 .pattern("CDC")
                 .pattern("---")
                 .define('-', Items.PRISMARINE_BRICK_SLAB)
-                .define('D', TideItems.DRIFTWOOD_LOG_ITEM.get())
+                .define('D', TideItems.DRIFTWOOD_LOG.get())
                 .define('C', Items.COPPER_INGOT)
                 .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(
                         Items.COPPER_INGOT))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.REEF_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.REEF_CORE.get())
                 .pattern("---")
                 .pattern("TST")
                 .pattern("---")
@@ -495,7 +501,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.TURTLE_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.TRAWL_CORE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.TRAWL_CORE.get())
                 .pattern("---")
                 .pattern("CFC")
                 .pattern("---")
@@ -517,7 +523,7 @@ public class TideRecipeProvider extends RecipeProvider {
 //                .save(consumer);
 
         //upgrades
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.FLOW_UPGRADE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.FLOW_UPGRADE_.get())
                 .pattern("---")
                 .pattern("SPS")
                 .pattern("---")
@@ -527,7 +533,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.SEASHELL_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BOUNTY_UPGRADE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BOUNTY_UPGRADE.get())
                 .pattern("---")
                 .pattern("SPS")
                 .pattern("---")
@@ -537,7 +543,7 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.SEASHELL_ALLOY_INGOT.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.RANGE_UPGRADE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.RANGE_UPGRADE.get())
                 .pattern("---")
                 .pattern("SIS")
                 .pattern("---")
@@ -549,40 +555,40 @@ public class TideRecipeProvider extends RecipeProvider {
                 .save(consumer);
 
         //driftwood furniture set
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.DRIFTWOOD_PLANKS_ITEM.get(), 4)
-                .requires(TideItems.DRIFTWOOD_LOG_ITEM.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.DRIFTWOOD_PLANKS.get(), 4)
+                .requires(TideItems.DRIFTWOOD_LOG.get())
                 .unlockedBy("has_driftwood", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_LOG_ITEM.get()))
+                        TideItems.DRIFTWOOD_LOG.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_STAIRS_ITEM.get(), 4)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_STAIRS.get(), 4)
                 .pattern("D  ")
                 .pattern("DD ")
                 .pattern("DDD")
-                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_SLAB_ITEM.get(), 6)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_SLAB.get(), 6)
                 .pattern("DDD")
-                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_FENCE_ITEM.get(), 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_FENCE.get(), 3)
                 .pattern("DSD")
                 .pattern("DSD")
-                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
                 .define('S', Items.STICK)
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_FENCE_GATE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_FENCE_GATE.get())
                 .pattern("SDS")
                 .pattern("SDS")
-                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
                 .define('S', Items.STICK)
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
 //        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_SIGN_ITEM.get(), 3)
 //                .pattern("DDD")
@@ -593,28 +599,43 @@ public class TideRecipeProvider extends RecipeProvider {
 //                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
 //                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
 //                .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_PRESSURE_PLATE_ITEM.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_PRESSURE_PLATE.get())
                 .pattern("DD")
-                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.DRIFTWOOD_BUTTON_ITEM.get())
-                .requires(TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.DRIFTWOOD_BUTTON.get())
+                .requires(TideItems.DRIFTWOOD_PLANKS.get())
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_COLUMN_ITEM.get(), 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_COLUMN.get(), 3)
                 .pattern("D")
                 .pattern("D")
                 .pattern("D")
-                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
+                        TideItems.DRIFTWOOD_PLANKS.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_DOOR.get(), 3)
+                .pattern("DD")
+                .pattern("DD")
+                .pattern("DD")
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_TRAPDOOR.get(), 2)
+                .pattern("DDD")
+                .pattern("DDD")
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
 
         //prismarine furniture set
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PRISMARINE_PILLAR_ITEM.get(), 3)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PRISMARINE_PILLAR.get(), 3)
                 .pattern("B")
                 .pattern("B")
                 .pattern("B")
@@ -630,6 +651,16 @@ public class TideRecipeProvider extends RecipeProvider {
                 .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
                 .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.SEASHELL_ALLOY_INGOT.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.EFFIGY.get())
+                .pattern("DTD")
+                .pattern(" T ")
+                .pattern("DSD")
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
+                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('S', Items.SMOOTH_STONE)
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
     };
 }

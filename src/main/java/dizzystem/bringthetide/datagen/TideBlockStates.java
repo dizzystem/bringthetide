@@ -8,6 +8,7 @@ import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -39,12 +40,16 @@ public class TideBlockStates extends BlockStateProvider {
         buttonBlock(TideBlocks.DRIFTWOOD_BUTTON.get(), modLoc("block/driftwood_planks"));
         shapedPillar(TideBlocks.DRIFTWOOD_COLUMN, modLoc("block/driftwood_pillar"), modLoc("block/driftwood_planks"),
                 modLoc("block/driftwood_planks"), modLoc("block/driftwood_planks"));
+        doorBlockWithRenderType(TideBlocks.DRIFTWOOD_DOOR.get(), modLoc("block/driftwood_door_bottom"),
+                modLoc("block/driftwood_door_top"), "cutout");
+        trapdoorBlockWithRenderType(TideBlocks.DRIFTWOOD_TRAPDOOR.get(),modLoc("block/driftwood_trapdoor"),
+                true, "cutout");
 
         simpleBlock(TideBlocks.POOL_BASE.get(),
                 models().cubeBottomTop(TideBlocks.POOL_BASE.getId().getPath(), modLoc("block/semitransparent"),
                         modLoc("block/semitransparent"), modLoc("block/semitransparent")).renderType("translucent"));
-        simpleBlock(TideBlocks.TANK.get(),
-                models().cubeAll(TideBlocks.TANK.getId().getPath(), modLoc("block/tank")).renderType("cutout"));
+        tank(TideBlocks.TANK, modLoc("block/tank_side"), modLoc("block/tank_lid"),
+                modLoc("block/tank_side"));
         simpleBlock(TideBlocks.RITUAL_TNT.get(),
                 models().cubeBottomTop(TideBlocks.RITUAL_TNT.getId().getPath(), modLoc("block/tnt_side"),
                         modLoc("block/tnt_bottom"), modLoc("block/tnt_top")));
@@ -132,6 +137,7 @@ public class TideBlockStates extends BlockStateProvider {
         VariantBlockStateBuilder.PartialBlockstate pillarTop = pillarBuilder.partialState()
                 .with(ShapedPillar.PILLAR_DIRECTION, PillarDirection.TOP);
         BlockModelBuilder pillarTopModel = models().getBuilder(path+"_top")
+                .parent(models().getExistingFile(mcLoc("block/block")))
                 .element().from(2f, 0f, 2f).to(14f, 16f, 14f)
                 .allFaces(body).end()
                 .element().from(0f, 14f, 0f).to(16f, 16f, 16f)
@@ -146,6 +152,7 @@ public class TideBlockStates extends BlockStateProvider {
         VariantBlockStateBuilder.PartialBlockstate pillarMiddle = pillarBuilder.partialState()
                 .with(ShapedPillar.PILLAR_DIRECTION, PillarDirection.MIDDLE);
         BlockModelBuilder pillarMiddleModel = models().getBuilder(path)
+                .parent(models().getExistingFile(mcLoc("block/block")))
                 .element().from(2f, 0f, 2f).to(14f, 16f, 14f)
                 .allFaces(body).end()
                 .texture("side", sideTexture)
@@ -157,6 +164,7 @@ public class TideBlockStates extends BlockStateProvider {
         VariantBlockStateBuilder.PartialBlockstate pillarBase = pillarBuilder.partialState()
                 .with(ShapedPillar.PILLAR_DIRECTION, PillarDirection.BASE);
         BlockModelBuilder pillarBaseModel = models().getBuilder(path+"_base")
+                .parent(models().getExistingFile(mcLoc("block/block")))
                 .element().from(2f, 0f, 2f).to(14f, 16f, 14f)
                 .allFaces(body).end()
                 .element().from(0f, 0f, 0f).to(16f, 2f, 16f)
@@ -170,8 +178,27 @@ public class TideBlockStates extends BlockStateProvider {
         simpleBlockItem(blockRegistry.get(), pillarMiddleModel);
     }
 
+    private void tank(RegistryObject<Block> blockRegistry, ResourceLocation sideTexture, ResourceLocation lidTexture,
+                      ResourceLocation particleTexture){
+        BlockModelBuilder tankModel = models().getBuilder(blockRegistry.getId().getPath())
+                .parent(models().getExistingFile(mcLoc("block/block")))
+                .element().from(1f, 0f, 2f).to(15f, 14f, 16f)
+                .allFaces((dir, builder) ->
+                        builder.uvs(0, 0, 14, 14).texture("#side")).end()
+                .element().from(4f, 3f, 0f).to(12f, 11f, 2f)
+                .allFaces((dir, builder) ->
+                        builder.uvs(0, 0, 8, 8).texture("#lid")).end()
+                .texture("side", sideTexture)
+                .texture("lid", lidTexture)
+                .texture("particle", particleTexture)
+                .renderType("cutout");
+
+        simpleBlock(TideBlocks.TANK.get(),tankModel);
+    }
+
     private void explosionRod(RegistryObject<ExplosionRod> blockRegistry, ResourceLocation texture) {
         BlockModelBuilder rodModel = models().getBuilder(blockRegistry.getId().getPath())
+                .parent(models().getExistingFile(mcLoc("block/block")))
                 .element().from(6f, 12f, 6f).to(10f, 16f, 10f)
                 .allFaces((dir, builder) -> {
                     switch(dir){
@@ -204,7 +231,11 @@ public class TideBlockStates extends BlockStateProvider {
                     builder.texture("#texture");
                 }).end()
                 .texture("texture", texture)
-                .texture("particle", texture);
+                .texture("particle", texture)
+                .transforms().transform(ItemDisplayContext.HEAD).rotation(-180f, 0f, 0f)
+                .translation(8.5f, 4f, 0f).end().end()
+                .transforms().transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).translation(0f, 2f, 0.5f)
+                .scale(0.4f).end().end();
 
         VariantBlockStateBuilder rodBuilder = getVariantBuilder(blockRegistry.get());
         rodBuilder.forAllStates(state -> {

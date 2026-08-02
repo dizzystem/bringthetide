@@ -1,4 +1,31 @@
 {
+  "parent": "minecraft:block/block",
+  "display": {
+    "head": {
+      "rotation": [
+        -180,
+        0,
+        0
+      ],
+      "translation": [
+        8.5,
+        4,
+        0
+      ]
+    },
+    "thirdperson_righthand": {
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "translation": [
+        0,
+        2,
+        0.5
+      ]
+    }
+  },
   "elements": [
     {
       "faces": {

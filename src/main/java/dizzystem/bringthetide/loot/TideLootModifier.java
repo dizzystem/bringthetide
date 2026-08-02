@@ -37,7 +37,7 @@ public class TideLootModifier extends LootModifier {
             lootTableId.equals(BuiltInLootTables.SHIPWRECK_SUPPLY) ||
             lootTableId.equals(BuiltInLootTables.SHIPWRECK_TREASURE)){
             int amt = context.getRandom().nextIntBetweenInclusive(3, 6);
-            generatedLoot.add(new ItemStack(TideItems.DRIFTWOOD_LOG_ITEM.get(), amt));
+            generatedLoot.add(new ItemStack(TideItems.DRIFTWOOD_LOG.get(), amt));
         }
 
         return generatedLoot;

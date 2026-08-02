@@ -3,6 +3,7 @@ package dizzystem.bringthetide.registration;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.block.*;
 import dizzystem.bringthetide.block.tile.*;
+import dizzystem.bringthetide.block.tile.core.*;
 import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -58,6 +59,9 @@ public class TideBlocks {
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.of().strength(2.0f).sound(SoundType.WOOD)
                     .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE).ignitedByLava()));
 
+    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos){ return false; }
+    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos, EntityType entity){ return false; }
+
     public static final BlockSetType DRIFTWOOD_BLOCK_TYPE = new BlockSetType("driftwood");
     public static final WoodType DRIFTWOOD_WOOD_TYPE = new WoodType("driftwood", DRIFTWOOD_BLOCK_TYPE);
     public static final RegistryObject<Block> DRIFTWOOD_PLANKS = BLOCKS.register("driftwood_planks",
@@ -71,8 +75,6 @@ public class TideBlocks {
             () -> new FenceBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
     public static final RegistryObject<FenceGateBlock> DRIFTWOOD_FENCE_GATE = BLOCKS.register("driftwood_fence_gate",
             () -> new FenceGateBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get()), DRIFTWOOD_WOOD_TYPE));
-    public static final RegistryObject<ShapedPillar> DRIFTWOOD_COLUMN  = BLOCKS.register("driftwood_column",
-            () -> new ShapedPillar(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
 
 //    public static final RegistryObject<StandingSignBlock> DRIFTWOOD_SIGN = BLOCKS.register("driftwood_sign",
 //            () -> new StandingSignBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)
@@ -91,12 +93,21 @@ public class TideBlocks {
     public static final RegistryObject<ButtonBlock> DRIFTWOOD_BUTTON = BLOCKS.register("driftwood_button",
             () -> new ButtonBlock(BlockBehaviour.Properties.of().noCollission().strength(0.5F)
                     .pushReaction(PushReaction.DESTROY), DRIFTWOOD_BLOCK_TYPE, 30, true));
-
-    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos){ return false; }
-    public static boolean never(BlockState state, BlockGetter getter, BlockPos pos, EntityType entity){ return false; }
+    public static final RegistryObject<ShapedPillar> DRIFTWOOD_COLUMN  = BLOCKS.register("driftwood_column",
+            () -> new ShapedPillar(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get())));
+    public static final RegistryObject<DoorBlock> DRIFTWOOD_DOOR = BLOCKS.register("driftwood_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)
+                    .instrument(NoteBlockInstrument.BASS).strength(3.0F).noOcclusion().ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY), DRIFTWOOD_BLOCK_TYPE));
+    public static final RegistryObject<TrapDoorBlock> DRIFTWOOD_TRAPDOOR = BLOCKS.register("driftwood_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)
+                    .instrument(NoteBlockInstrument.BASS).strength(3.0F).noOcclusion().isValidSpawn(TideBlocks::never)
+                    .ignitedByLava(), DRIFTWOOD_BLOCK_TYPE));
 
     public static final RegistryObject<Block> TANK = BLOCKS.register("fluid_tank",
-            Tank::new);
+            () -> new Tank(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).instabreak().sound(SoundType.GLASS)
+                    .noOcclusion().isValidSpawn(TideBlocks::never).isRedstoneConductor(TideBlocks::never)
+                    .isSuffocating(TideBlocks::never).isViewBlocking(TideBlocks::never)));
     public static final RegistryObject<Block> RITUAL_TNT = BLOCKS.register("ritual_tnt",
             () -> new Block(BlockBehaviour.Properties.of()));
     public static final RegistryObject<Block> POOL_BASE = BLOCKS.register("pool_base",

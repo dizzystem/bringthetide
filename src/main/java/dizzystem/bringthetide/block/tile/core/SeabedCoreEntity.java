@@ -1,5 +1,6 @@
-package dizzystem.bringthetide.block.tile;
+package dizzystem.bringthetide.block.tile.core;
 
+import dizzystem.bringthetide.block.tile.CoreEntity;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,7 +14,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;

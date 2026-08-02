@@ -1,5 +1,6 @@
-package dizzystem.bringthetide.block.tile;
+package dizzystem.bringthetide.block.tile.core;
 
+import dizzystem.bringthetide.block.tile.ItemCoreEntity;
 import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.core.BlockPos;

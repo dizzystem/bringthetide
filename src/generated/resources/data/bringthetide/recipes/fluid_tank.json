@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "S": {
+      "item": "minecraft:prismarine_brick_slab"
+    }
+  },
+  "pattern": [
+    "GS"
+  ],
+  "result": {
+    "item": "bringthetide:fluid_tank"
+  },
+  "show_notification": true
+}

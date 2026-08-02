@@ -43,7 +43,7 @@ public class ItemCoreRenderer extends CoreRenderer {
 
         float bob = (float) Math.cos((2000 - (millis % 4000)) * Math.PI*2f / 2000f) * 0.1f;
         Vector3f spiral;
-        if (entity.craftingEntity != null && entity.maxCraftingTimer > 0){
+        if (entity.craftingEntity != null && !entity.craftingEntity.isRemoved() && entity.maxCraftingTimer > 0){
             if (entity.craftingTimer <= 0){
                 //craft should be done already, we're probably just lagging
                 return;

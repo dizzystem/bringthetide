@@ -1,7 +1,6 @@
 package dizzystem.bringthetide.block;
 
 import dizzystem.bringthetide.block.tile.CoreEntity;
-import dizzystem.bringthetide.block.tile.ErosionCoreEntity;
 import dizzystem.bringthetide.util.FluidHandler;
 import dizzystem.bringthetide.util.PoolHandler;
 import net.minecraft.core.BlockPos;
@@ -33,7 +32,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.UUID;
 import java.util.function.BiFunction;
 
 public class Core extends Block implements EntityBlock {

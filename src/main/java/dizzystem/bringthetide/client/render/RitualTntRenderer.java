@@ -14,10 +14,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 //copied from net/minecraft/client/renderer/entity/TntRenderer.java
-public class OceanifiedTntRenderer extends EntityRenderer<RitualTnt>  {
+public class RitualTntRenderer extends EntityRenderer<RitualTnt>  {
     private final BlockRenderDispatcher blockRenderer;
 
-    public OceanifiedTntRenderer(EntityRendererProvider.Context ctx){
+    public RitualTntRenderer(EntityRendererProvider.Context ctx){
         super(ctx);
         this.shadowRadius = 0.5F;
         this.blockRenderer = ctx.getBlockRenderDispatcher();

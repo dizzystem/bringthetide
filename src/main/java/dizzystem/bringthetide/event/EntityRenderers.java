@@ -33,6 +33,7 @@ public class EntityRenderers {
         event.registerBlockEntityRenderer(TideBlocks.FLUID_FILTER_ENTITY.get(), CoreRenderer::new);
         event.registerBlockEntityRenderer(TideBlocks.ENTITY_FILTER_ENTITY.get(), CoreRenderer::new);
 
-        event.registerEntityRenderer(TideEntities.OCEANIFIED_TNT.get(), OceanifiedTntRenderer::new);
+        event.registerEntityRenderer(TideEntities.OCEANIFIED_TNT.get(), RitualTntRenderer::new);
+        event.registerEntityRenderer(TideEntities.EFFIGY.get(), EffigyRenderer::new);
     }
 }

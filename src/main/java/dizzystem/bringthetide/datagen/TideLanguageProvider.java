@@ -2,6 +2,7 @@ package dizzystem.bringthetide.datagen;
 
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.registration.TideBlocks;
+import dizzystem.bringthetide.registration.TideEntities;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideItems;
 import net.minecraft.data.PackOutput;
@@ -35,11 +36,15 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), "Driftwood Pressure Plate");
         add(TideBlocks.DRIFTWOOD_BUTTON.get(), "Driftwood Button");
         add(TideBlocks.DRIFTWOOD_COLUMN.get(), "Driftwood Column");
+        add(TideBlocks.DRIFTWOOD_DOOR.get(), "Driftwood Door");
+        add(TideBlocks.DRIFTWOOD_TRAPDOOR.get(), "Driftwood Trapdoor");
 
         add(TideBlocks.POOL_BASE.get(), "Pool Base");
         add(TideBlocks.RITUAL_TNT.get(), "Ritual TNT");
         add(TideBlocks.TANK.get(), "Prismarine Tank");
         add(TideBlocks.EXPLOSION_ROD.get(), "Explosion Rod");
+        add(TideEntities.EFFIGY.get(), "Effigy");
+        add(TideItems.EFFIGY.get(), "Effigy");
 
         add(TideBlocks.BASIN_CORE.get(), "Basin Core");
         add(TideBlocks.CURRENT_CORE.get(), "Current Core");

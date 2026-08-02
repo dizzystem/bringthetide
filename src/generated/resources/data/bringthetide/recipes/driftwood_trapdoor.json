@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "bringthetide:driftwood_planks"
+    }
+  },
+  "pattern": [
+    "DDD",
+    "DDD"
+  ],
+  "result": {
+    "count": 2,
+    "item": "bringthetide:driftwood_trapdoor"
+  },
+  "show_notification": true
+}

@@ -66,7 +66,9 @@ public class TideBlockTags extends BlockTagsProvider {
 //                .add(TideBlocks.DRIFTWOOD_WALL_SIGN.get())
                 .add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get())
                 .add(TideBlocks.DRIFTWOOD_BUTTON.get())
-                .add(TideBlocks.DRIFTWOOD_COLUMN.get());
+                .add(TideBlocks.DRIFTWOOD_COLUMN.get())
+                .add(TideBlocks.DRIFTWOOD_DOOR.get())
+                .add(TideBlocks.DRIFTWOOD_TRAPDOOR.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(TideBlocks.BASIN_CORE.get())
                 .add(TideBlocks.CURRENT_CORE.get())
@@ -110,5 +112,13 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(TideBlocks.DRIFTWOOD_BUTTON.get());
         tag(BlockTags.WOODEN_BUTTONS)
                 .add(TideBlocks.DRIFTWOOD_BUTTON.get());
+        tag(BlockTags.DOORS)
+                .add(TideBlocks.DRIFTWOOD_DOOR.get());
+        tag(BlockTags.WOODEN_DOORS)
+                .add(TideBlocks.DRIFTWOOD_DOOR.get());
+        tag(BlockTags.TRAPDOORS)
+                .add(TideBlocks.DRIFTWOOD_TRAPDOOR.get());
+        tag(BlockTags.WOODEN_TRAPDOORS)
+                .add(TideBlocks.DRIFTWOOD_TRAPDOOR.get());
     }
 }

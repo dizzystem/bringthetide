@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "bringthetide:driftwood_planks"
+    },
+    "S": {
+      "item": "minecraft:smooth_stone"
+    },
+    "T": {
+      "item": "bringthetide:turtle_alloy_ingot"
+    }
+  },
+  "pattern": [
+    "DTD",
+    " T ",
+    "DSD"
+  ],
+  "result": {
+    "item": "bringthetide:effigy"
+  },
+  "show_notification": true
+}

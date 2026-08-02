@@ -1,11 +1,15 @@
-package dizzystem.bringthetide.block.tile;
+package dizzystem.bringthetide.block.tile.core;
 
+import dizzystem.bringthetide.block.tile.CoreEntity;
 import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,17 +39,23 @@ public class ReefCoreEntity extends CoreEntity {
     //called when an entity enters our pool
     @Override
     public void entityInPool(Entity entity, Level level, BlockPos pos, RitualTnt tnt) {
-        if (!(entity instanceof Animal animal)) {
-            return;
-        }
         if (!this.isPoolActive()) {
             return;
         }
 
-        if (animal.isBaby()){
-            animal.ageUp(4);
-        } else if (animal.canFallInLove()){
-            animal.setInLove(null);
+        if (entity instanceof Animal animal) {
+            if (animal.isBaby()){
+                animal.ageUp(4);
+            } else if (animal.canFallInLove()){
+                animal.setInLove(null);
+            }
+        }
+
+        if (entity instanceof Player player){
+            if (player.getFoodData().needsFood()){
+                ItemStack food = new ItemStack(Items.COOKED_COD, 1);
+                player.eat(player.level(), food);
+            }
         }
     }
 }

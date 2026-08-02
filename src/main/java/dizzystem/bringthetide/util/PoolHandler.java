@@ -3,6 +3,7 @@ package dizzystem.bringthetide.util;
 import com.google.common.collect.Sets;
 import com.mojang.logging.LogUtils;
 import dizzystem.bringthetide.api.TideTags;
+import dizzystem.bringthetide.entity.Effigy;
 import dizzystem.bringthetide.entity.RitualTnt;
 import dizzystem.bringthetide.item.DolphinCostumeItem;
 import dizzystem.bringthetide.item.Wand;
@@ -215,6 +216,15 @@ public class PoolHandler {
             oldTnt.remove(Entity.RemovalReason.DISCARDED);
             level.addFreshEntity(newTnt);
             return;
+        }
+
+        //effigy effect propagation
+        if (entity instanceof Effigy effigy){
+            Player player = effigy.getPlacedByPlayer();
+            if (player != null){
+                entityInPool(player, level, pos, tnt);
+                return;
+            }
         }
 
         //only check the same entity once every 10 ticks

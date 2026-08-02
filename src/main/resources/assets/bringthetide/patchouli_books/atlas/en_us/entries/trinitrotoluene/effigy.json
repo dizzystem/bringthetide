@@ -1,0 +1,19 @@
+{
+  "name": "Effigy",
+  "icon": "bringthetide:effigy",
+  "category": "bringthetide:trinitrotoluene",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "While my rituals are useful, I must sometimes spend time away from my base where I do not have access to them. In such an emergency, I can leave a driftwood effigy of myself in my place."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:effigy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The effigy maintains a sympathetic resonance with the one who placed it. There are some obvious effects - if the effigy is attacked, so am I. If it is set on fire, so am I. More usefully, when placed in a ritual, the ritual will apply to me as if I was in the ritual myself."
+    }
+  ]
+}

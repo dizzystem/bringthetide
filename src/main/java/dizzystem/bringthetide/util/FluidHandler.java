@@ -1,6 +1,7 @@
 package dizzystem.bringthetide.util;
 
-import dizzystem.bringthetide.block.tile.ErosionCoreEntity;
+import com.mojang.logging.LogUtils;
+import dizzystem.bringthetide.block.tile.core.ErosionCoreEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,8 +27,8 @@ public class FluidHandler {
                 result = FluidUtil.tryFillContainer(item, fluidHandler, coreFluid.getAmount(),
                         player, true);
                 if (result.isSuccess()){
-                    if (!player.isCreative()) {
-                        if (item.getCount() > 1) {
+                    if (!player.isCreative()){
+                        if (item.getCount() > 1){
                             item.shrink(1);
                             player.getInventory().placeItemBackInInventory(result.result);
                         } else {
@@ -39,11 +40,11 @@ public class FluidHandler {
                 }
             }
 
-            result = FluidUtil.tryEmptyContainer(item, fluidHandler, ErosionCoreEntity.TANK_CAPACITY,
+            result = FluidUtil.tryEmptyContainer(item, fluidHandler, fluidHandler.getTankCapacity(0),
                     player, true);
             if (result.isSuccess()){ //put in fluid
-                if (!player.isCreative()) {
-                    if (item.getCount() > 1) {
+                if (!player.isCreative()){
+                    if (item.getCount() > 1){
                         item.shrink(1);
                         player.getInventory().placeItemBackInInventory(result.result);
                     } else {
