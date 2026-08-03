@@ -40,6 +40,10 @@ public class TideItemModels extends ItemModelProvider {
         basicItem(TideItems.DRIFTWOOD_DOOR.get());
         withExistingParent(TideBlocks.DRIFTWOOD_TRAPDOOR.getId().getPath(), modLoc("block/driftwood_trapdoor_bottom"));
 
+        withExistingParent(TideBlocks.SEASHELL_BRASS_BLOCK.getId().getPath(), modLoc("block/seashell_brass_block"));
+        withExistingParent(TideBlocks.TURTLE_STEEL_BLOCK.getId().getPath(), modLoc("block/turtle_steel_block"));
+        withExistingParent(TideBlocks.PUFFERGOLD_BLOCK.getId().getPath(), modLoc("block/puffergold_block"));
+
         withExistingParent(TideBlocks.BASIN_CORE.getId().getPath(), modLoc("block/basin_core"));
         withExistingParent(TideBlocks.CURRENT_CORE.getId().getPath(), modLoc("block/current_core"));
         withExistingParent(TideBlocks.DEPOSITION_CORE.getId().getPath(), modLoc("block/deposition_core"));
@@ -61,9 +65,9 @@ public class TideItemModels extends ItemModelProvider {
         //basicItem(TideItems.IMBUED_SEAWATER_BUCKET.get());
         basicItem(TideItems.DRIFTWOOD_WAND.get());
         basicItem(TideItems.CREATIVE_WAND.get());
-        basicItem(TideItems.TURTLE_ALLOY_INGOT.get());
-        basicItem(TideItems.FISH_ALLOY_INGOT.get());
-        basicItem(TideItems.SEASHELL_ALLOY_INGOT.get());
+        basicItem(TideItems.TURTLE_STEEL_INGOT.get());
+        basicItem(TideItems.PUFFERGOLD_INGOT.get());
+        basicItem(TideItems.SEASHELL_BRASS_INGOT.get());
         basicItem(TideItems.SEABOUND_SKIN.get());
         basicItem(TideItems.COSTUME_HELMET.get());
         basicItem(TideItems.COSTUME_CHESTPLATE.get());

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_fish_alloy": {
+    "has_puffergold": {
       "conditions": {
         "items": [
           {
             "items": [
-              "bringthetide:fish_alloy_ingot"
+              "bringthetide:puffergold_ingot"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_fish_alloy",
+      "has_puffergold",
       "has_the_recipe"
     ]
   ],

@@ -1,0 +1,15 @@
+{
+  "name": "Seabed Ritual",
+  "icon": "bringthetide:seabed_core",
+  "category": "bringthetide:rituals",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This ritual calls upon the bottom feeders of the Primordial Ocean to harvest and replant crops in the pool. Since it is generally impractical to $(o)grow$() crops in a ritual pool, what with them being filled with imbued water and all, I should probably couple this ritual with a TNT duper or some other way of extending its effect."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "bringthetide:seabed_core"
+    }
+  ]
+}

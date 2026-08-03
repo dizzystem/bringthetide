@@ -44,6 +44,7 @@ public class Registration {
             event.accept(TideItems.EROSION_CORE);
             event.accept(TideItems.PELAGIC_CORE);
             event.accept(TideItems.REEF_CORE);
+            event.accept(TideItems.SEABED_CORE);
             event.accept(TideItems.SINKHOLE_CORE);
             event.accept(TideItems.TRAWL_CORE);
             event.accept(TideItems.VORTEX_CORE);
@@ -65,9 +66,9 @@ public class Registration {
         }
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS){
             event.accept(TideItems.SEABOUND_SKIN);
-            event.accept(TideItems.SEASHELL_ALLOY_INGOT);
-            event.accept(TideItems.TURTLE_ALLOY_INGOT);
-            event.accept(TideItems.FISH_ALLOY_INGOT);
+            event.accept(TideItems.SEASHELL_BRASS_INGOT);
+            event.accept(TideItems.TURTLE_STEEL_INGOT);
+            event.accept(TideItems.PUFFERGOLD_INGOT);
         }
     }
 

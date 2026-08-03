@@ -67,14 +67,14 @@ public class Effigy extends ArmorStand {
 
     //Drop our effigy item instead of an armour stand item.
     @Override
-    protected void brokenByPlayer(DamageSource p_31647_) {
+    protected void brokenByPlayer(DamageSource damageSource) {
         ItemStack itemstack = new ItemStack(TideItems.EFFIGY.get());
         if (this.hasCustomName()) {
             itemstack.setHoverName(this.getCustomName());
         }
 
         Block.popResource(this.level(), this.blockPosition(), itemstack);
-        brokenByAnything(p_31647_);
+        brokenByAnything(damageSource);
     }
 
     // === player redirects start ===

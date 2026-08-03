@@ -6,10 +6,7 @@ import dizzystem.bringthetide.registration.TideEntities;
 import dizzystem.bringthetide.registration.TideFluids;
 import dizzystem.bringthetide.registration.TideItems;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.registries.RegistryObject;
 
 public class TideLanguageProvider extends LanguageProvider {
     public TideLanguageProvider(PackOutput output, String locale){
@@ -70,9 +67,12 @@ public class TideLanguageProvider extends LanguageProvider {
         //add(TideItems.IMBUED_SEAWATER_BUCKET.get(), "Imbued Seawater Bucket");
         add(TideItems.DRIFTWOOD_WAND.get(), "Driftwood Wand");
         add(TideItems.CREATIVE_WAND.get(), "Creative Wand");
-        add(TideItems.SEASHELL_ALLOY_INGOT.get(), "Seashell Brass Ingot");
-        add(TideItems.TURTLE_ALLOY_INGOT.get(), "Turtle Steel Ingot");
-        add(TideItems.FISH_ALLOY_INGOT.get(), "Puffergold Ingot");
+        add(TideItems.SEASHELL_BRASS_INGOT.get(), "Seashell Brass Ingot");
+        add(TideItems.SEASHELL_BRASS_BLOCK.get(), "Seashell Brass Block");
+        add(TideItems.TURTLE_STEEL_INGOT.get(), "Turtle Steel Ingot");
+        add(TideItems.TURTLE_STEEL_BLOCK.get(), "Turtle Steel Block");
+        add(TideItems.PUFFERGOLD_INGOT.get(), "Puffergold Ingot");
+        add(TideItems.PUFFERGOLD_BLOCK.get(), "Puffergold Block");
         add(TideItems.SEABOUND_SKIN.get(), "Seabound Skin");
         add(TideItems.COSTUME_HELMET.get(), "Dolphin Costume Head");
         add(TideItems.COSTUME_CHESTPLATE.get(), "Dolphin Costume Body");

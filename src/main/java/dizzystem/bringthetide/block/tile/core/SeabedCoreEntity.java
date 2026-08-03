@@ -2,6 +2,7 @@ package dizzystem.bringthetide.block.tile.core;
 
 import dizzystem.bringthetide.block.tile.CoreEntity;
 import dizzystem.bringthetide.registration.TideBlocks;
+import dizzystem.bringthetide.registration.TideParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -88,5 +89,16 @@ public class SeabedCoreEntity extends CoreEntity {
             ItemEntity entity = new ItemEntity(level, poolCentre.x, poolCentre.y, poolCentre.z, drop);
             level.addFreshEntity(entity);
         }
+
+        //don't overdo it on the bubbles, there's likely to be a lot of crops being harvested at once
+        level.sendParticles(TideParticles.BUBBLE.get(),
+                block.getX() + 0.5,
+                block.getY() + 1.5,
+                block.getZ() + 0.5,
+                1,
+                0,
+                0,
+                0,
+                0.2);
     }
 }

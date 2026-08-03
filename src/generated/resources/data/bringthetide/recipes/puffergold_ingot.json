@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "bringthetide:puffergold_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "bringthetide:puffergold_ingot"
+  }
+}

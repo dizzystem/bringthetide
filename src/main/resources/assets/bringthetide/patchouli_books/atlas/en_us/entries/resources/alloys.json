@@ -1,6 +1,6 @@
 {
   "name": "Alloys",
-  "icon": "bringthetide:turtle_alloy_ingot",
+  "icon": "bringthetide:turtle_steel_ingot",
   "category": "bringthetide:resources",
   "pages": [
     {
@@ -9,7 +9,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(li)With raw cod, tropical fish, and pufferfish as catalysts, I can turn an ingot of gold into an ingot of puffergold."
+      "text": "$(li)With raw cod, raw salmon, and pufferfish as catalysts, I can turn an ingot of gold into an ingot of puffergold."
     }
   ]
 }

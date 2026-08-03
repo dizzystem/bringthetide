@@ -87,7 +87,10 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(TideBlocks.FLUID_FILTER.get())
                 .add(TideBlocks.ENTITY_FILTER.get())
                 .add(TideBlocks.PRISMARINE_PILLAR.get())
-                .add(TideBlocks.EXPLOSION_ROD.get());
+                .add(TideBlocks.EXPLOSION_ROD.get())
+                .add(TideBlocks.SEASHELL_BRASS_BLOCK.get())
+                .add(TideBlocks.TURTLE_STEEL_BLOCK.get())
+                .add(TideBlocks.PUFFERGOLD_BLOCK.get());
         tag(BlockTags.PLANKS)
                 .add(TideBlocks.DRIFTWOOD_PLANKS.get());
         tag(BlockTags.STAIRS)

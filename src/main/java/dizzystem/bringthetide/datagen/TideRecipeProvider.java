@@ -269,20 +269,20 @@ public class TideRecipeProvider extends RecipeProvider {
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
                 .mainIngredient(Ingredient.of(Items.COPPER_INGOT))
                 .catalyst(Ingredient.of(Items.NAUTILUS_SHELL))
-                .result(new ItemStack(TideItems.SEASHELL_ALLOY_INGOT.get(), 1))
+                .result(new ItemStack(TideItems.SEASHELL_BRASS_INGOT.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_seashellalloyingot"));
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
                 .mainIngredient(Ingredient.of(Items.IRON_INGOT))
                 .catalyst(Ingredient.of(Items.SCUTE))
                 .catalyst(Ingredient.of(Items.SEAGRASS))
-                .result(new ItemStack(TideItems.TURTLE_ALLOY_INGOT.get(), 1))
+                .result(new ItemStack(TideItems.TURTLE_STEEL_INGOT.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_turtlealloyingot"));
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
                 .mainIngredient(Ingredient.of(Items.GOLD_INGOT))
                 .catalyst(Ingredient.of(Items.COD))
                 .catalyst(Ingredient.of(Items.SALMON))
                 .catalyst(Ingredient.of(Items.PUFFERFISH))
-                .result(new ItemStack(TideItems.FISH_ALLOY_INGOT.get(), 1))
+                .result(new ItemStack(TideItems.PUFFERGOLD_INGOT.get(), 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_fishalloyingot"));
         DepositionRecipeBuilder.customRecipe(depositionSerializer)
                 .mainIngredient(Ingredient.of(Items.LEATHER))
@@ -326,6 +326,12 @@ public class TideRecipeProvider extends RecipeProvider {
                 .catalyst(Ingredient.of(Items.BONE_MEAL))
                 .result(new ItemStack(Items.TUBE_CORAL_BLOCK, 1))
                 .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_tubecoral"));
+        DepositionRecipeBuilder.customRecipe(depositionSerializer)
+                .mainIngredient(Ingredient.of(Items.WHEAT_SEEDS))
+                .catalyst(Ingredient.of(Items.SEAGRASS))
+                .catalyst(Ingredient.of(Items.SEAGRASS))
+                .result(new ItemStack(Items.KELP, 1))
+                .save(consumer, ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "deposition_kelp"));
 
         RecipeSerializer<?> pelagicSerializer = TideRecipes.PELAGIC_SERIALIZER.get();
         PelagicRecipeBuilder.customRecipe(pelagicSerializer)
@@ -414,10 +420,10 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("FBF")
                 .pattern("---")
                 .define('-', Items.SANDSTONE_SLAB)
-                .define('F', TideItems.FISH_ALLOY_INGOT.get())
+                .define('F', TideItems.PUFFERGOLD_INGOT.get())
                 .define('B', Items.WATER_BUCKET)
-                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.FISH_ALLOY_INGOT.get()))
+                .unlockedBy("has_puffergold", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.PUFFERGOLD_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PELAGIC_CORE.get())
                 .pattern("---")
@@ -434,30 +440,30 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("FIF")
                 .pattern("---")
                 .define('-', Items.SANDSTONE_SLAB)
-                .define('F', TideItems.FISH_ALLOY_INGOT.get())
+                .define('F', TideItems.PUFFERGOLD_INGOT.get())
                 .define('I', Items.IRON_HOE)
-                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.FISH_ALLOY_INGOT.get()))
+                .unlockedBy("has_puffergold", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.PUFFERGOLD_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SINKHOLE_CORE.get())
                 .pattern("---")
                 .pattern("FIF")
                 .pattern("---")
                 .define('-', Items.SANDSTONE_SLAB)
-                .define('F', TideItems.FISH_ALLOY_INGOT.get())
+                .define('F', TideItems.PUFFERGOLD_INGOT.get())
                 .define('I', Items.IRON_PICKAXE)
-                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.FISH_ALLOY_INGOT.get()))
+                .unlockedBy("has_puffergold", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.PUFFERGOLD_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.VORTEX_CORE.get())
                 .pattern("---")
                 .pattern("FBF")
                 .pattern("---")
                 .define('-', Items.SANDSTONE_SLAB)
-                .define('F', TideItems.FISH_ALLOY_INGOT.get())
+                .define('F', TideItems.PUFFERGOLD_INGOT.get())
                 .define('B', Items.IRON_SWORD)
-                .unlockedBy("has_fish_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.FISH_ALLOY_INGOT.get()))
+                .unlockedBy("has_puffergold", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.PUFFERGOLD_INGOT.get()))
                 .save(consumer);
 
         //prismarine cores
@@ -466,20 +472,20 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("TBT")
                 .pattern("---")
                 .define('-', Items.PRISMARINE_BRICK_SLAB)
-                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('T', TideItems.TURTLE_STEEL_INGOT.get())
                 .define('B', Items.GLASS_BOTTLE)
-                .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.TURTLE_ALLOY_INGOT.get()))
+                .unlockedBy("has_turtle_steel", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_STEEL_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.CURRENT_CORE.get())
                 .pattern("---")
                 .pattern("THT")
                 .pattern("---")
                 .define('-', Items.PRISMARINE_BRICK_SLAB)
-                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('T', TideItems.TURTLE_STEEL_INGOT.get())
                 .define('H', Items.HOPPER)
-                .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.TURTLE_ALLOY_INGOT.get()))
+                .unlockedBy("has_turtle_steel", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_STEEL_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DEPOSITION_CORE.get())
                 .pattern("---")
@@ -496,10 +502,10 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("TST")
                 .pattern("---")
                 .define('-', Items.PRISMARINE_BRICK_SLAB)
-                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('T', TideItems.TURTLE_STEEL_INGOT.get())
                 .define('S', Items.SEAGRASS)
-                .unlockedBy("has_turtle_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.TURTLE_ALLOY_INGOT.get()))
+                .unlockedBy("has_turtle_steel", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_STEEL_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.TRAWL_CORE.get())
                 .pattern("---")
@@ -529,9 +535,9 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("---")
                 .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
                 .define('P', Items.PRISMARINE_SHARD)
-                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
-                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.SEASHELL_ALLOY_INGOT.get()))
+                .define('S', TideItems.SEASHELL_BRASS_INGOT.get())
+                .unlockedBy("has_seashell_brass", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_BRASS_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.BOUNTY_UPGRADE.get())
                 .pattern("---")
@@ -539,9 +545,9 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("---")
                 .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
                 .define('P', Items.PRISMARINE_CRYSTALS)
-                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
-                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.SEASHELL_ALLOY_INGOT.get()))
+                .define('S', TideItems.SEASHELL_BRASS_INGOT.get())
+                .unlockedBy("has_seashell_brass", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_BRASS_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.RANGE_UPGRADE.get())
                 .pattern("---")
@@ -549,9 +555,9 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("---")
                 .define('-', Items.OXIDIZED_CUT_COPPER_SLAB)
                 .define('I', Items.INK_SAC)
-                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
-                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.SEASHELL_ALLOY_INGOT.get()))
+                .define('S', TideItems.SEASHELL_BRASS_INGOT.get())
+                .unlockedBy("has_seashell_brass", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_BRASS_INGOT.get()))
                 .save(consumer);
 
         //driftwood furniture set
@@ -634,6 +640,48 @@ public class TideRecipeProvider extends RecipeProvider {
                         TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
 
+        //ingots to blocks and vice versa
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.SEASHELL_BRASS_BLOCK.get())
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', TideItems.SEASHELL_BRASS_INGOT.get())
+                .unlockedBy("has_seashell_brass", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_BRASS_INGOT.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.SEASHELL_BRASS_INGOT.get(), 9)
+                .requires(TideItems.SEASHELL_BRASS_BLOCK.get())
+                .unlockedBy("has_seashell_brass_block", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_BRASS_BLOCK.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.TURTLE_STEEL_BLOCK.get())
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', TideItems.TURTLE_STEEL_INGOT.get())
+                .unlockedBy("has_turtle_steel", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_STEEL_INGOT.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.TURTLE_STEEL_INGOT.get(), 9)
+                .requires(TideItems.TURTLE_STEEL_BLOCK.get())
+                .unlockedBy("has_turtle_steel_block", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.TURTLE_STEEL_BLOCK.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PUFFERGOLD_BLOCK.get())
+                .pattern("SSS")
+                .pattern("SSS")
+                .pattern("SSS")
+                .define('S', TideItems.PUFFERGOLD_INGOT.get())
+                .unlockedBy("has_puffergold", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.PUFFERGOLD_INGOT.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, TideItems.PUFFERGOLD_INGOT.get(), 9)
+                .requires(TideItems.PUFFERGOLD_BLOCK.get())
+                .unlockedBy("has_puffergold_block", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.PUFFERGOLD_BLOCK.get()))
+                .save(consumer);
+        
+
         //prismarine furniture set
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.PRISMARINE_PILLAR.get(), 3)
                 .pattern("B")
@@ -648,16 +696,16 @@ public class TideRecipeProvider extends RecipeProvider {
                 .pattern("S")
                 .pattern("S")
                 .pattern("S")
-                .define('S', TideItems.SEASHELL_ALLOY_INGOT.get())
-                .unlockedBy("has_seashell_alloy", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.SEASHELL_ALLOY_INGOT.get()))
+                .define('S', TideItems.SEASHELL_BRASS_INGOT.get())
+                .unlockedBy("has_seashell_brass", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.SEASHELL_BRASS_INGOT.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.EFFIGY.get())
                 .pattern("DTD")
                 .pattern(" T ")
                 .pattern("DSD")
                 .define('D', TideItems.DRIFTWOOD_PLANKS.get())
-                .define('T', TideItems.TURTLE_ALLOY_INGOT.get())
+                .define('T', TideItems.TURTLE_STEEL_INGOT.get())
                 .define('S', Items.SMOOTH_STONE)
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.DRIFTWOOD_PLANKS.get()))

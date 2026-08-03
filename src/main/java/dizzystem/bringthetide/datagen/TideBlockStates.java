@@ -45,6 +45,10 @@ public class TideBlockStates extends BlockStateProvider {
         trapdoorBlockWithRenderType(TideBlocks.DRIFTWOOD_TRAPDOOR.get(),modLoc("block/driftwood_trapdoor"),
                 true, "cutout");
 
+        simpleBlock(TideBlocks.SEASHELL_BRASS_BLOCK.get());
+        simpleBlock(TideBlocks.TURTLE_STEEL_BLOCK.get());
+        simpleBlock(TideBlocks.PUFFERGOLD_BLOCK.get());
+
         simpleBlock(TideBlocks.POOL_BASE.get(),
                 models().cubeBottomTop(TideBlocks.POOL_BASE.getId().getPath(), modLoc("block/semitransparent"),
                         modLoc("block/semitransparent"), modLoc("block/semitransparent")).renderType("translucent"));
@@ -61,7 +65,7 @@ public class TideBlockStates extends BlockStateProvider {
         horizontalBlock(TideBlocks.PELAGIC_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/pelagic_core"));
         horizontalBlock(TideBlocks.SEABED_CORE.get(), modLoc("block/core_sandstone"),
-                modLoc("block/core_sandstone_face"), modLoc("block/sinkhole_core"));
+                modLoc("block/core_sandstone_face"), modLoc("block/seabed_core"));
         horizontalBlock(TideBlocks.SINKHOLE_CORE.get(), modLoc("block/core_sandstone"),
                 modLoc("block/core_sandstone_face"), modLoc("block/sinkhole_core"));
         horizontalBlock(TideBlocks.VORTEX_CORE.get(), modLoc("block/core_sandstone"),

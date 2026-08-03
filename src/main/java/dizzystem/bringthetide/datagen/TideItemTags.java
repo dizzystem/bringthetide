@@ -60,6 +60,8 @@ public class TideItemTags extends ItemTagsProvider {
                 .add(TideItems.DRIFTWOOD_TRAPDOOR.get());
         tag(ItemTags.WOODEN_TRAPDOORS)
                 .add(TideItems.DRIFTWOOD_TRAPDOOR.get());
+        tag(ItemTags.PIGLIN_LOVED)
+                .add(TideItems.PUFFERGOLD_INGOT.get());
         tag(TideTags.NON_DRIFTWOOD_LOGS)
                 .addTag(ItemTags.LOGS)
                 .remove(TideItems.DRIFTWOOD_LOG.get());

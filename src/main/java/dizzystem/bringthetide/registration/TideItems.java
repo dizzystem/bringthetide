@@ -50,6 +50,13 @@ public class TideItems {
     public static final RegistryObject<Item> DRIFTWOOD_TRAPDOOR = ITEMS.register("driftwood_trapdoor",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_TRAPDOOR.get(), new Item.Properties()));
 
+    public static final RegistryObject<Item> SEASHELL_BRASS_BLOCK = ITEMS.register("seashell_brass_block",
+            () -> new BlockItem(TideBlocks.SEASHELL_BRASS_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> TURTLE_STEEL_BLOCK = ITEMS.register("turtle_steel_block",
+            () -> new BlockItem(TideBlocks.TURTLE_STEEL_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<Item> PUFFERGOLD_BLOCK = ITEMS.register("puffergold_block",
+            () -> new BlockItem(TideBlocks.PUFFERGOLD_BLOCK.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> TANK = ITEMS.register("fluid_tank",
             () -> new TankItem(TideBlocks.TANK.get(), new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> EXPLOSION_ROD = ITEMS.register("explosion_rod",
@@ -96,11 +103,11 @@ public class TideItems {
 //            () -> new BucketItem(TideFluids.IMBUED_SEAWATER, new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_WAND = ITEMS.register("driftwood_wand", DriftwoodWand::new);
     public static final RegistryObject<Item> CREATIVE_WAND = ITEMS.register("creative_wand", CreativeWand::new);
-    public static final RegistryObject<Item> TURTLE_ALLOY_INGOT = ITEMS.register("turtle_alloy_ingot",
+    public static final RegistryObject<Item> TURTLE_STEEL_INGOT = ITEMS.register("turtle_steel_ingot",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> FISH_ALLOY_INGOT = ITEMS.register("fish_alloy_ingot",
+    public static final RegistryObject<Item> PUFFERGOLD_INGOT = ITEMS.register("puffergold_ingot",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> SEASHELL_ALLOY_INGOT = ITEMS.register("seashell_alloy_ingot",
+    public static final RegistryObject<Item> SEASHELL_BRASS_INGOT = ITEMS.register("seashell_brass_ingot",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SEABOUND_SKIN = ITEMS.register("seabound_skin",
             () -> new Item(new Item.Properties()));

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_seashell_alloy": {
+    "has_seashell_brass": {
       "conditions": {
         "items": [
           {
             "items": [
-              "bringthetide:seashell_alloy_ingot"
+              "bringthetide:seashell_brass_ingot"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_seashell_alloy",
+      "has_seashell_brass",
       "has_the_recipe"
     ]
   ],

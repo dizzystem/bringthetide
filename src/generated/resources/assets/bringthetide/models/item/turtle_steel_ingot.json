@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "bringthetide:item/fish_alloy_ingot"
+    "layer0": "bringthetide:item/turtle_steel_ingot"
   }
 }

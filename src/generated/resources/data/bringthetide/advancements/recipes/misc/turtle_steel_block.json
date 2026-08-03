@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "bringthetide:turtle_steel_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_turtle_steel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "bringthetide:turtle_steel_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_turtle_steel",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "bringthetide:turtle_steel_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

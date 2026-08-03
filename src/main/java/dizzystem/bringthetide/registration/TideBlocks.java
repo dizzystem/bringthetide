@@ -104,6 +104,16 @@ public class TideBlocks {
                     .instrument(NoteBlockInstrument.BASS).strength(3.0F).noOcclusion().isValidSpawn(TideBlocks::never)
                     .ignitedByLava(), DRIFTWOOD_BLOCK_TYPE));
 
+    public static final RegistryObject<Block> SEASHELL_BRASS_BLOCK = BLOCKS.register("seashell_brass_block",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).requiresCorrectToolForDrops()
+                    .strength(3.0F, 6.0F).sound(SoundType.COPPER)));
+    public static final RegistryObject<Block> TURTLE_STEEL_BLOCK = BLOCKS.register("turtle_steel_block",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistryObject<Block> PUFFERGOLD_BLOCK = BLOCKS.register("puffergold_block",
+            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).instrument(NoteBlockInstrument.BELL)
+                    .requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL)));
+
     public static final RegistryObject<Block> TANK = BLOCKS.register("fluid_tank",
             () -> new Tank(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).instabreak().sound(SoundType.GLASS)
                     .noOcclusion().isValidSpawn(TideBlocks::never).isRedstoneConductor(TideBlocks::never)
