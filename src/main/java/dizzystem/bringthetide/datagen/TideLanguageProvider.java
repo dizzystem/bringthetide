@@ -28,8 +28,7 @@ public class TideLanguageProvider extends LanguageProvider {
         add(TideBlocks.DRIFTWOOD_SLAB.get(), "Driftwood Slab");
         add(TideBlocks.DRIFTWOOD_FENCE.get(), "Driftwood Fence");
         add(TideBlocks.DRIFTWOOD_FENCE_GATE.get(), "Driftwood Fence Gate");
-//        add(TideBlocks.DRIFTWOOD_SIGN.get(), "Driftwood Sign");
-//        add(TideBlocks.DRIFTWOOD_WALL_SIGN.get(), "Driftwood Sign");
+        add(TideBlocks.DRIFTWOOD_SIGN.get(), "Driftwood Sign");
         add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), "Driftwood Pressure Plate");
         add(TideBlocks.DRIFTWOOD_BUTTON.get(), "Driftwood Button");
         add(TideBlocks.DRIFTWOOD_COLUMN.get(), "Driftwood Column");

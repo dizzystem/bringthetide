@@ -297,8 +297,10 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     public void clearImbuedWater(){
         for (var fluidPos : this.poolFluids){
-            if (level.getBlockState(fluidPos).is(TideBlocks.BLOCK_IMBUED_SEAWATER.get())){
-                level.setBlockAndUpdate(fluidPos, Blocks.WATER.defaultBlockState());
+            if (!level.isClientSide() &&
+                    level.getBlockState(fluidPos).is(TideBlocks.BLOCK_IMBUED_SEAWATER.get())){
+                level.setBlockAndUpdate(fluidPos,
+                        PoolHandler.getImbueableFluidForDimensionType(level.dimensionType()).defaultBlockState());
                 ((ServerLevel) level).sendParticles(TideParticles.BUBBLE.get(),
                         fluidPos.getX() + 0.5,
                         fluidPos.getY() + 1,
@@ -343,6 +345,26 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
                         0);
             }
         }
+    }
+
+    //This is called from the block when we're broken.
+    public void onRemove(){
+        //Clear our pool if broken.
+        clearImbuedWater();
+        removePoolBase();
+
+        Level level = this.level;
+        //have to make a copy here to avoid ConcurrentModificationException
+        ArrayList<BlockPos> cores = new ArrayList<>(this.poolCores);
+        for (BlockPos core : cores){
+            if (!core.equals(getBlockPos()) && level.getBlockEntity(core) instanceof CoreEntity coreEntity){
+                coreEntity.doPoolFormedCheck();
+                BlockState state = level.getBlockState(core);
+                level.sendBlockUpdated(core, state, state, Block.UPDATE_CLIENTS);
+            }
+        }
+
+        super.setRemoved();
     }
 
     public void tickClient(){

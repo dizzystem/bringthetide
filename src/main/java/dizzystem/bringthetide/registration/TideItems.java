@@ -37,8 +37,8 @@ public class TideItems {
             () -> new BlockItem(TideBlocks.DRIFTWOOD_FENCE.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_FENCE_GATE = ITEMS.register("driftwood_fence_gate",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_FENCE_GATE.get(), new Item.Properties()));
-//    public static final RegistryObject<Item> DRIFTWOOD_SIGN_ITEM = ITEMS.register("driftwood_sign",
-//            () -> new BlockItem(TideBlocks.DRIFTWOOD_SIGN.get(), new Item.Properties()));
+    public static final RegistryObject<Item> DRIFTWOOD_SIGN = ITEMS.register("driftwood_sign",
+            () -> new SignItem(new Item.Properties(), TideBlocks.DRIFTWOOD_SIGN.get(), TideBlocks.DRIFTWOOD_WALL_SIGN.get()));
     public static final RegistryObject<Item> DRIFTWOOD_PRESSURE_PLATE = ITEMS.register("driftwood_pressure_plate",
             () -> new BlockItem(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get(), new Item.Properties()));
     public static final RegistryObject<Item> DRIFTWOOD_BUTTON = ITEMS.register("driftwood_button",

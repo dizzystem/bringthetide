@@ -72,8 +72,4 @@ public class Registration {
         }
     }
 
-    public static void addFluidsClient(FMLClientSetupEvent event){
-        ItemBlockRenderTypes.setRenderLayer(TideFluids.IMBUED_SEAWATER.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(TideFluids.FLOWING_IMBUED_SEAWATER.get(), RenderType.translucent());
-    }
 }

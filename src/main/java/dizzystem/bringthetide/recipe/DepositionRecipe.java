@@ -94,9 +94,7 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height){
-        return true;
-    }
+    public boolean canCraftInDimensions(int width, int height){ return true; }
 
     @Override
     @ParametersAreNonnullByDefault
@@ -115,9 +113,10 @@ public class DepositionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull RecipeType<?> getType() {
-        return TideRecipes.DEPOSITION.get();
-    }
+    public @NotNull RecipeType<?> getType() { return TideRecipes.DEPOSITION.get(); }
+
+    @Override
+    public boolean isSpecial() { return true; }
 
     public static class Serializer implements RecipeSerializer<DepositionRecipe> {
         @Override

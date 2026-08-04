@@ -1,7 +1,6 @@
 package dizzystem.bringthetide.mixin;
 
 import dizzystem.bringthetide.util.ExplosionHandler;
-import dizzystem.bringthetide.util.ServerLevelAccessor;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -17,7 +16,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nullable;
@@ -25,7 +23,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 @Mixin(ServerLevel.class)
-public abstract class MixinServerLevel extends Level implements WorldGenLevel, ServerLevelAccessor {
+public abstract class MixinServerLevel extends Level implements WorldGenLevel {
     public MixinServerLevel(MinecraftServer p_214999_, Executor p_215000_, LevelStorageSource.LevelStorageAccess p_215001_, ServerLevelData p_215002_, ResourceKey<Level> p_215003_, LevelStem p_215004_, ChunkProgressListener p_215005_, boolean p_215006_, long p_215007_, List<CustomSpawner> p_215008_, boolean p_215009_, @Nullable RandomSequences p_288977_){
         super(p_215002_, p_215003_, p_214999_.registryAccess(), p_215004_.type(), p_214999_::getProfiler, false, p_215006_, p_215007_, p_214999_.getMaxChainedNeighborUpdates());
     }

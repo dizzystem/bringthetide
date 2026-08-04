@@ -22,24 +22,9 @@ public class BringTheTide {
         IEventBus modEventBus = context.getModEventBus();
         Registration.init(modEventBus);
 
-        modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(Registration::addCreative);
-        modEventBus.addListener(Registration::addFluidsClient);
         modEventBus.addListener(TideDataGenerator::generate);
 
-        //Tutorial doesn't have this. What does it do?
-        context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event){
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+//        context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 }

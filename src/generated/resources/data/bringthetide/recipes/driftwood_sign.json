@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "bringthetide:driftwood_planks"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "DDD",
+    "DDD",
+    " S "
+  ],
+  "result": {
+    "count": 3,
+    "item": "bringthetide:driftwood_sign"
+  },
+  "show_notification": true
+}

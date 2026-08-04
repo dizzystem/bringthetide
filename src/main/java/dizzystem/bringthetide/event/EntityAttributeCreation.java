@@ -14,6 +14,8 @@ public class EntityAttributeCreation {
     @SubscribeEvent
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(TideEntities.EFFIGY.get(), LivingEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH).build());
+                .add(Attributes.MAX_HEALTH)
+                .add(Attributes.ATTACK_SPEED)
+                .build());
     }
 }

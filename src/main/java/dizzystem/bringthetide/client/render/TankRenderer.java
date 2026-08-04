@@ -44,6 +44,6 @@ public class TankRenderer implements BlockEntityRenderer<TankEntity> {
         float bob = (float) Math.cos((2000 - (millis % 4000)) * Math.PI*2f / 2000f) * 0.025f;
 
         RenderHandler.renderFluidBubble(entity, poseStack, bufferSource,
-                new Vec3(0.5f, 0.5f + bob, 0.5f), 0.6f, fluidStack, fullness);
+                new Vec3(0.5f, 0.5f + bob, 0.5f + 0.0625), 0.6f, fluidStack, fullness);
     }
 }

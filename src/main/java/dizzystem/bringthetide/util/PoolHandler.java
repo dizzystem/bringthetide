@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -385,23 +386,24 @@ public class PoolHandler {
         return new BlockState[]{};
     }
 
+    public static Block getImbueableFluidForDimensionType(DimensionType dimensionType){
+        if (dimensionType != null && dimensionType.ultraWarm()){
+            //lava in the nether instead of water
+            return Blocks.LAVA;
+        }
+
+        return Blocks.WATER;
+    }
+
     //pool filling minigame
     public static boolean wandUse(Player player, ItemStack wand, Level level, BlockPos pos){
         BlockState turnInto = null;
 
         //we already checked it's a fluid and a source block in the wand
-        if (level.dimensionType().ultraWarm()){ //lava in the nether instead of water
-            if (level.getBlockState(pos).is(Blocks.LAVA)){
-                turnInto = TideBlocks.BLOCK_IMBUED_SEAWATER.get().defaultBlockState();
-            } else {
-                return false;
-            }
+        if (level.getBlockState(pos).is(getImbueableFluidForDimensionType(level.dimensionType()))){
+            turnInto = TideBlocks.BLOCK_IMBUED_SEAWATER.get().defaultBlockState();
         } else {
-            if (level.getBlockState(pos).is(Blocks.WATER)){
-                turnInto = TideBlocks.BLOCK_IMBUED_SEAWATER.get().defaultBlockState();
-            } else {
-                return false;
-            }
+            return false;
         }
 
         //give our cores a chance to block us

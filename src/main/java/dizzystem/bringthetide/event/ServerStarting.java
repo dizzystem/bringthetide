@@ -13,10 +13,7 @@ public class ServerStarting {
 
     @SubscribeEvent
     public static void onServerStarting(ServerStartingEvent event){
-        LOGGER.info("HELLO from server starting");
-        LOGGER.info("HELLO from server starting");
-        LOGGER.info("HELLO from server starting");
-        LOGGER.info("HELLO from server starting");
+//        LOGGER.debug("HELLO from server starting");
     }
 }
 

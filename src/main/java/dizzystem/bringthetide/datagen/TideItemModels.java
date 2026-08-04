@@ -30,8 +30,7 @@ public class TideItemModels extends ItemModelProvider {
                 mcLoc("block/fence_inventory"),
                 modLoc("block/driftwood_planks"));
         withExistingParent(TideBlocks.DRIFTWOOD_FENCE_GATE.getId().getPath(), modLoc("block/driftwood_fence_gate"));
-//        withExistingParent(TideBlocks.DRIFTWOOD_SIGN.getId().getPath(), modLoc("block/driftwood_sign"));
-//        withExistingParent(TideBlocks.DRIFTWOOD_WALL_SIGN.getId().getPath(), modLoc("block/driftwood_sign"));
+        basicItem(TideItems.DRIFTWOOD_SIGN.get());
         withExistingParent(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.getId().getPath(), modLoc("block/driftwood_pressure_plate"));
         singleTexture(TideBlocks.DRIFTWOOD_BUTTON.getId().getPath(),
                 mcLoc("block/button_inventory"),

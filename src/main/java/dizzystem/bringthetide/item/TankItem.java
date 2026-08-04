@@ -139,7 +139,7 @@ public class TankItem extends BlockItem {
             FluidStack fluid = fluidHandler.orElse(null).getFluidInTank(0);
             if (!fluid.isEmpty()){
                 tooltip.add(fluid.getDisplayName().copy().append(": ").append(((Integer) fluid.getAmount()).toString())
-                        .withStyle(ChatFormatting.WHITE).withStyle(ChatFormatting.ITALIC));
+                        .withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
             }
         }
     }

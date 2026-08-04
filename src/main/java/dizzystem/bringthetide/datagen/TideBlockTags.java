@@ -62,8 +62,8 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(TideBlocks.DRIFTWOOD_SLAB.get())
                 .add(TideBlocks.DRIFTWOOD_FENCE.get())
                 .add(TideBlocks.DRIFTWOOD_FENCE_GATE.get())
-//                .add(TideBlocks.DRIFTWOOD_SIGN.get())
-//                .add(TideBlocks.DRIFTWOOD_WALL_SIGN.get())
+                .add(TideBlocks.DRIFTWOOD_SIGN.get())
+                .add(TideBlocks.DRIFTWOOD_WALL_SIGN.get())
                 .add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get())
                 .add(TideBlocks.DRIFTWOOD_BUTTON.get())
                 .add(TideBlocks.DRIFTWOOD_COLUMN.get())
@@ -107,8 +107,10 @@ public class TideBlockTags extends BlockTagsProvider {
                 .add(TideBlocks.DRIFTWOOD_FENCE.get());
         tag(BlockTags.FENCE_GATES)
                 .add(TideBlocks.DRIFTWOOD_FENCE_GATE.get());
-//        tag(BlockTags.SIGNS)
-//                .add(TideBlocks.DRIFTWOOD_SIGN.get());
+        tag(BlockTags.SIGNS)
+                .add(TideBlocks.DRIFTWOOD_SIGN.get());
+        tag(BlockTags.WALL_SIGNS)
+                .add(TideBlocks.DRIFTWOOD_WALL_SIGN.get());
         tag(BlockTags.WOODEN_PRESSURE_PLATES)
                 .add(TideBlocks.DRIFTWOOD_PRESSURE_PLATE.get());
         tag(BlockTags.BUTTONS)

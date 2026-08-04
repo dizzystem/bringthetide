@@ -479,13 +479,13 @@ public class TideRecipeProvider extends RecipeProvider {
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.CURRENT_CORE.get())
                 .pattern("---")
-                .pattern("THT")
+                .pattern("IHI")
                 .pattern("---")
                 .define('-', Items.PRISMARINE_BRICK_SLAB)
-                .define('T', TideItems.TURTLE_STEEL_INGOT.get())
+                .define('I', Items.IRON_INGOT)
                 .define('H', Items.HOPPER)
-                .unlockedBy("has_turtle_steel", InventoryChangeTrigger.TriggerInstance.hasItems(
-                        TideItems.TURTLE_STEEL_INGOT.get()))
+                .unlockedBy("has_iron", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        Items.IRON_INGOT))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DEPOSITION_CORE.get())
                 .pattern("---")
@@ -596,15 +596,15 @@ public class TideRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
                         TideItems.DRIFTWOOD_PLANKS.get()))
                 .save(consumer);
-//        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_SIGN_ITEM.get(), 3)
-//                .pattern("DDD")
-//                .pattern("DDD")
-//                .pattern(" S ")
-//                .define('D', TideItems.DRIFTWOOD_PLANKS_ITEM.get())
-//                .define('S', Items.STICK)
-//                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
-//                        TideItems.DRIFTWOOD_PLANKS_ITEM.get()))
-//                .save(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_SIGN.get(), 3)
+                .pattern("DDD")
+                .pattern("DDD")
+                .pattern(" S ")
+                .define('D', TideItems.DRIFTWOOD_PLANKS.get())
+                .define('S', Items.STICK)
+                .unlockedBy("has_driftwood_planks", InventoryChangeTrigger.TriggerInstance.hasItems(
+                        TideItems.DRIFTWOOD_PLANKS.get()))
+                .save(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, TideItems.DRIFTWOOD_PRESSURE_PLATE.get())
                 .pattern("DD")
                 .define('D', TideItems.DRIFTWOOD_PLANKS.get())

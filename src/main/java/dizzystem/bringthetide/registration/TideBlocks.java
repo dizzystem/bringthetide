@@ -6,6 +6,7 @@ import dizzystem.bringthetide.block.tile.*;
 import dizzystem.bringthetide.block.tile.core.*;
 import dizzystem.bringthetide.fluid.BlockImbuedSeawater;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -62,8 +63,10 @@ public class TideBlocks {
     public static boolean never(BlockState state, BlockGetter getter, BlockPos pos){ return false; }
     public static boolean never(BlockState state, BlockGetter getter, BlockPos pos, EntityType entity){ return false; }
 
-    public static final BlockSetType DRIFTWOOD_BLOCK_TYPE = new BlockSetType("driftwood");
-    public static final WoodType DRIFTWOOD_WOOD_TYPE = new WoodType("driftwood", DRIFTWOOD_BLOCK_TYPE);
+    public static final ResourceLocation DRIFTWOOD_TYPE = ResourceLocation.fromNamespaceAndPath(BringTheTide.MODID, "driftwood");
+    public static final BlockSetType DRIFTWOOD_BLOCK_TYPE = new BlockSetType(DRIFTWOOD_TYPE.toString());
+    public static final WoodType DRIFTWOOD_WOOD_TYPE = new WoodType(DRIFTWOOD_TYPE.toString(), DRIFTWOOD_BLOCK_TYPE);
+
     public static final RegistryObject<Block> DRIFTWOOD_PLANKS = BLOCKS.register("driftwood_planks",
             () -> new Block(BlockBehaviour.Properties.of().strength(2.0f, 3.0f).sound(SoundType.WOOD)
                     .instrument(NoteBlockInstrument.BASS).mapColor(MapColor.TERRACOTTA_WHITE).ignitedByLava()));
@@ -76,12 +79,12 @@ public class TideBlocks {
     public static final RegistryObject<FenceGateBlock> DRIFTWOOD_FENCE_GATE = BLOCKS.register("driftwood_fence_gate",
             () -> new FenceGateBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_PLANKS.get()), DRIFTWOOD_WOOD_TYPE));
 
-//    public static final RegistryObject<StandingSignBlock> DRIFTWOOD_SIGN = BLOCKS.register("driftwood_sign",
-//            () -> new StandingSignBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)
-//                    .instrument(NoteBlockInstrument.BASS).forceSolidOn().noCollission().strength(1.0F).ignitedByLava(),
-//                    DRIFTWOOD_WOOD_TYPE));
-//    public static final RegistryObject<WallSignBlock> DRIFTWOOD_WALL_SIGN = BLOCKS.register("driftwood_wall_sign",
-//            () -> new WallSignBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_SIGN.get()), DRIFTWOOD_WOOD_TYPE));
+    public static final RegistryObject<StandingSignBlock> DRIFTWOOD_SIGN = BLOCKS.register("driftwood_sign",
+            () -> new StandingSignBlock(BlockBehaviour.Properties.of().mapColor(MapColor.TERRACOTTA_WHITE)
+                    .instrument(NoteBlockInstrument.BASS).forceSolidOn().noCollission().strength(1.0F).ignitedByLava(),
+                    DRIFTWOOD_WOOD_TYPE));
+    public static final RegistryObject<WallSignBlock> DRIFTWOOD_WALL_SIGN = BLOCKS.register("driftwood_wall_sign",
+            () -> new WallSignBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_SIGN.get()), DRIFTWOOD_WOOD_TYPE));
 //    public static final RegistryObject<CeilingHangingSignBlock> DRIFTWOOD_HANGING_SIGN = BLOCKS.register("driftwood_hanging_sign",
 //            () -> new CeilingHangingSignBlock(BlockBehaviour.Properties.copy(DRIFTWOOD_SIGN.get()), DRIFTWOOD_WOOD_TYPE));
 
@@ -122,13 +125,13 @@ public class TideBlocks {
             () -> new Block(BlockBehaviour.Properties.of()));
     public static final RegistryObject<Block> POOL_BASE = BLOCKS.register("pool_base",
             () -> new PoolBase(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).instabreak().noCollission().replaceable()
-                    .sound(SoundType.GLASS).noOcclusion().isValidSpawn(TideBlocks::never).isRedstoneConductor(TideBlocks::never)
+                    .sound(SoundType.GLASS).noOcclusion().forceSolidOn().isValidSpawn(TideBlocks::never).isRedstoneConductor(TideBlocks::never)
                     .isSuffocating(TideBlocks::never).isViewBlocking(TideBlocks::never).pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<ExplosionRod> EXPLOSION_ROD = BLOCKS.register("explosion_rod",
             () -> new ExplosionRod(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).forceSolidOn()
                     .requiresCorrectToolForDrops().strength(3.0F, 3600.0F).sound(SoundType.COPPER).noOcclusion()));
 
-    private static Block.Properties coreProps = BlockBehaviour.Properties.of().strength(3.5F);
+    private static final Block.Properties coreProps = BlockBehaviour.Properties.of().strength(3.5F, 9.0f);
     public static final RegistryObject<Block> BASIN_CORE = BLOCKS.register("basin_core",
             () -> new Core(coreProps, BasinCoreEntity::new));
     public static final RegistryObject<Block> CURRENT_CORE = BLOCKS.register("current_core",
@@ -163,9 +166,9 @@ public class TideBlocks {
             () -> new Core(coreProps, FluidFilterEntity::new));
     public static final RegistryObject<Block> ENTITY_FILTER = BLOCKS.register("entity_filter",
             () -> new Core(coreProps, EntityFilterEntity::new));
+
     public static final RegistryObject<LiquidBlock> BLOCK_IMBUED_SEAWATER = BLOCKS.register(
             "block_imbued_seawater", BlockImbuedSeawater::new);
-
     public static final RegistryObject<BlockEntityType<TankEntity>> TANK_ENTITY =
             BLOCK_ENTITIES.register("tank_entity",
                     () -> BlockEntityType.Builder.of(TankEntity::new, TANK.get()).build(null));

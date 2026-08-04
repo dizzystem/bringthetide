@@ -77,7 +77,7 @@ public class Core extends Block implements EntityBlock {
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
         if (blockEntity instanceof CoreEntity coreEntity){
-            coreEntity.clearImbuedWater();
+            coreEntity.onRemove();
             PoolHandler.deleteCore(level, blockPos);
         }
 

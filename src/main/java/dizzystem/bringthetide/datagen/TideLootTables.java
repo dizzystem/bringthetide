@@ -37,6 +37,7 @@ public class TideLootTables extends VanillaBlockLoot {
                 .put(TideBlocks.MEDIUM_PRISMARINE_BUD.get(), this::prismarineBud)
                 .put(TideBlocks.LARGE_PRISMARINE_BUD.get(), this::prismarineBud)
                 .put(TideBlocks.PRISMARINE_CLUSTER.get(), this::prismarineCluster)
+                .put(TideBlocks.DRIFTWOOD_DOOR.get(), this::createDoorTable)
                 .put(TideBlocks.TANK.get(), this::keepInventory)
                 .build();
     }

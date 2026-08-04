@@ -79,9 +79,7 @@ public class ErosionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height){
-        return true;
-    }
+    public boolean canCraftInDimensions(int width, int height){ return true; }
 
     @Override
     @ParametersAreNonnullByDefault
@@ -103,9 +101,10 @@ public class ErosionRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull RecipeType<?> getType() {
-        return TideRecipes.EROSION.get();
-    }
+    public @NotNull RecipeType<?> getType() { return TideRecipes.EROSION.get(); }
+
+    @Override
+    public boolean isSpecial() { return true; }
 
     //this reads recipes from json i think?
     //modified from net/minecraft/world/item/crafting/SimpleCookingSerializer

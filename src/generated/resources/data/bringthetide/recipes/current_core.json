@@ -8,13 +8,13 @@
     "H": {
       "item": "minecraft:hopper"
     },
-    "T": {
-      "item": "bringthetide:turtle_steel_ingot"
+    "I": {
+      "item": "minecraft:iron_ingot"
     }
   },
   "pattern": [
     "---",
-    "THT",
+    "IHI",
     "---"
   ],
   "result": {

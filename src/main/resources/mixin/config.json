@@ -1,6 +1,7 @@
 {
   "package" : "dizzystem.bringthetide.mixin",
   "mixins" : [
-    "MixinServerLevel"
+    "MixinServerLevel",
+    "MixinBlockEntityType"
   ]
 }

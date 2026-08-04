@@ -80,9 +80,7 @@ public class PelagicRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height){
-        return true;
-    }
+    public boolean canCraftInDimensions(int width, int height){ return true; }
 
     @Override
     @ParametersAreNonnullByDefault
@@ -101,9 +99,10 @@ public class PelagicRecipe implements Recipe<RecipeWrapper> {
     }
 
     @Override
-    public @NotNull RecipeType<?> getType() {
-        return TideRecipes.PELAGIC.get();
-    }
+    public @NotNull RecipeType<?> getType() { return TideRecipes.PELAGIC.get(); }
+
+    @Override
+    public boolean isSpecial() { return true; }
 
     public static class Serializer implements RecipeSerializer<PelagicRecipe> {
         @Override

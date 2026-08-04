@@ -44,8 +44,8 @@ public class TideItemTags extends ItemTagsProvider {
                 .add(TideItems.DRIFTWOOD_FENCE.get());
         tag(ItemTags.FENCE_GATES)
                 .add(TideItems.DRIFTWOOD_FENCE_GATE.get());
-//        tag(ItemTags.SIGNS)
-//                .add(TideItems.DRIFTWOOD_SIGN_ITEM.get());
+        tag(ItemTags.SIGNS)
+                .add(TideItems.DRIFTWOOD_SIGN.get());
         tag(ItemTags.WOODEN_PRESSURE_PLATES)
                 .add(TideItems.DRIFTWOOD_PRESSURE_PLATE.get());
         tag(ItemTags.BUTTONS)
