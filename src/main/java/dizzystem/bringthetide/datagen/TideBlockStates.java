@@ -3,6 +3,7 @@ package dizzystem.bringthetide.datagen;
 import dizzystem.bringthetide.BringTheTide;
 import dizzystem.bringthetide.block.ExplosionRod;
 import dizzystem.bringthetide.block.ShapedPillar;
+import dizzystem.bringthetide.block.Tank;
 import dizzystem.bringthetide.block.properties.PillarDirection;
 import dizzystem.bringthetide.registration.TideBlocks;
 import net.minecraft.core.Direction;
@@ -52,8 +53,9 @@ public class TideBlockStates extends BlockStateProvider {
         simpleBlock(TideBlocks.POOL_BASE.get(),
                 models().cubeBottomTop(TideBlocks.POOL_BASE.getId().getPath(), modLoc("block/semitransparent"),
                         modLoc("block/semitransparent"), modLoc("block/semitransparent")).renderType("translucent"));
-        tank(TideBlocks.TANK, modLoc("block/tank_side"), modLoc("block/tank_lid"),
-                modLoc("block/tank_side"));
+        tank(TideBlocks.TANK, modLoc("block/tank_side_long"), modLoc("block/tank_side_long_cutout"),
+                modLoc("block/tank_side_tall"),  modLoc("block/tank_side_tall_cutout"),
+                modLoc("block/tank_lid"), modLoc("block/tank_side"));
         simpleBlock(TideBlocks.RITUAL_TNT.get(),
                 models().cubeBottomTop(TideBlocks.RITUAL_TNT.getId().getPath(), modLoc("block/tnt_side"),
                         modLoc("block/tnt_bottom"), modLoc("block/tnt_top")));
@@ -182,22 +184,74 @@ public class TideBlockStates extends BlockStateProvider {
         simpleBlockItem(blockRegistry.get(), pillarMiddleModel);
     }
 
-    private void tank(RegistryObject<Block> blockRegistry, ResourceLocation sideTexture, ResourceLocation lidTexture,
+    private void tank(RegistryObject<Block> blockRegistry, ResourceLocation sideLongTexture, ResourceLocation sideLongCutoutTexture,
+                      ResourceLocation sideTallTexture, ResourceLocation sideTallCutoutTexture, ResourceLocation lidTexture,
                       ResourceLocation particleTexture){
         BlockModelBuilder tankModel = models().getBuilder(blockRegistry.getId().getPath())
                 .parent(models().getExistingFile(mcLoc("block/block")))
-                .element().from(1f, 0f, 2f).to(15f, 14f, 16f)
-                .allFaces((dir, builder) ->
-                        builder.uvs(0, 0, 14, 14).texture("#side")).end()
+                .element().from(1f, 1f, 2f).to(15f, 13f, 16f)
+                .allFaces((dir, builder) -> {
+                    switch(dir){
+                        case NORTH:
+                        case SOUTH:
+                            builder.texture("#sideLongCutout").uvs(0, 0, 14, 12);
+                            break;
+                        case WEST:
+                        case EAST:
+                            builder.texture("#sideLong").uvs(0, 0, 14, 12);
+                            break;
+                        case UP:
+                        case DOWN:
+                            builder.texture("#side").uvs(0, 0, 14, 14);
+                            break;
+                    }
+                }).end()
+                .element().from(2f, 0f, 2f).to(14f, 14f, 16f)
+                .allFaces((dir, builder) -> {
+                    switch(dir){
+                        case NORTH:
+                        case SOUTH:
+                            builder.texture("#sideTallCutout").uvs(0, 0, 12, 14);
+                            break;
+                        case WEST:
+                        case EAST:
+                            builder.texture("#side").uvs(0, 0, 14, 14);
+                            break;
+                        case UP:
+                        case DOWN:
+                            builder.texture("#sideTall").uvs(0, 0, 12, 14);
+                            break;
+                    }
+                }).end()
                 .element().from(4f, 3f, 0f).to(12f, 11f, 2f)
                 .allFaces((dir, builder) ->
                         builder.uvs(0, 0, 8, 8).texture("#lid")).end()
-                .texture("side", sideTexture)
+                .texture("sideLong", sideLongTexture)
+                .texture("sideTall", sideTallTexture)
+                .texture("sideLongCutout", sideLongCutoutTexture)
+                .texture("sideTallCutout", sideTallCutoutTexture)
+                .texture("side", particleTexture)
                 .texture("lid", lidTexture)
                 .texture("particle", particleTexture)
                 .renderType("cutout");
 
-        simpleBlock(TideBlocks.TANK.get(),tankModel);
+        VariantBlockStateBuilder tankBuilder = getVariantBuilder(blockRegistry.get());
+        tankBuilder.forAllStates(state -> {
+            ConfiguredModel.Builder<?> model = ConfiguredModel.builder().modelFile(tankModel);
+            switch(state.getValue(Tank.FACING)){
+                case WEST:
+                    model.rotationY(270);
+                    break;
+                case EAST:
+                    model.rotationY(90);
+                    break;
+                case SOUTH:
+                    model.rotationY(180);
+                    break;
+            }
+            return model.build();
+        });
+        simpleBlockItem(blockRegistry.get(), tankModel);
     }
 
     private void explosionRod(RegistryObject<ExplosionRod> blockRegistry, ResourceLocation texture) {

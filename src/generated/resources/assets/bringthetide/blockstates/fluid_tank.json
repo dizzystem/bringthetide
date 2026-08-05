@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "bringthetide:block/fluid_tank",
+      "y": 90
+    },
+    "facing=north": {
       "model": "bringthetide:block/fluid_tank"
+    },
+    "facing=south": {
+      "model": "bringthetide:block/fluid_tank",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "bringthetide:block/fluid_tank",
+      "y": 270
     }
   }
 }

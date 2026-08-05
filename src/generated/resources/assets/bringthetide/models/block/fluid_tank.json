@@ -13,6 +13,74 @@
           ]
         },
         "east": {
+          "texture": "#sideLong",
+          "uv": [
+            0.0,
+            0.0,
+            14.0,
+            12.0
+          ]
+        },
+        "north": {
+          "texture": "#sideLongCutout",
+          "uv": [
+            0.0,
+            0.0,
+            14.0,
+            12.0
+          ]
+        },
+        "south": {
+          "texture": "#sideLongCutout",
+          "uv": [
+            0.0,
+            0.0,
+            14.0,
+            12.0
+          ]
+        },
+        "up": {
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            14.0,
+            14.0
+          ]
+        },
+        "west": {
+          "texture": "#sideLong",
+          "uv": [
+            0.0,
+            0.0,
+            14.0,
+            12.0
+          ]
+        }
+      },
+      "from": [
+        1,
+        1,
+        2
+      ],
+      "to": [
+        15,
+        13,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#sideTall",
+          "uv": [
+            0.0,
+            0.0,
+            12.0,
+            14.0
+          ]
+        },
+        "east": {
           "texture": "#side",
           "uv": [
             0.0,
@@ -22,29 +90,29 @@
           ]
         },
         "north": {
-          "texture": "#side",
+          "texture": "#sideTallCutout",
           "uv": [
             0.0,
             0.0,
-            14.0,
+            12.0,
             14.0
           ]
         },
         "south": {
-          "texture": "#side",
+          "texture": "#sideTallCutout",
           "uv": [
             0.0,
             0.0,
-            14.0,
+            12.0,
             14.0
           ]
         },
         "up": {
-          "texture": "#side",
+          "texture": "#sideTall",
           "uv": [
             0.0,
             0.0,
-            14.0,
+            12.0,
             14.0
           ]
         },
@@ -59,12 +127,12 @@
         }
       },
       "from": [
-        1,
+        2,
         0,
         2
       ],
       "to": [
-        15,
+        14,
         14,
         16
       ]
@@ -142,6 +210,10 @@
   "textures": {
     "lid": "bringthetide:block/tank_lid",
     "particle": "bringthetide:block/tank_side",
-    "side": "bringthetide:block/tank_side"
+    "side": "bringthetide:block/tank_side",
+    "sideLong": "bringthetide:block/tank_side_long",
+    "sideLongCutout": "bringthetide:block/tank_side_long_cutout",
+    "sideTall": "bringthetide:block/tank_side_tall",
+    "sideTallCutout": "bringthetide:block/tank_side_tall_cutout"
   }
 }

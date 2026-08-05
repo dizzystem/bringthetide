@@ -2,6 +2,7 @@ package dizzystem.bringthetide.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dizzystem.bringthetide.BringTheTide;
+import dizzystem.bringthetide.block.Tank;
 import dizzystem.bringthetide.block.tile.TankEntity;
 import dizzystem.bringthetide.util.RenderHandler;
 import net.minecraft.client.Minecraft;
@@ -42,8 +43,10 @@ public class TankRenderer implements BlockEntityRenderer<TankEntity> {
         long millis = System.currentTimeMillis();
         int fullness = (int) Math.ceil(16f * fluidStack.getAmount() / TankEntity.TANK_CAPACITY);
         float bob = (float) Math.cos((2000 - (millis % 4000)) * Math.PI*2f / 2000f) * 0.025f;
+        Vec3 facingOffset = Vec3.atLowerCornerOf(entity.getBlockState().getValue(Tank.FACING).getNormal())
+                .reverse().scale(0.0625);
 
         RenderHandler.renderFluidBubble(entity, poseStack, bufferSource,
-                new Vec3(0.5f, 0.5f + bob, 0.5f + 0.0625), 0.6f, fluidStack, fullness);
+                new Vec3(0.5f, 0.5f + bob - 0.0625f, 0.5f).add(facingOffset), 0.6f, fluidStack, fullness);
     }
 }

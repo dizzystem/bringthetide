@@ -57,7 +57,7 @@ public class VortexCoreEntity extends CoreEntity {
         }
 
         UUID placedBy = this.getPlacedBy();
-        LogUtils.getLogger().info("simulating attack from {}", placedBy);
+        LogUtils.getLogger().info("simulating attack from {} with looting {}", placedBy, this.getLuck());
         FakePlayer fp = FakePlayerHandler.getFakePlayer((ServerLevel) level, placedBy);
         EnchantmentHelper.setEnchantments(Map.of(Enchantments.MOB_LOOTING, (int) this.getLuck()), weapon);
         fp.setItemInHand(InteractionHand.MAIN_HAND, weapon);

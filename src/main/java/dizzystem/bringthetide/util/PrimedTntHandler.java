@@ -18,6 +18,10 @@ public class PrimedTntHandler {
 
     public static void levelTick(Level level){
         for (PrimedTnt tnt : trackedTnt){
+            if (tnt.level() != level){
+                continue;
+            }
+
             if (tnt.isRemoved()){
                 toRemove.add(tnt);
                 continue;

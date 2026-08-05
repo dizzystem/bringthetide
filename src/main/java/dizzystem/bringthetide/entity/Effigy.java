@@ -77,6 +77,10 @@ public class Effigy extends ArmorStand {
         brokenByAnything(damageSource);
     }
 
+    public ItemStack getPickResult() {
+        return new ItemStack(TideItems.EFFIGY.get());
+    }
+
     // === player redirects start ===
 
     @Override

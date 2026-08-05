@@ -41,14 +41,16 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
     public boolean poolFormed = false, poolFilled = false, schedulePoolCheck = false, scheduleReset = false,
             scheduleRegisterCore = false;
     public int ticks = 0, maxCraftingTimer = 0, craftingTimer = 0, baseTicksPerAction = 80;
-    public float thalassity = 1f, renderThalassity = 0f, speed = 1f, luck = 1f, range = 1f;
+    public float thalassity = 1f, renderThalassity = 0f, speed = 1f, luck = 0f, range = 0f;
     public ItemEntity craftingEntity;
     public ArrayList<Vec3i> missingBlocks = new ArrayList<>();
     public ArrayList<BlockPos> poolCores = new ArrayList<>();
-    public HashSet<BlockPos> poolBlocks = new HashSet<>(), poolFluids = new HashSet<>();
+    public HashSet<BlockPos> poolBlocks = new HashSet<>();
+    public HashSet<BlockPos> poolFluids = new HashSet<>();
     public BlockPos poolCentre = getBlockPos();
-    public Map<BlockPos, BlockState[]> missingBlocksAllowed = new HashMap<>();
-    public Map<BlockPos, Integer> renderOverlayData = new HashMap<>();
+    public final Map<Entity, Long> entityCooldowns = new HashMap<>();
+    public final Map<BlockPos, BlockState[]> missingBlocksAllowed = new HashMap<>();
+    public final Map<BlockPos, Integer> renderOverlayData = new HashMap<>();
     private UUID placedBy;
 
     public CoreEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState){
@@ -81,6 +83,13 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
     public void setPlacedBy(UUID placedBy) { this.placedBy = placedBy; }
     public UUID getPlacedBy() { return placedBy; }
+
+    public void setEntityCooldown(Entity entity, Long cooldown){
+        this.entityCooldowns.put(entity, cooldown);
+    }
+    public Long getEntityCooldown(Entity entity){
+        return this.entityCooldowns.get(entity);
+    }
 
     /**
      * The required additional blocks around the core to make it function as part of a ritual.
@@ -510,8 +519,8 @@ public abstract class CoreEntity extends BlockEntity implements IForgeBlockEntit
 
                 //apply upgrades
                 this.speed = 1;
-                this.luck = 1;
-                this.range = 1;
+                this.luck = 0;
+                this.range = 0;
                 for (var core : poolCores){
                     if (level.getBlockEntity(core) instanceof UpgradeCoreEntity upgradeCore){
                         upgradeCore.applyUpgradeto(this);

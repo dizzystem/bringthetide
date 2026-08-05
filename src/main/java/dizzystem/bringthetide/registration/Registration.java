@@ -30,6 +30,7 @@ public class Registration {
             event.accept(TideItems.DRIFTWOOD_SLAB);
             event.accept(TideItems.DRIFTWOOD_FENCE);
             event.accept(TideItems.DRIFTWOOD_FENCE_GATE);
+            event.accept(TideItems.DRIFTWOOD_SIGN);
             event.accept(TideItems.DRIFTWOOD_PRESSURE_PLATE);
             event.accept(TideItems.DRIFTWOOD_BUTTON);
             event.accept(TideItems.DRIFTWOOD_COLUMN);

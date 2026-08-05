@@ -40,12 +40,18 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PoolHandler {
+    private static long ticks = 0;
     private static final HashSet<PoolCore> cores = new HashSet<>();
     private static final Map<ItemEntity, ArrayList<CraftingAttempt>> craftingAttempts = new HashMap<>();
     private static final Map<ItemEntity, OngoingCraft> ongoingCrafts = new HashMap<>();
-    private static final Map<Entity, Integer> entityCooldowns = new HashMap<>();
     private static final ExplosionDamageCalculator EXPLOSION_DAMAGE_CALCULATOR = new ExplosionDamageCalculator();
     private static Explosion EXPLOSION = null;
+
+    public static void serverTick(){
+        ticks ++;
+    }
+
+    public static long getCurrentTicks() { return ticks; }
 
     private static boolean isValidPoolBlock(BlockState blockState){
         return blockState.is(TideTags.VALID_POOL_BLOCK);
@@ -209,7 +215,7 @@ public class PoolHandler {
         }
 
         //tnt effect propagation
-        if (tnt == null && entity instanceof PrimedTnt oldTnt && !(entity instanceof RitualTnt)){
+        if (tnt == null && entity instanceof PrimedTnt oldTnt){
             RitualTnt newTnt = new RitualTnt(TideEntities.OCEANIFIED_TNT.get(), level, pos);
             CompoundTag data = new CompoundTag();
             oldTnt.save(data);
@@ -228,16 +234,8 @@ public class PoolHandler {
             }
         }
 
-        //only check the same entity once every 10 ticks
-        Integer cooldown = entityCooldowns.get(entity);
-        if (cooldown != null && cooldown > 0){
-            entityCooldowns.put(entity, cooldown-1);
-            return;
-        }
-
-        //todo: give each core its own cooldown, it doesn't really make sense to have a shared cooldown when
-        //  they can be different speeds
-        int minTicksPerAction = 99999;
+        //just iterate through every core and see if the entity's in their pools
+        // shouldn't be too laggy? it's just a bunch of poolContainsFluidBlock calls which are O(1)
         for (PoolCore core : cores){
             if (level != core.level()){
                 continue;
@@ -249,17 +247,19 @@ public class PoolHandler {
                     continue;
                 }
 
-                //LogUtils.getLogger().info("{} {}", core.corePos(), pos);
                 if (poolContainsFluidBlock(level, core.corePos(), pos)){
-                    coreEntity.entityInPool(entity, level, pos, null);
-                    if (coreEntity.getTicksPerAction() < minTicksPerAction){
-                        minTicksPerAction = coreEntity.getTicksPerAction();
+                    //only check the same entity once every cooldown period
+                    Long cooldown = coreEntity.getEntityCooldown(entity);
+                    if (cooldown != null && getCurrentTicks() < cooldown){
+                        continue;
                     }
+                    coreEntity.setEntityCooldown(entity, getCurrentTicks() + coreEntity.getTicksPerAction());
+
+                    coreEntity.entityInPool(entity, level, pos, null);
                 }
             }
         }
 
-        entityCooldowns.put(entity, minTicksPerAction);
         beginCrafts();
     }
 
